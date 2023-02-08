@@ -1,2 +1,2 @@
 # RESILIENCE
-RESILIENCE: electRical surgES In cabLes Induced by gEomagnetic disturbaNCE
+RESILIENCE: elect**R**ical surg**ES** **I**n cab**L**es **I**nduced by g**E**omagnetic disturba**NCE**
