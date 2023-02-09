@@ -1,2 +1,2 @@
-# RESILIENCE
-RESILIENCE: elect**R**ical surg**ES** **I**n cab**L**es **I**nduced by g**E**omagnetic disturba**NCE**
+# SCUBA
+SUCBA: **S**ubmarine **C**ables **U**pset **b**y **A**urora.
