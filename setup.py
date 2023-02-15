@@ -1,0 +1,40 @@
+from setuptools import setup
+
+setup(
+    name="scuba",
+    version="0.1.0",
+    packages=["scuba"],
+    package_dir={"scuba": "scuba"},
+    package_data={"scuba": []},
+    author="Shibaji Chakraborty",
+    author_email="shibaji7@vt.edu",
+    maintainer="Shibaji Chakraborty",
+    maintainer_email="shibaji7@vt.edu",
+    license="MIT License",
+    description="SCUBA: Submarine Cables Upset by Aurora.",
+    long_description="Model compute electrical surges in submarine cables induced by geomagnetic activities",
+    install_requires=[
+        "pandas",
+        "matplotlib>=3.2",
+    ],
+    keywords=[
+        "python",
+        "submarine cable",
+        "electrical surge",
+        "geomagnetic induction",
+        "geomagnetic disturbance",
+    ],
+    classifiers=[
+        "Development Status :: 3 - Alpha",
+        "Intended Audience :: Education",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Operating System :: MacOS :: MacOS X",
+        "Operating System :: Microsoft :: Windows",
+        "Operating System :: Linux :: Unix",
+    ],
+)
