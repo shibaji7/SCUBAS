@@ -35,4 +35,5 @@ setup(
         "Programming Language :: Python :: 3.10",
         "Operating System :: OS Independent",
     ],
+    url="https://github.com/shibaji7/SCUBAS",
 )
