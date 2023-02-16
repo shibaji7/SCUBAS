@@ -6,6 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
+# All local config files
+.scubas_config*
+
 # Distribution / packaging
 .Python
 build/

@@ -16,6 +16,10 @@ setup(
     install_requires=[
         "pandas",
         "matplotlib>=3.2",
+        "pyproj",
+        "loguru",
+        "scipy",
+        "SciencePlots",
     ],
     keywords=[
         "python",

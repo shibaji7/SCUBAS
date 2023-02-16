@@ -14,6 +14,7 @@ __email__ = "shibaji7@vt.edu"
 __status__ = "Research"
 
 import os
+from types import SimpleNamespace
 
 import numpy as np
 import pandas as pd
@@ -32,8 +33,25 @@ class ConductivityProfile(object):
         http://ds.iris.edu/ds/products/emc-litho10/
     """
 
-    def __init__(self):
-        self.cprop = load_conductivity_params()
+    def __init__(
+        self,
+        conductivity_params=dict(
+            earth_model="LITHO1.0.nc",
+            grid_interpolation_method="nearest",
+            seawater_resistivity=0.3,
+            sediment_resistivity=3.0,
+            crust_resistivity=3000.0,
+            lithosphere_resistivity=1000.0,
+            asthenosphere_resistivity=100.0,
+            transition_zone_resistivity=10.0,
+            lower_mantle_resistivity=1.0,
+            transition_zone_top=410.0,
+            transition_zone_bot=660.0,
+            profile_max_depth=1000.0,
+            uri="http://ds.iris.edu/files/products/emc/emc-files/LITHO1.0.nc",
+        ),
+    ):
+        self.cprop = SimpleNamespace(**conductivity_params)
         self.earth_model = self.cprop.earth_model
 
         # NOTE these are specified in terms of resistivity, in ohm-m
@@ -63,8 +81,8 @@ class ConductivityProfile(object):
         Returns a dict containing the pertinent parts of the Earth model
         Dict entries are callable interpolation objects
         """
-        os.makedirs("config/", exists_ok=True)
-        filename = "config/" + self.earth_model
+        os.makedirs(".scubas_config/", exist_ok=True)
+        filename = ".scubas_config/" + self.earth_model
         if not os.path.exists(filename):
             uri = self.cprop.uri
             os.system(f"wget -O {filename} {uri}")
@@ -223,6 +241,7 @@ class ConductivityProfile(object):
         return
 
     def get_interpolation_points(self, pt0, pt1):
+        """ """
         globe = Geod(ellps="WGS84")
 
         # somewhat janky way of figuring out how many interp points to have between
@@ -434,10 +453,3 @@ class ConductivityProfile(object):
             logger.info(f"Compiled Profile \n {rf}")
             profiles.append(rf)
         return profiles
-
-
-if __name__ == "__main__":
-    # Testing codes
-    latlons = np.array([[48, -167], [-36, 160], [54, 3]])
-    cf = ConductivityProfile()
-    cf.compile_profiles(latlons)

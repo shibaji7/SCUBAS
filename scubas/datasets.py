@@ -16,12 +16,16 @@ __maintainer__ = "Chakraborty, S."
 __email__ = "shibaji7@vt.edu"
 __status__ = "Research"
 
+from types import SimpleNamespace
+
 import numpy as np
 import pandas as pd
 from scipy import constants as C
 
 
 class Layer(object):
+    """ """
+
     def __init__(self, name, tickness, conductivity):
         self.name = name
         self.thickness = tickness
@@ -37,27 +41,27 @@ class Site(object):
         self.name = name
         return
 
-    def get_thicknesses(self, index=None):
-        th = [l.tickness for l in self.layers]
-        th = th[index] if index else th
+    def get_thicknesses(self, index=-1):
+        th = [l.thickness for l in self.layers]
+        th = th[index] if index >= 0 else th
         return th
 
-    def get_conductivities(self, index=None):
+    def get_conductivities(self, index=-1):
         cd = [l.conductivity for l in self.layers]
-        cd = cd[index] if index else cd
+        cd = cd[index] if index >= 0 else cd
         return cd
 
-    def get_resistivities(self, index=None):
+    def get_resistivities(self, index=-1):
         rv = [l.resistivity for l in self.layers]
-        rv = rv[index] if index else rv
+        rv = rv[index] if index >= 0 else rv
         return rv
 
-    def get_names(self, index=None):
+    def get_names(self, index=-1):
         na = [l.name for l in self.layers]
-        na = na[index] if index else na
+        na = na[index] if index >= 0 else na
         return na
 
-    def get(self, index=None):
+    def get(self, index=-1):
         o = pd.DataFrame()
         o["names"] = self.get_names(index)
         o["conductivities"] = self.get_conductivities(index)
@@ -104,103 +108,119 @@ class Site(object):
         return Site(layers, desciption, site_name)
 
 
-PROFILES = dict(
-    BM=Site.init(
-        conductivities=[0.2, 0.0003333, 0.02, 0.1, 1.12201],
-        thicknesses=[2000, 75000, 332000, 250000, np.inf],
-        names=[
-            "Sediments",
-            "Crust",
-            "Lithosphere",
-            "Upper Mantle",
-            "Lower Mantle",
-        ],
-        desciption="This model is Ben's model",
-        site_name="Ben's Model",
-    ),
-    OM=Site.init(
-        conductivities=[3.3333333, 0.2, 0.0003333, 0.02, 0.1, 1.12201],
-        thicknesses=[1000, 2000, 75000, 332000, 250000, np.inf],
-        names=[
-            "Seawater",
-            "Sediments",
-            "Crust",
-            "Lithosphere",
-            "Upper Mantle",
-            "Lower Mantle",
-        ],
-        desciption="This model is modified Ben's model. An 1 km thick ocean on top of Ben's model.",
-        site_name="Ocean Model",
-    ),
-    DB=Site.init(
-        conductivities=[0.00005, 0.005, 0.001, 0.01, 0.3333333],
-        thicknesses=[15000, 10000, 125000, 200000, np.inf],
-        names=[
-            "Sediments",
-            "Crust",
-            "Lithosphere",
-            "Upper Mantle",
-            "Lower Mantle",
-        ],
-        desciption="This model is suggested by David.",
-        site_name="David's Model",
-    ),
-    UN=Site.init(
-        conductivities=[0.2, 0.2, 0.2, 0.2, 1.12201],
-        thicknesses=[2000, 75000, 332000, 250000, np.inf],
-        names=[
-            "Sediments",
-            "Crust",
-            "Lithosphere",
-            "Upper Mantle",
-            "Lower Mantle",
-        ],
-        desciption="This model is suggested by David.",
-        site_name="Uniform Model",
-    ),
-    CS=Site.init(
-        conductivities=[3.3333333, 0.3333333, 0.00033333333, 0.001, 0.01, 0.1, 1],
-        thicknesses=[100, 3000, 20000, 140000, 246900, 250000, 340000],
-        names=[
-            "Seawater",
-            "Sediments",
-            "Crust",
-            "Lithosphere",
-            "Upper Mantle",
-            "Transition Zone",
-            "Lower Mantle",
-        ],
-        desciption="Used in IGS study by David",
-        site_name="Continental Shelf",
-    ),
-    SO=Site.init(
-        conductivities=[3.3333333, 0.3333333, 0.00033333333, 0.001, 0.01, 0.1, 1],
-        thicknesses=[1000, 2000, 10000, 70000, 327000, 250000, 340000],
-        names=[
-            "Seawater",
-            "Sediments",
-            "Crust",
-            "Lithosphere",
-            "Upper Mantle",
-            "Transition Zone",
-            "Lower Mantle",
-        ],
-        desciption="Used in IGS study by David",
-        site_name="Shallow Ocean",
-    ),
-    DO=Site.init(
-        conductivities=[3.3333333, 0.3333333, 0.00033333333, 0.001, 0.01, 0.1, 1],
-        thicknesses=[4000, 2000, 10000, 70000, 327000, 250000, 340000],
-        names=[
-            "Seawater",
-            "Sediments",
-            "Crust",
-            "Lithosphere",
-            "Upper Mantle",
-            "Transition Zone",
-            "Lower Mantle",
-        ],
-        desciption="Used in IGS study by David",
-        site_name="Deep Ocean",
-    ),
+PROFILES = SimpleNamespace(
+    **dict(
+        BM=Site.init(
+            conductivities=[0.2, 0.0003333, 0.02, 0.1, 1.12201],
+            thicknesses=[2000, 75000, 332000, 250000, np.inf],
+            names=[
+                "Sediments",
+                "Crust",
+                "Lithosphere",
+                "Upper Mantle",
+                "Lower Mantle",
+            ],
+            desciption="This model is Ben's model",
+            site_name="Ben's Model",
+        ),
+        OM=Site.init(
+            conductivities=[3.3333333, 0.2, 0.0003333, 0.02, 0.1, 1.12201],
+            thicknesses=[1000, 2000, 75000, 332000, 250000, np.inf],
+            names=[
+                "Seawater",
+                "Sediments",
+                "Crust",
+                "Lithosphere",
+                "Upper Mantle",
+                "Lower Mantle",
+            ],
+            desciption="This model is modified Ben's model. An 1 km thick ocean on top of Ben's model.",
+            site_name="Ocean Model",
+        ),
+        DB=Site.init(
+            conductivities=[0.00005, 0.005, 0.001, 0.01, 0.3333333],
+            thicknesses=[15000, 10000, 125000, 200000, np.inf],
+            names=[
+                "Sediments",
+                "Crust",
+                "Lithosphere",
+                "Upper Mantle",
+                "Lower Mantle",
+            ],
+            desciption="This model is suggested by David.",
+            site_name="David's Model",
+        ),
+        UN=Site.init(
+            conductivities=[0.2, 0.2, 0.2, 0.2, 1.12201],
+            thicknesses=[2000, 75000, 332000, 250000, np.inf],
+            names=[
+                "Sediments",
+                "Crust",
+                "Lithosphere",
+                "Upper Mantle",
+                "Lower Mantle",
+            ],
+            desciption="This model is suggested by David.",
+            site_name="Uniform Model",
+        ),
+        CS=Site.init(
+            conductivities=[3.3333333, 0.3333333, 0.00033333333, 0.001, 0.01, 0.1, 1],
+            thicknesses=[100, 3000, 20000, 140000, 246900, 250000, 340000],
+            names=[
+                "Seawater",
+                "Sediments",
+                "Crust",
+                "Lithosphere",
+                "Upper Mantle",
+                "Transition Zone",
+                "Lower Mantle",
+            ],
+            desciption="Used in IGS study by David",
+            site_name="Continental Shelf",
+        ),
+        SO=Site.init(
+            conductivities=[3.3333333, 0.3333333, 0.00033333333, 0.001, 0.01, 0.1, 1],
+            thicknesses=[1000, 2000, 10000, 70000, 327000, 250000, 340000],
+            names=[
+                "Seawater",
+                "Sediments",
+                "Crust",
+                "Lithosphere",
+                "Upper Mantle",
+                "Transition Zone",
+                "Lower Mantle",
+            ],
+            desciption="Used in IGS study by David",
+            site_name="Shallow Ocean",
+        ),
+        DO=Site.init(
+            conductivities=[3.3333333, 0.3333333, 0.00033333333, 0.001, 0.01, 0.1, 1],
+            thicknesses=[4000, 2000, 10000, 70000, 327000, 250000, 340000],
+            names=[
+                "Seawater",
+                "Sediments",
+                "Crust",
+                "Lithosphere",
+                "Upper Mantle",
+                "Transition Zone",
+                "Lower Mantle",
+            ],
+            desciption="Used in IGS study by David",
+            site_name="Deep Ocean",
+        ),
+        LD=Site.init(
+            conductivities=[0.3333333, 0.00033333333, 0.001, 0.01, 0.1, 1],
+            thicknesses=[1000, 10000, 140000, 249000, 250000, 340000],
+            names=[
+                "Sediments",
+                "Crust",
+                "Lithosphere",
+                "Upper Mantle",
+                "Transition Zone",
+                "Lower Mantle",
+            ],
+            desciption="Used in IGS study by David",
+            site_name="Land",
+        ),
+    )
 )

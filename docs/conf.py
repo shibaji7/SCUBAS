@@ -8,6 +8,7 @@
 
 import os
 import sys
+
 sys.path.insert(0, os.path.abspath(".."))
 
 project = "SCUBAS: Submarine Cable Upset by Auroral Streams"
@@ -18,10 +19,10 @@ author = "Shibaji Chakraborty"
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-        'sphinx.ext.githubpages',
-        'sphinx.ext.viewcode',
-        'sphinx.ext.coverage',
-        'sphinx.ext.autodoc',
+    "sphinx.ext.githubpages",
+    "sphinx.ext.viewcode",
+    "sphinx.ext.coverage",
+    "sphinx.ext.autodoc",
 ]
 
 source_suffix = ".rst"
