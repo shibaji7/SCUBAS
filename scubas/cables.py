@@ -20,13 +20,6 @@ from loguru import logger
 
 from scubas.datasets import PROFILES
 from scubas.models import OceanModel
-from scubas.utils import (
-    component_mappings,
-    component_sign_mappings,
-    fft,
-    frexp102str,
-    ifft,
-)
 
 
 class CableSection(object):
@@ -150,7 +143,6 @@ class TransmissionLine(CableSection):
         self.elec_params = SimpleNamespace(**elec_params)
         self.active_termination = SimpleNamespace(**active_termination)
         # Extract electrical properties of the cable
-        self.compile_oml()
         (
             self.C,
             self.R,
@@ -173,7 +165,7 @@ class TransmissionLine(CableSection):
         o += "Ad: %s (km)" % (frexp102str(1e-3 / self.gma))
         return o
 
-    def compile_oml(self):
+    def compile_oml(self, bfield_data_file=None):
         """
         Create ocean model
         """
@@ -181,6 +173,9 @@ class TransmissionLine(CableSection):
             self.elec_params.site,
             flim=self.elec_params.flim,
         )
+        if bfield_data_file:
+            self.model.read_iaga(bfield_data_file)
+            self.model.to_Efields()
         return
 
     def add_active_termination(self):
@@ -221,13 +216,15 @@ class TransmissionLine(CableSection):
         gma, Z0 = np.sqrt(Z * Y), np.sqrt(Z / Y)  # in /m and Ohm
         return C, R, Z, Y, gma, Z0
 
-    def compute_eqv_pi_circuit(self, Efield, components):
+    def compute_eqv_pi_circuit(self, Efield=None, components=None):
         """
         Calculate equivalent pi circuit model.
         X component is Nort (n), Y component East (e)
         dE: Dataframe containing E-field
         components: [X and Y] for E-fields
         """
+        Efield = Efield if Efield is not None else self.model.Efield
+        components = components if components is not None else self.model.components
         self.Ye, self.Yp2, self.Ie = {}, {}, {}
         for a in components:
             L = self.cable_lengths[a]
@@ -278,45 +275,6 @@ class TransmissionLine(CableSection):
             / (np.exp(self.gma * L) - np.exp(-self.gma * L))
         )
         return V, x / 1.0e3
-
-    def compute_numerical_Et(self, Bfield, components):
-        """
-        Compute Et using numerical FFT and IFFT block
-        Bfield: Dataframe containing B-field
-        components: [X and Y] for B-fields
-        """
-        self.Bfield = Bfield
-        self.Efield = pd.DataFrame()
-        self.Efield["Time"] = self.Bfield.index.tolist()
-        stime = self.Efield.Time.tolist()[0]
-        if isinstance(stime, dt.datetime):
-            t = np.array(self.Efield.Time.apply(lambda x: (x - stime).total_seconds()))
-            self.Efield["dTime"] = t
-        else:
-            t = np.array(self.Efield.Time)
-        for a in components:
-            Bt = np.array(self.Bfield[a])
-            # Bt = utility.detrend_magnetic_field(np.array(self.Bfield[a]), t)
-            dT = (
-                self.Bfield.dTime.tolist()[0]
-                if "dTime" in self.Bfield.columns
-                else t[1] - t[0]
-            )
-            Bf, f = fft(Bt, dT)
-            E2B = np.array(self.model.get_TFs(freqs=f).E2B)
-            Et = 2 * ifft(
-                component_sign_mappings(
-                    "B%sE%s" % (a.lower(), component_mappings("B2E", a).lower())
-                )
-                * E2B
-                * Bf
-            )
-            self.Efield[component_mappings("B2E", a)] = Et
-        self.Efield = self.Efield.set_index("Time")
-        # Transforming to E-field components
-        self.components = [component_mappings("B2E", a) for a in components]
-        self.compute_eqv_pi_circuit(self.Efield, self.components)
-        return
 
 
 class Cable(object):

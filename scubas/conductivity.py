@@ -23,6 +23,8 @@ from pyproj import Geod
 from scipy.interpolate import RegularGridInterpolator
 from scipy.io import netcdf_file
 
+from scubas.datasets import Site
+
 
 class ConductivityProfile(object):
     """
@@ -411,45 +413,143 @@ class ConductivityProfile(object):
         lm_thk = self.get_lower_mantle_layer()
         resistivity_profile = np.array(
             [
-                [water_thk, self.seawater_resistivity],
-                [sed_thk, self.sediment_resistivity],
-                [crust_thk, self.crust_resistivity],
-                [litho_thk, self.lithosphere_resistivity],
-                [astheno_thk, self.asthenosphere_resistivity],
-                [tz_thk, self.transition_zone_resistivity],
-                [lm_thk, self.lower_mantle_resistivity],
+                [water_thk, self.seawater_resistivity, "Seawater"],
+                [sed_thk, self.sediment_resistivity, "Sediment"],
+                [crust_thk, self.crust_resistivity, "Crust"],
+                [litho_thk, self.lithosphere_resistivity, "Lithosphere"],
+                [astheno_thk, self.asthenosphere_resistivity, "Upper Mantle"],
+                [tz_thk, self.transition_zone_resistivity, "Transition Zone"],
+                [lm_thk, self.lower_mantle_resistivity, "Lower Mantle"],
             ]
         )
         rf = pd.DataFrame()
-        rf["thickness"], rf["resistivity"] = (
+        rf["thickness"], rf["resistivity"], rf["name"] = (
             resistivity_profile[:, 0],
             resistivity_profile[:, 1],
+            resistivity_profile[:, 2],
         )
         return rf
 
-    def compile_profiles(self, latlons, kind="rounded"):
+    @staticmethod
+    def compile_profile(
+        latlon,
+        kind="rounded",
+        to_site=True,
+        site_name="",
+        site_description="",
+        **conductivity_params,
+    ):
         """
         Compile profiles for a set of latlons
         """
+        cp = ConductivityProfile(**conductivity_params)
+        if kind == "rounded":
+            latlon = np.rint(latlon)
+        logger.info(f"Lat-lon: {latlon}")
+        profile = self._compile_profile_(latlon)
+        logger.info(f"Compiled Profile \n {profile}")
+        if to_site:
+            profile = Site.init(
+                1.0 / profile["resistivity"].to_numpy(dtype=float),
+                profile["thickness"].to_numpy(dtype=float),
+                profile["name"],
+                site_description,
+                site_name,
+            )
+        return profile
+
+    @staticmethod
+    def compile_profiles(
+        latlons,
+        kind="rounded",
+        to_site=True,
+        site_names=[],
+        site_descriptions=[],
+        **conductivity_params,
+    ):
+        """
+        Compile profiles for a set of latlons
+        """
+
+        cp = ConductivityProfile(**conductivity_params)
         profiles = []
-        for latlon in latlons:
+        for i, latlon in enumerate(latlons):
             if kind == "rounded":
                 latlon = np.rint(latlon)
             logger.info(f"Lat-lon: {latlon}")
-            rf = self._compile_profile_(latlon)
-            logger.info(f"Compiled Profile \n {rf}")
-            profiles.append(rf)
+            profile = cp._compile_profile_(latlon)
+            logger.info(f"Compiled Profile \n {profile}")
+            if to_site:
+                site_name = site_names[i] if i < len(site_names) else ""
+                site_description = (
+                    site_descriptions[i] if i < len(site_descriptions) else ""
+                )
+                profile = Site.init(
+                    1.0 / profile["resistivity"].to_numpy(dtype=float),
+                    profile["thickness"].to_numpy(dtype=float),
+                    profile["name"],
+                    site_description,
+                    site_name,
+                )
+            profiles.append(profile)
         return profiles
 
-    def compile_bin_profiles(self, binlatlons):
+    @staticmethod
+    def compile_bined_profile(
+        bined_latlon,
+        to_site=True,
+        site_name="",
+        site_description="",
+        **conductivity_params,
+    ):
         """
-        Compile profiles for a set of binned latlons
+        Compile profiles for a binned latlons
         """
+        cp = ConductivityProfile(**conductivity_params)
+        ipts = cp.get_interpolation_points(bined_latlon[0], bined_latlon[1])
+        profile = cp._compile_profile_(ipts)
+        logger.info(f"Compiled Profile \n {profile}")
+        if to_site:
+            profile = Site.init(
+                1.0 / profile["resistivity"].to_numpy(dtype=float),
+                profile["thickness"].to_numpy(dtype=float),
+                profile["name"],
+                site_description,
+                site_name,
+            )
+        return profile
+
+    @staticmethod
+    def compile_bined_profiles(
+        bined_latlons,
+        to_site=True,
+        site_names=[],
+        site_descriptions=[],
+        **conductivity_params,
+    ):
+        """
+        Compile profiles for a binned latlons
+        """
+        cp = ConductivityProfile(**conductivity_params)
         profiles = []
-        nbins = len(binlatlons) - 1
+        nbins = len(bined_latlons) - 1
         for i in range(nbins):
-            ipts = self.get_interpolation_points(binlatlons[i, :], binlatlons[i + 1, :])
-            rf = self._compile_profile_(ipts)
-            logger.info(f"Compiled Profile \n {rf}")
-            profiles.append(rf)
+            ipts = cp.get_interpolation_points(
+                bined_latlons[i, :], bined_latlons[i + 1, :]
+            )
+            profile = cp._compile_profile_(ipts)
+            logger.info(f"Compiled Profile \n {profile}")
+            if to_site:
+                site_name = site_names[i] if i < len(site_names) else ""
+                site_description = (
+                    site_descriptions[i] if i < len(site_descriptions) else ""
+                )
+                profile = Site.init(
+                    1.0 / profile["resistivity"].to_numpy(dtype=float),
+                    profile["thickness"].to_numpy(dtype=float),
+                    profile["name"],
+                    site_description,
+                    site_name,
+                )
+            profiles.append(profile)
         return profiles
