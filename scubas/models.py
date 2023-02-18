@@ -15,6 +15,8 @@ __email__ = "shibaji7@vt.edu"
 __status__ = "Research"
 
 
+import datetime as dt
+
 import numpy as np
 import pandas as pd
 from loguru import logger
@@ -100,7 +102,7 @@ class OceanModel(object):
         tf["freq"], tf[key] = np.copy(self.freqs) if freqs is None else freqs, TFs[key]
         return tf
 
-    def read_iaga(self, fname, return_xyzf=True, return_header=False):
+    def read_iaga(self, file, return_xyzf=True, return_header=False):
         """
         Read IAGA profiles
         """
@@ -108,7 +110,7 @@ class OceanModel(object):
         # Read Headers
         header_records = {"header_length": 0}
 
-        with open(fname, "r") as openfile:
+        with open(file, "r") as openfile:
             for newline in openfile:
                 if newline[0] == " ":
                     header_records["header_length"] += 1
@@ -134,7 +136,7 @@ class OceanModel(object):
             else:
                 seen_count[col] = 1
         df = pd.read_csv(
-            fname,
+            file,
             header=header_records["header_length"],
             delim_whitespace=True,
             parse_dates=[[0, 1]],
@@ -159,15 +161,23 @@ class OceanModel(object):
             df["X"] = df["H"] * np.cos(np.deg2rad(df["D"] / 60.0))
             df["Y"] = df["H"] * np.sin(np.deg2rad(df["D"] / 60.0))
             del df["H"], df["D"]
-
-        self.header_records = header_records
-        self.Bfield = df.copy()
         if return_header:
             return df, header_records
         else:
             return df
 
-    def to_Efields(self, Bfield=None, components=["X", "Y"]):
+    def read_Bfield_data(self, files, return_xyzf=True):
+        """
+        Read B-Files
+        """
+        self.Bfield = pd.DataFrame()
+        for file in files:
+            self.Bfield = pd.concat(
+                [self.Bfield, self.read_iaga(file, return_xyzf, return_header=False)]
+            )
+        return self.Bfield
+
+    def to_Efields(self, Bfield=None, components=["X", "Y"], p=None):
         """
         Compute Et using numerical FFT and IFFT block
         Bfield: Dataframe containing B-field
@@ -177,23 +187,25 @@ class OceanModel(object):
         self.components = components
         self.Efield = pd.DataFrame()
         self.Efield["Time"] = self.Bfield.index.tolist()
-        stime = self.Efield.Time.tolist()[0]
-        if isinstance(stime, dt.datetime):
-            t = np.array(self.Efield.Time.apply(lambda x: (x - stime).total_seconds()))
-            self.Efield["dTime"] = t
+        tx = self.Efield.Time.tolist()[0]
+        if isinstance(tx, dt.datetime) or isinstance(tx, pd.Timestamp):
+            t = np.array(self.Efield.Time.apply(lambda x: (x - tx).total_seconds()))
+            self.Efield["dTime"], self.Bfield["dTime"] = t, t
         else:
             t = np.array(self.Efield.Time)
+            self.Efield["dTime"], self.Bfield["dTime"] = (t[1] - t[0], t[1] - t[0])
         for a in self.components:
             Bt = np.array(self.Bfield[a])
-            # Bt = utility.detrend_magnetic_field(np.array(self.Bfield[a]), t)
+            proc = Preprocess(np.array(self.Bfield.dTime), np.array(Bt))
+            Bt = proc.detrend_magnetic_field(p)
             dT = (
-                self.Bfield.dTime.tolist()[0]
+                self.Bfield.dTime.tolist()[1]
                 if "dTime" in self.Bfield.columns
                 else t[1] - t[0]
             )
             Bf, f = fft(Bt, dT)
             E2B = np.array(self.get_TFs(freqs=f).E2B)
-            Et = 2 * ifft(
+            Et = ifft(
                 component_sign_mappings(
                     "B%sE%s" % (a.lower(), component_mappings("B2E", a).lower())
                 )
@@ -204,3 +216,51 @@ class OceanModel(object):
         self.Efield = self.Efield.set_index("Time")
         self.components = [component_mappings("B2E", a) for a in self.components]
         return
+
+
+class Preprocess(object):
+    """
+    This class is used to process the B-field and E-field data.
+    """
+
+    def __init__(self, t, field, p=0.1):
+        """
+        Parameters:
+        -----------
+        t: Array of time seconds
+        field: Array containing the data
+        p: Tapering value (0-1)
+        """
+        self.t = t
+        self.field = field
+        self.p = p
+        return
+
+    def get_tapering_function(self, p=None):
+        """
+        This method is resposible for generateing
+        tapering function based on time sequence t
+        and tapering coefficient p
+        """
+        p = self.p if p is None else p
+        T = len(self.t)
+        P, P2 = int(T * p), int(T * p / 2)
+        w = np.zeros_like(self.t)
+        w[:P2] = 0.5 * (1 - np.cos(2 * np.pi * self.t[:P2] / P))
+        w[P2 : T - P2] = 1.0
+        w[T - P2 :] = 0.5 * (
+            1 - np.cos(2 * np.pi * (self.t[-1] - self.t[T - P2 :]) / P)
+        )
+        return w
+
+    def detrend_magnetic_field(self, p=None):
+        """
+        This method is resposible for detrend
+        magnetic field data and taper it to reduce
+        spurious frequency components.
+        """
+        p = self.p if p is None else p
+        fmed = np.median(self.field[:120])
+        w = self.get_tapering_function(p)
+        f = (self.field - fmed) * w
+        return f

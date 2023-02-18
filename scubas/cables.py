@@ -12,14 +12,13 @@ __email__ = "shibaji7@vt.edu"
 __status__ = "Research"
 
 
-from types import SimpleNamespace
-
 import numpy as np
 import pandas as pd
 from loguru import logger
 
 from scubas.datasets import PROFILES
 from scubas.models import OceanModel
+from scubas.utils import RecursiveNamespace
 
 
 class CableSection(object):
@@ -42,7 +41,7 @@ class CableSection(object):
         ),
     ):
         self.sec_id = sec_id
-        self.directed_length = SimpleNamespace(**directed_length)
+        self.directed_length = RecursiveNamespace(**directed_length)
         self.components = []
         self.compute_lengths()
         return
@@ -140,8 +139,8 @@ class TransmissionLine(CableSection):
         """
         # Compute phyiscal properties of the cable section
         super().__init__(sec_id, directed_length=directed_length)
-        self.elec_params = SimpleNamespace(**elec_params)
-        self.active_termination = SimpleNamespace(**active_termination)
+        self.elec_params = RecursiveNamespace(**elec_params)
+        self.active_termination = RecursiveNamespace(**active_termination)
         # Extract electrical properties of the cable
         (
             self.C,
@@ -151,7 +150,7 @@ class TransmissionLine(CableSection):
             self.gma,
             self.Z0,
         ) = self.calc_trasmission_line_parameters()
-        self.end_pot = SimpleNamespace(**dict())
+        self.end_pot = RecursiveNamespace(**dict())
         return
 
     def to_str(self):
@@ -165,7 +164,7 @@ class TransmissionLine(CableSection):
         o += "Ad: %s (km)" % (frexp102str(1e-3 / self.gma))
         return o
 
-    def compile_oml(self, bfield_data_file=None):
+    def compile_oml(self, bfield_data_files=[], p=None):
         """
         Create ocean model
         """
@@ -173,10 +172,11 @@ class TransmissionLine(CableSection):
             self.elec_params.site,
             flim=self.elec_params.flim,
         )
-        if bfield_data_file:
-            self.model.read_iaga(bfield_data_file)
-            self.model.to_Efields()
-        return
+        if bfield_data_files and len(bfield_data_files) > 0:
+            self.model.read_Bfield_data(bfield_data_files)
+            self.model.to_Efields(p=p)
+            self.compute_eqv_pi_circuit()
+        return self
 
     def add_active_termination(self):
         """
@@ -335,7 +335,7 @@ class Cable(object):
             self.nodes[nid] = {}
             logger.info(f"Node:{nid}")
             for a in self.components:
-                node = SimpleNamespace(**dict())
+                node = RecursiveNamespace(**dict())
                 Yii = np.zeros_like(self.node_ids, dtype=float)
                 if nid == self.left_edge:
                     Ji = -1.0 * sections[nid].Ie[a]

@@ -14,7 +14,6 @@ __email__ = "shibaji7@vt.edu"
 __status__ = "Research"
 
 import os
-from types import SimpleNamespace
 
 import numpy as np
 import pandas as pd
@@ -24,6 +23,7 @@ from scipy.interpolate import RegularGridInterpolator
 from scipy.io import netcdf_file
 
 from scubas.datasets import Site
+from scubas.utils import RecursiveNamespace
 
 
 class ConductivityProfile(object):
@@ -53,7 +53,7 @@ class ConductivityProfile(object):
             uri="http://ds.iris.edu/files/products/emc/emc-files/LITHO1.0.nc",
         ),
     ):
-        self.cprop = SimpleNamespace(**conductivity_params)
+        self.cprop = RecursiveNamespace(**conductivity_params)
         self.earth_model = self.cprop.earth_model
 
         # NOTE these are specified in terms of resistivity, in ohm-m
