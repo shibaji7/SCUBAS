@@ -22,13 +22,7 @@ import pandas as pd
 from loguru import logger
 from scipy import constants as C
 
-from scubas.utils import (
-    component_mappings,
-    component_sign_mappings,
-    fft,
-    frexp102str,
-    ifft,
-)
+from scubas.utils import component_mappings, component_sign_mappings, fft, ifft
 
 
 class OceanModel(object):
