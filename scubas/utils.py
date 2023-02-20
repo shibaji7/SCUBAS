@@ -64,7 +64,7 @@ def ifft(Y):
     numpy package of a complex FFT signal (Y).
     """
     n = len(Y)
-    X = np.fft.irfft(Y) * n
+    X = np.fft.irfft(Y) * 2 * n
     return X
 
 

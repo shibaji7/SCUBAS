@@ -42,7 +42,7 @@ def update_rc_params(params=dict(), science=False):
     return
 
 
-def plot_transfer_function(Tx, xlim=[1e-6, 1e-2], ylim=[1e-4, 1e1], science=False):
+def plot_transfer_function(Tx, xlim=[1e-6, 1e-2], ylim=[1e-3, 1e0], science=False):
     """ """
     update_rc_params(science=science)
     fig = plt.figure(dpi=180, figsize=(3, 2.5))

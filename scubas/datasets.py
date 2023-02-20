@@ -223,7 +223,7 @@ PROFILES = SimpleNamespace(
             site_name="Land",
         ),
         CS_W=Site.init(
-            conductivities=[0.3, 0.3333333, 0.00033333333, 0.001, 0.01, 0.1, 1],
+            conductivities=[3.3333333, 0.3333333, 0.00033333333, 0.001, 0.01, 0.1, 1],
             thicknesses=[100, 8000, 15000, 150000, 236900, 250000, 340000],
             names=[
                 "Seawater",
@@ -238,7 +238,7 @@ PROFILES = SimpleNamespace(
             site_name="Continental Shelf West",
         ),
         DO_1=Site.init(
-            conductivities=[0.3, 0.3333333, 0.00033333333, 0.001, 0.01, 0.1, 1],
+            conductivities=[3.3333333, 0.3333333, 0.00033333333, 0.001, 0.01, 0.1, 1],
             thicknesses=[4000, 4000, 10000, 145000, 247000, 250000, 340000],
             names=[
                 "Seawater",
@@ -253,7 +253,7 @@ PROFILES = SimpleNamespace(
             site_name="Deep Ocean",
         ),
         DO_2=Site.init(
-            conductivities=[0.3, 0.3333333, 0.00033333333, 0.001, 0.01, 0.1, 1],
+            conductivities=[3.3333333, 0.3333333, 0.00033333333, 0.001, 0.01, 0.1, 1],
             thicknesses=[5200, 2000, 10000, 140000, 252800, 250000, 340000],
             names=[
                 "Seawater",
@@ -268,7 +268,7 @@ PROFILES = SimpleNamespace(
             site_name="Deep Ocean",
         ),
         DO_3=Site.init(
-            conductivities=[0.3, 0.3333333, 0.00033333333, 0.001, 0.01, 0.1, 1],
+            conductivities=[3.3333333, 0.3333333, 0.00033333333, 0.001, 0.01, 0.1, 1],
             thicknesses=[4000, 2000, 10000, 140000, 254000, 250000, 340000],
             names=[
                 "Seawater",
@@ -283,7 +283,7 @@ PROFILES = SimpleNamespace(
             site_name="Deep Ocean",
         ),
         DO_4=Site.init(
-            conductivities=[0.3, 0.3333333, 0.00033333333, 0.001, 0.01, 0.1, 1],
+            conductivities=[3.3333333, 0.3333333, 0.00033333333, 0.001, 0.01, 0.1, 1],
             thicknesses=[4800, 1000, 10000, 70000, 324200, 250000, 340000],
             names=[
                 "Seawater",
@@ -298,7 +298,7 @@ PROFILES = SimpleNamespace(
             site_name="Deep Ocean",
         ),
         DO_5=Site.init(
-            conductivities=[0.3, 0.3333333, 0.00033333333, 0.001, 0.01, 0.1, 1],
+            conductivities=[3.3333333, 0.3333333, 0.00033333333, 0.001, 0.01, 0.1, 1],
             thicknesses=[4000, 1000, 10000, 70000, 324200, 250000, 340000],
             names=[
                 "Seawater",
@@ -313,7 +313,7 @@ PROFILES = SimpleNamespace(
             site_name="Deep Ocean",
         ),
         MAR=Site.init(
-            conductivities=[0.3, 0.3333333, 0.00033333333, 0.001, 0.01, 0.1, 1],
+            conductivities=[3.3333333, 0.3333333, 0.00033333333, 0.001, 0.01, 0.1, 1],
             thicknesses=[3000, 0, 10000, 25000, 372000, 250000, 340000],
             names=[
                 "Seawater",
@@ -328,7 +328,7 @@ PROFILES = SimpleNamespace(
             site_name="Mid-Atlantic Ridge",
         ),
         DO_6=Site.init(
-            conductivities=[0.3, 0.3333333, 0.00033333333, 0.001, 0.01, 0.1, 1],
+            conductivities=[3.3333333, 0.3333333, 0.00033333333, 0.001, 0.01, 0.1, 1],
             thicknesses=[4500, 1500, 10000, 70000, 324000, 250000, 340000],
             names=[
                 "Seawater",
@@ -343,7 +343,7 @@ PROFILES = SimpleNamespace(
             site_name="Deep Ocean",
         ),
         CS_E=Site.init(
-            conductivities=[0.3, 0.3333333, 0.00033333333, 0.001, 0.01, 0.1, 1],
+            conductivities=[3.3333333, 0.3333333, 0.00033333333, 0.001, 0.01, 0.1, 1],
             thicknesses=[100, 3000, 20000, 120000, 266900, 250000, 340000],
             names=[
                 "Seawater",
