@@ -1,5 +1,5 @@
 # SCUBAS
-SUCBA: **S**ubmarine **C**ables **U**pset **b**y **A**uroral **S**treams.
+SUCBAS: **S**ubmarine **C**ables **U**pset **b**y **A**uroral **S**treams.
 
 
 ## Installation
