@@ -18,7 +18,7 @@ from loguru import logger
 
 from scubas.datasets import PROFILES
 from scubas.models import OceanModel
-from scubas.utils import RecursiveNamespace
+from scubas.utils import RecursiveNamespace, frexp102str
 
 
 class CableSection(object):
@@ -63,8 +63,8 @@ class CableSection(object):
                 dl.length / np.sqrt(2),
                 dl.length / np.sqrt(2),
             )
-        elif (hasattr(dl, "length_north") and dl.length_north) or (
-            hasattr(dl, "length_east") and dl.length_east
+        elif (hasattr(dl, "length_north") and dl.length_north is not None) or (
+            hasattr(dl, "length_east") and dl.length_east is not None
         ):
             logger.info("Cable length from directed length")
             self.length_north = dl.length_north if hasattr(dl, "length_north") else 0.0
@@ -195,6 +195,12 @@ class TransmissionLine(CableSection):
                     Jn[a] = E / Z  # Assuming input mV/km convert to V/m
                 setattr(at, "Yn", 1.0 / Z0)
                 setattr(at, "Jn", Jn)
+                setattr(at, "Z0", Z0)
+                setattr(at, "R", R)
+                setattr(at, "C", C)
+                setattr(at, "Z", Z)
+                setattr(at, "Y", Y)
+                setattr(at, "gma", gma)
         return
 
     def calc_trasmission_line_parameters(self, site=None, width=None):
@@ -204,14 +210,21 @@ class TransmissionLine(CableSection):
         width = width if width else self.elec_params.width
         site = site if site else self.elec_params.site
         logger.info(f"Cable width: {width}")
-        C = width * (
-            (site.get_thicknesses(1) / site.get_resistivities(1))
-            + (site.get_thicknesses(0) / site.get_resistivities(0))
-        )  # in m/ohm
-        R = (
-            (site.get_thicknesses(2) * site.get_resistivities(2))
-            + (site.get_thicknesses(3) * site.get_resistivities(3))
-        ) / width  # in m*ohm
+        if site.name == "Land":
+            C = width * ((site.get_thicknesses(0) / site.get_resistivities(0)))
+            R = (
+                (site.get_thicknesses(1) * site.get_resistivities(1))
+                + (site.get_thicknesses(2) * site.get_resistivities(2))
+            ) / width
+        else:
+            C = width * (
+                (site.get_thicknesses(1) / site.get_resistivities(1))
+                + (site.get_thicknesses(0) / site.get_resistivities(0))
+            )  # in m/ohm
+            R = (
+                (site.get_thicknesses(2) * site.get_resistivities(2))
+                + (site.get_thicknesses(3) * site.get_resistivities(3))
+            ) / width  # in m*ohm
         Z, Y = 1.0 / C, 1.0 / R  # in Ohm-m and S/m
         gma, Z0 = np.sqrt(Z * Y), np.sqrt(Z / Y)  # in /m and Ohm
         return C, R, Z, Y, gma, Z0

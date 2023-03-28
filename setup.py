@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="scubas",
-    version="0.1.0",
+    version="0.1.2",
     packages=["scubas"],
     package_dir={"scubas": "scubas"},
     package_data={"scubas": []},

@@ -114,7 +114,7 @@ def potential_along_section(
     return {"figure": fig, "axes": ax}
 
 
-def cable_potential(V, x, science=False):
+def cable_potential(V, x, science=False, ylim=[-50, 50]):
     update_rc_params(
         {"xtick.labelsize": 12, "ytick.labelsize": 12, "font.size": 12}, science
     )
@@ -122,10 +122,11 @@ def cable_potential(V, x, science=False):
         nrows=1, ncols=1, dpi=150, figsize=(6, 3), sharex="all", sharey="all"
     )
     ax = axes
-    ax.set_ylabel("Voltage, V")
-    ax.set_xlabel("Cable Length, km")
+    ax.set_ylabel("Earth potential, V")
+    ax.set_xlabel("Distance, km")
     ax.plot(x, V, "k", lw=0.8, ls="-")
     ax.set_xlim(x[0], x[-1])
+    ax.set_ylim(ylim)
     txt = ""
     ax.text(
         0.05, 0.95, txt, ha="left", va="top", transform=ax.transAxes, fontsize="small"

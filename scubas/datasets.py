@@ -210,7 +210,7 @@ PROFILES = SimpleNamespace(
         ),
         LD=Site.init(
             conductivities=[0.3333333, 0.00033333333, 0.001, 0.01, 0.1, 1],
-            thicknesses=[1000, 10000, 140000, 249000, 250000, 340000],
+            thicknesses=[1000, 20000, 140000, 249000, 250000, 340000],
             names=[
                 "Sediments",
                 "Crust",
