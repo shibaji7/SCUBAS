@@ -160,15 +160,21 @@ class OceanModel(object):
         else:
             return df
 
-    def read_Bfield_data(self, files, return_xyzf=True):
+    def read_Bfield_data(self, files, return_xyzf=True, csv_file_date_name="Date"):
         """
         Read B-Files
         """
         self.Bfield = pd.DataFrame()
         for file in files:
-            self.Bfield = pd.concat(
-                [self.Bfield, self.read_iaga(file, return_xyzf, return_header=False)]
-            )
+            file_type = file.split(".")[-1]
+            if file_type == "txt":
+                o = self.read_iaga(file, return_xyzf, return_header=False)
+            elif file_type == "csv":
+                o = pd.read_csv(file, parse_dates=[csv_file_date_name])
+                o = o.rename(columns={csv_file_date_name: "Time"})
+                o = o.set_index("Time")
+                o.index.name = "Time"
+            self.Bfield = pd.concat([self.Bfield, o])
         return self.Bfield
 
     def to_Efields(self, Bfield=None, components=["X", "Y"], p=None):

@@ -164,7 +164,7 @@ class TransmissionLine(CableSection):
         o += "Ad: %s (km)" % (frexp102str(1e-3 / self.gma))
         return o
 
-    def compile_oml(self, bfield_data_files=[], p=None):
+    def compile_oml(self, bfield_data_files=[], p=None, csv_file_date_name="Date"):
         """
         Create ocean model
         """
@@ -173,7 +173,9 @@ class TransmissionLine(CableSection):
             flim=self.elec_params.flim,
         )
         if bfield_data_files and len(bfield_data_files) > 0:
-            self.model.read_Bfield_data(bfield_data_files)
+            self.model.read_Bfield_data(
+                bfield_data_files, csv_file_date_name=csv_file_date_name
+            )
             self.model.to_Efields(p=p)
             self.compute_eqv_pi_circuit()
         return self
