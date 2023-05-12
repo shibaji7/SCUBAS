@@ -18,9 +18,9 @@ setup(
     maintainer_email="shibaji7@vt.edu",
     license="MIT License",
     description="SCUBAS: Submarine Cables Upset by Auroral Streams.",
-     long_description="Model compute electrical surges in submarine cables induced by geomagnetic activities",
-    #long_description=long_description,
-    #long_description_content_type="text/markdown",
+    # long_description="Model compute electrical surges in submarine cables induced by geomagnetic activities",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     install_requires=[
         "pandas",
         "matplotlib>=3.2",
