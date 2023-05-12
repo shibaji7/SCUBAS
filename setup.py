@@ -1,8 +1,14 @@
+# read the contents of your README file
+from pathlib import Path
+
 from setuptools import setup
+
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text()
 
 setup(
     name="scubas",
-    version="0.1.2",
+    version="0.1.3",
     packages=["scubas"],
     package_dir={"scubas": "scubas"},
     package_data={"scubas": []},
@@ -12,7 +18,9 @@ setup(
     maintainer_email="shibaji7@vt.edu",
     license="MIT License",
     description="SCUBAS: Submarine Cables Upset by Auroral Streams.",
-    long_description="Model compute electrical surges in submarine cables induced by geomagnetic activities",
+     long_description="Model compute electrical surges in submarine cables induced by geomagnetic activities",
+    #long_description=long_description,
+    #long_description_content_type="text/markdown",
     install_requires=[
         "pandas",
         "matplotlib>=3.2",
@@ -22,7 +30,7 @@ setup(
         "SciencePlots",
     ],
     keywords=[
-        "python",
+        "Python>=3.6",
         "submarine cable",
         "electrical surge",
         "geomagnetic induction",
@@ -39,5 +47,9 @@ setup(
         "Programming Language :: Python :: 3.10",
         "Operating System :: OS Independent",
     ],
+    project_urls={
+        "Home": "https://github.com/shibaji7/SCUBAS",
+        "Documentations": "https://scubas.readthedocs.io/en/latest/",
+    },
     url="https://github.com/shibaji7/SCUBAS",
 )
