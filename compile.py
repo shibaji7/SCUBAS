@@ -37,11 +37,16 @@ def uplaod_pip(sk=False):
 
 
 def generate_doc():
+    if os.path.exists("scubas/__init__.py"):
+        os.remove("scubas/__init__.py")
     if os.path.exists("docs/"):
         shutil.rmtree("docs/")
-    os.mkdir("docs/")
+    os.system("sphinx-quickstart docs")
+    os.system("sphinx-apidoc -o docs/ scubas")
+    shutil.copyfile("scripts/__init__.py", "scubas/__init__.py")
+    shutil.copyfile("scripts/conf.py", "scubas/conf.py")
     os.chdir("docs/")
-    os.system("sphinx-quickstart")
+    os.system("make html")
     os.chdir("../")
     return
 

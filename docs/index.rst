@@ -1,10 +1,10 @@
-.. SCUBAS Documentation documentation master file, created by
-   sphinx-quickstart on Thu May 11 23:03:58 2023.
+.. q documentation master file, created by
+   sphinx-quickstart on Thu May 11 23:31:31 2023.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to SCUBAS Documentation's documentation!
-================================================
+Welcome to q's documentation!
+=============================
 
 .. toctree::
    :maxdepth: 2

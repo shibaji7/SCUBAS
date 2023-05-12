@@ -4,4 +4,10 @@ scubas
 .. toctree::
    :maxdepth: 4
 
-   scubas
+   cables
+   conductivity
+   conf
+   datasets
+   models
+   plotlib
+   utils
