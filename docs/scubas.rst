@@ -4,14 +4,6 @@ scubas package
 Submodules
 ----------
 
-scubas.analysis module
-----------------------
-
-.. automodule:: scubas.analysis
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 scubas.cables module
 --------------------
 
@@ -36,18 +28,18 @@ scubas.datasets module
    :undoc-members:
    :show-inheritance:
 
-scubas.plotlib module
----------------------
+scubas.models module
+--------------------
 
-.. automodule:: scubas.plotlib
+.. automodule:: scubas.models
    :members:
    :undoc-members:
    :show-inheritance:
 
-scubas.transmission\_lines module
----------------------------------
+scubas.plotlib module
+---------------------
 
-.. automodule:: scubas.transmission_lines
+.. automodule:: scubas.plotlib
    :members:
    :undoc-members:
    :show-inheritance:

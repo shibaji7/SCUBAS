@@ -1,4 +1,5 @@
-"""utility.py: Module is used to implement utility methods"""
+"""utility.py: Module is used to implement utility methods.
+"""
 
 __author__ = "Chakraborty, S."
 __copyright__ = ""

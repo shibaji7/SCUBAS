@@ -8,7 +8,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name="scubas",
-    version="0.1.3",
+    version="0.1.4",
     packages=["scubas"],
     package_dir={"scubas": "scubas"},
     package_data={"scubas": []},
@@ -48,7 +48,6 @@ setup(
         "Operating System :: OS Independent",
     ],
     project_urls={
-        "Home": "https://github.com/shibaji7/SCUBAS",
         "Documentations": "https://scubas.readthedocs.io/en/latest/",
     },
     url="https://github.com/shibaji7/SCUBAS",

@@ -13,6 +13,7 @@ def clean():
     if os.path.exists("scubas.egg-info/"):
         shutil.rmtree("scubas.egg-info/")
     os.system("find . -type d -name '.ipynb_checkpoints' -exec rm -rf {} +")
+    os.system("find . -type d -name '__pycache__' -exec rm -rf {} +")
     return
 
 
@@ -25,8 +26,23 @@ def build():
     return
 
 
-def uplaod_pip():
-    os.system("twine upload dist/*")
+def uplaod_pip(sk=False):
+    clean()
+    build()
+    if sk:
+        os.system("twine upload dist/* --verbose --skip-existing")
+    else:
+        os.system("twine upload dist/* --verbose")
+    return
+
+
+def generate_doc():
+    if os.path.exists("docs/"):
+        shutil.rmtree("docs/")
+    os.mkdir("docs/")
+    os.chdir("docs/")
+    os.system("sphinx-quickstart")
+    os.chdir("../")
     return
 
 
@@ -50,6 +66,18 @@ if __name__ == "__main__":
         action="store_true",
         help="Upload code to PIP repository",
     )
+    parser.add_argument(
+        "-skpip",
+        "--skpip",
+        action="store_true",
+        help="Upload code to PIP repository [skip exisiting]",
+    )
+    parser.add_argument(
+        "-doc",
+        "--doc",
+        action="store_true",
+        help="Generate documentations using Sphinx",
+    )
     args = parser.parse_args()
     if args.clean:
         clean()
@@ -59,6 +87,11 @@ if __name__ == "__main__":
         clean()
         build()
     if args.upip:
+        uplaod_pip()
+    if args.skpip:
+        uplaod_pip(sk=True)
+    if args.doc:
         clean()
         build()
-        uplaod_pip()
+        generate_doc()
+        
