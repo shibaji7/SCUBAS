@@ -94,4 +94,3 @@ if __name__ == "__main__":
         clean()
         build()
         generate_doc()
-        
