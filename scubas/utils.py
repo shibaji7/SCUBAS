@@ -36,7 +36,14 @@ class RecursiveNamespace(SimpleNamespace):
 
 def frexp102str(x):
     """
-    Convert to mantesa exponent form in txt
+    Convert to mantesa exponent form in txt.
+
+    :param value: Value of a large/small number.
+    :type value: float or int
+    :raise Exception: If the value is invalid.
+    :return: The ingredients list.
+    :rtype: str
+
     """
     exp = int(math.log10(x))
     if exp <= 0:
