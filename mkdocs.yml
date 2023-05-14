@@ -11,7 +11,8 @@ nav:
     - Installation: user/install.md  
     - INTERMAGNET Data Access: user/intermagnet.md 
     - Citing: user/citing.md
-    - Code Documentation: dev/scubas.md
+    - Tutorials: dev/scubas.md
+    - Code Documentation:
             - Cables: dev/cables.md
             - Ocean/Earth Conductivity: dev/conductivity.md
             - Datasets: dev/datasets.md
