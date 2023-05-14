@@ -23,7 +23,7 @@ setup(
     long_description_content_type="text/markdown",
     install_requires=[
         "pandas",
-        "matplotlib>=3.2",
+        "matplotlib>=3.3.4",
         "pyproj",
         "loguru",
         "scipy",

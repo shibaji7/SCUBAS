@@ -56,6 +56,7 @@ def build_doc():
     shutil.copyfile("scripts/__init__.py", "scubas/__init__.py")
     
     # Run make
+    os.system("rm docs/conf.rst")
     os.chdir("docs/")
     os.system("make html")
     os.chdir("../")

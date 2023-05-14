@@ -40,4 +40,4 @@ Follow the same instructions as installing the interactive notebooks.
 
 ## Citing this Project
 
-- Chakraborty S, Boteler DH, Shi X, Murphy BS, Hartinger MD, Wang X, Lucas G and Baker JBH (2022) Modeling geomagnetic induction in submarine cables. *Front. Phys.* 10:1022475. doi: 10.3389/fphy.2022.1022475
+- Chakraborty S, Boteler DH, Shi X, Murphy BS, Hartinger MD, Wang X, Lucas G and Baker JBH (2022) Modeling geomagnetic induction in submarine cables. *Front. Phys.* 10:1022475. [doi:10.3389/fphy.2022.1022475](https://doi.org/10.3389/fphy.2022.1022475)
