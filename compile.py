@@ -33,34 +33,34 @@ def uplaod_pip():
     return
 
 
-def generate_doc():
-    # Remove existing document
-    if os.path.exists("docs/"):
-        shutil.rmtree("docs/")
+# def generate_doc():
+#     # Remove existing document
+#     if os.path.exists("docs/"):
+#         shutil.rmtree("docs/")
         
-    # Create background and copy conf
-    os.system("sphinx-quickstart docs")
-    shutil.copyfile("scripts/conf.py", "docs/conf.py")
-    return
+#     # Create background and copy conf
+#     os.system("sphinx-quickstart docs")
+#     shutil.copyfile("scripts/conf.py", "docs/conf.py")
+#     return
 
 
-def build_doc():
-    # Run apidoc        
-    os.system("sphinx-apidoc -o docs/ scubas")
-    # Remove init
-    if os.path.exists("scubas/__init__.py"):
-        os.remove("scubas/__init__.py")
-    # Run apidoc again
-    os.system("sphinx-apidoc -o docs/ scubas")
-    # Include init
-    shutil.copyfile("scripts/__init__.py", "scubas/__init__.py")
+# def build_doc():
+#     # Run apidoc        
+#     os.system("sphinx-apidoc -o docs/ scubas")
+#     # Remove init
+#     if os.path.exists("scubas/__init__.py"):
+#         os.remove("scubas/__init__.py")
+#     # Run apidoc again
+#     os.system("sphinx-apidoc -o docs/ scubas")
+#     # Include init
+#     shutil.copyfile("scripts/__init__.py", "scubas/__init__.py")
     
-    # Run make
-    os.system("rm docs/conf.rst")
-    os.chdir("docs/")
-    os.system("make html")
-    os.chdir("../")
-    return
+#     # Run make
+#     os.system("rm docs/conf.rst")
+#     os.chdir("docs/")
+#     os.system("make html")
+#     os.chdir("../")
+#     return
 
 
 if __name__ == "__main__":
@@ -83,18 +83,18 @@ if __name__ == "__main__":
         action="store_true",
         help="Upload code to PIP repository",
     )
-    parser.add_argument(
-        "-gdoc",
-        "--gdoc",
-        action="store_true",
-        help="Generate documentations using Sphinx",
-    )
-    parser.add_argument(
-        "-bdoc",
-        "--bdoc",
-        action="store_true",
-        help="Build documentations using Sphinx",
-    )
+#     parser.add_argument(
+#         "-gdoc",
+#         "--gdoc",
+#         action="store_true",
+#         help="Generate documentations using Sphinx",
+#     )
+#     parser.add_argument(
+#         "-bdoc",
+#         "--bdoc",
+#         action="store_true",
+#         help="Build documentations using Sphinx",
+#     )
     args = parser.parse_args()
     if args.clean:
         clean()
@@ -105,8 +105,8 @@ if __name__ == "__main__":
         build()
     if args.upip:
         uplaod_pip()
-    if args.gdoc:
-        generate_doc()
-    if args.bdoc:
-        build_doc()
+#     if args.gdoc:
+#         generate_doc()
+#     if args.bdoc:
+#         build_doc()
         
