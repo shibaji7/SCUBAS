@@ -51,10 +51,16 @@ def frexp102str(x: float) -> str:
     return txt
 
 
-def fft(X, dT, remove_zero_frequency=True):
-    """
-    This function is responsible for FFT using
-    numpy package of a real signal (X).
+def fft(X: np.array, dT: float, remove_zero_frequency:bool=True) -> tuple:
+    """This function is responsible for FFT using NumPy package of a real signal (X).
+    
+    Arguments:
+        X: Timeseries data 
+        dT:
+        remove_zero_frequency:
+        
+    Returns:
+        
     """
     n = len(X)
     Y = 2.0 / n * np.fft.rfft(X)

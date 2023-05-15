@@ -80,7 +80,6 @@ The following virtual environments have been tested by scubas developers:"
 ### pip Virtual Environment
 Instructions can be found here [virtual environment](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)
 
-Option 1:
 1. `$ python3 -m pip install --user virtualenv` (Install virtual environment package)
 2. `$ python3 -m virtualenv <environment name>`  (Make your virtual environment)
 3. `$ source <environment name>/bin/activate`  (Activate the virtual environment)
@@ -95,7 +94,7 @@ Instructions can be found here [conda environment](https://uoa-eresearch.github.
 
 1. `$ conda create -n yourenvname python=3.7 anaconda`
 2. `$ conda activate yourenvname`
-* `$ pip install scubas`
+3. `$ pip install scubas`
 
 #### Adding the environment to PyCharm
 
@@ -103,6 +102,7 @@ To set the project interpreter to the anaconda environment:
 
 1. File -> Settings -> Project Folder -> Project Interpreter
 2. Click the project Interpreter drop down list and click on show all.
+
 * If you don't see the environment you wish to use click the plus sign on the right side bar named "Add"
 * Select "Conda Environment" on the left side menu.
 * Click "Existing Environment" and give the interpreter field the path to your environment's python.exe and apply.
