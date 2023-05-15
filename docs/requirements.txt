@@ -41,7 +41,7 @@ mkdocs-material-extensions==1.1.1
 mkdocstrings==0.21.2
 more-itertools==9.0.0
 mypy-extensions==1.0.0
-numpy=1.23.2
+numpy==1.23.2
 packaging==23.0
 pandas==1.5.3
 pathspec==0.11.0
