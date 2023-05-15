@@ -9,3 +9,5 @@ document.
 This version of the MIT Public License incorporates the terms
 and conditions of MIT General Public License.
 -->
+
+::: utils.frexp102str
