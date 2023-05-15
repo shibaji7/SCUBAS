@@ -11,3 +11,5 @@ and conditions of MIT General Public License.
 -->
 
 ::: utils.frexp102str
+    options:
+      show_source: true

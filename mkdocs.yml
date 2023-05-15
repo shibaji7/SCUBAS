@@ -5,12 +5,14 @@ theme:
 plugins:
     - search
     - mkdocstrings:
-        - default_handler: python
-        - handlers:
-            python:
-            rendering:
-                show_source: true
-      
+        enabled: !ENV [ENABLE_MKDOCSTRINGS, true]
+        custom_templates: templates
+        default_handler: python
+        handlers:
+          python:
+            options:
+              show_source: false
+              
 markdown_extensions:
     - extra
     - admonition
