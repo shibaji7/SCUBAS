@@ -4,7 +4,15 @@ theme:
   name: "material"
 plugins:
     - search
-    - mkdocstrings
+    - mkdocstrings:
+        - default_handler: python
+        - handlers:
+            python:
+            rendering:
+                show_source: true
+      watch:
+        - scubas
+        - ../scubas
 markdown_extensions:
     - extra
     - admonition
