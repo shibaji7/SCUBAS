@@ -26,7 +26,7 @@ If you have any questions or concerns please submit an **Issue** on the [SCUBAS 
   - [INTERMAGNET Data Access](user/intermagnet.md)
   - [Citing](user/citing.md)
   - [Tutorials](dev/scubas.md)
-  - [Code Documentation]
+  - Code Documentation:
     - [Cables](dev/cables.md)
     - [Ocean/Earth Conductivity](dev/conductivity.md)
     - [Datasets](dev/datasets.md)
