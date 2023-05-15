@@ -9,7 +9,9 @@ document.
 This version of the MIT Public License incorporates the terms
 and conditions of MIT General Public License.
 -->
+## Documentation for `Utlity` module
 
 ::: scubas.utils.frexp102str
     options:
+      show_root_heading: true
       show_source: true

@@ -11,7 +11,7 @@ plugins:
         handlers:
           python:
             options:
-              show_source: false
+              show_source: true
      
 markdown_extensions:
     - extra
