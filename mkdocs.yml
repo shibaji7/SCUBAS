@@ -1,6 +1,10 @@
 site_name: SCUBAS Documentation
 repo_url: https://github.com/shibaji7/SCUBAS
-theme: readthedocs
+theme: 
+  name: "material"
+plugins:
+    - search
+    - mkdocstrings
 markdown_extensions:
     - extra
     - admonition
