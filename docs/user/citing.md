@@ -15,6 +15,8 @@ If SCUBAS contributes to a project that leads to a scientific publication, pleas
 # How to cite SCUBAS
 
 - Chakraborty S, Boteler DH, Shi X, Murphy BS, Hartinger MD, Wang X, Lucas G and Baker JBH (2022) Modeling geomagnetic induction in submarine cables. *Front. Phys.* 10:1022475. [doi:10.3389/fphy.2022.1022475](https://doi.org/10.3389/fphy.2022.1022475)
+- Boteler DH, Pirjola RJ. Magnetic and electric fields produced in the sea during geomagnetic disturbances. *Pure Appl Geophys* (2003) 160:1695–716. [doi:10.1007/s00024-003-2372-6](https://doi.org/10.1007/s00024-003-2372-6)
+- Wang X, Boteler D, Pirjola R. Distributed-source transmission line theory for modeling the coast effect on geoelectric fields. *IEEE Trans Power Deliv* (2022).
 
 # How to cite INTERMAGNET
 
