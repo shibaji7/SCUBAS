@@ -10,9 +10,7 @@ plugins:
             python:
             rendering:
                 show_source: true
-      watch:
-        - scubas
-        - ../scubas
+      
 markdown_extensions:
     - extra
     - admonition
