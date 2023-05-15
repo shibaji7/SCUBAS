@@ -18,7 +18,7 @@ If SCUBAS contributes to a project that leads to a scientific publication, pleas
 
 # How to cite INTERMAGNET
 
-
+If you are using INTERMAGNET dataset to drive the model simulation and results are being used in publications, the please cite INTERMAGNET. A detailed description of the data conditions are listed in this [webpage](https://intermagnet.github.io/data_conditions.html).
 
 ## Python Library References 
 

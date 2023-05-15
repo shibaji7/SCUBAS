@@ -103,9 +103,9 @@ To set the project interpreter to the anaconda environment:
 1. File -> Settings -> Project Folder -> Project Interpreter
 2. Click the project Interpreter drop down list and click on show all.
 
-* If you don't see the environment you wish to use click the plus sign on the right side bar named "Add"
-* Select "Conda Environment" on the left side menu.
-* Click "Existing Environment" and give the interpreter field the path to your environment's python.exe and apply.
+    * If you don't see the environment you wish to use click the plus sign on the right side bar named "Add"
+    * Select "Conda Environment" on the left side menu.
+    * Click "Existing Environment" and give the interpreter field the path to your environment's python.exe and apply.
 
 ## Local Install
 **pip3 install**
