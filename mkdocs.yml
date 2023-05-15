@@ -12,7 +12,8 @@ plugins:
           python:
             options:
               show_source: false
-              
+    - watch:
+        - scubas
 markdown_extensions:
     - extra
     - admonition
