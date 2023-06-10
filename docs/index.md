@@ -27,10 +27,10 @@ If you have any questions or concerns please submit an **Issue** on the [SCUBAS 
   - [Citing](user/citing.md)
   - Tutorials
     - [TLM Theory](tutorial/theory.md)
-    - [Electrically Long and Short Cable](tutorial/elsc.md)
+    - [Long and Short Cables](tutorial/elsc.md)
     - [Active Termination](tutorial/active.md)
     - [Network Modeling](tutorial/netmodel.md)
-    - [Example Codes (Conductivity Structures)](tutorial/conduct.md)
+    - [Case Studies/Codes](tutorial/conduct.md)
     - [Event Study (1989 Strom)](tutorial/1989.md)
   - Code Documentation:
     - [Cables](dev/cables.md)
