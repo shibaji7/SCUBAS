@@ -88,3 +88,4 @@ watchdog==3.0.0
 webencodings==0.5.1
 Werkzeug==2.2.3
 zipp==3.13.0
+mkdocs-glightbox==0.3.4

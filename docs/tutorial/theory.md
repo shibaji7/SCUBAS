@@ -20,13 +20,10 @@ More recently, Wang et al. in 2023 demonstrated that the generalized thin sheet 
 
 The figure below illustrates the schematic representation of the double-layer structure and its equivalent transmission line model incorporating $Z$ and $Y$ impedances.
 
-By employing this transmission line model, researchers can gain valuable insights into the electromagnetic response of the Earth's conductivity structure. This approach allows for a more accurate assessment of the propagation and attenuation of electromagnetic signals through the conductive and resistive layers. The generalized thin sheet analysis, coupled with the transmission line representation, provides a powerful tool for investigating various geophysical phenomena and exploring the behavior of the Earth's subsurface. ![Alt text](../figures/Thinsheet-Model.png)
-
-$$
-\operatorname{ker} f=\{g\in G:f(g)=e_{H}\}{\mbox{.}}
-$$
+By employing this transmission line model, researchers can gain valuable insights into the electromagnetic response of the Earth's conductivity structure. This approach allows for a more accurate assessment of the propagation and attenuation of electromagnetic signals through the conductive and resistive layers. The generalized thin sheet analysis, coupled with the transmission line representation, provides a powerful tool for investigating various geophysical phenomena and exploring the behavior of the Earth's subsurface. ![Alt text](../figures/Thinsheet-Model.png){ align=right }
 
 From theory we understand voltage $V(x)$ and current $I(x)$ along the cable are:
+
 $$
 V(x)=\frac{V_ke^{\gamma L}-V_i}{e^{\gamma L}-e^{-\gamma L}}e^{-\gamma (L-x)}+\frac{V_ie^{\gamma L}-V_k}{e^{\gamma L}-e^{-\gamma L}}e^{-\gamma x}
 $$
@@ -34,12 +31,37 @@ $$
 $$
 I(x)=-\frac{1}{Z_0}\frac{V_ke^{\gamma L}-V_i}{e^{\gamma L}-e^{-\gamma L}}e^{-\gamma (L-x)}+\frac{1}{Z_0}\frac{V_ie^{\gamma L}-V_k}{e^{\gamma L}-e^{-\gamma L}}e^{-\gamma x}+\frac{E}{\gamma Z_0}
 $$
+
 where, $\gamma=\sqrt{ZY}$ $Z_0=\sqrt{\frac{Z}{Y}}$. Also, $L$, and $x$ are the length of cable and any random point on the cable.
 
-#### Equivalent-$\pi$ Circuit
+#### Equivalent-Pi Circuit
 To combine multiple transmission line sections, it is useful to convert each section into  equivalent-$\pi$ circuits (Boteler, 2013) as shown in following figure. ![Alt text](../figures/Thinsheet-Model.png)
+
 The equivalent-$\pi$ circuit can be represented with a voltage source, $E'$, and series impedance, $Z'$,  admittances, $Y'/2$, to ground at each end as shown in the figure (Boteler, 2013) with circuit components given by
 
 $$
 Z'=Z_0\sinh{\gamma L}
 $$
+
+$$
+\frac{Y'}{2}=(\cosh{\gamma L}-1)\frac{1}{Z_0\sinh{\gamma L}}
+$$
+
+$$
+E'=\frac{E}{\gamma}\sinh{\gamma L}
+$$
+
+Alternatively, the equivalent-pi circuit can be represented with an equivalent current source, $I_E$, in parallel with a series admittance, $Y_E$, as shown in the above.  In this case the equivalent-$\pi$ components are given by:
+
+$$
+Y_E=\frac{1}{Z_0\sinh{\gamma L}}
+$$
+
+$$
+\frac{Y'}{2}=(\cosh{\gamma L}-1)\frac{1}{Z_0\sinh{\gamma L}}
+$$
+
+$$
+I_E=\frac{E}{Z}
+$$
+

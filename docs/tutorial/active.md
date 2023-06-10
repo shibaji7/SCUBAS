@@ -9,3 +9,7 @@ document.
 This version of the MIT Public License incorporates the terms
 and conditions of MIT General Public License.
 -->
+#### Transmission Line with “Active” Terminations
+---
+
+For electromagnetic induction into a transmission line with multiple sections we can consider a single section as represent the sections on either side by their Thevenin equivalent circuits as shown in the following figure. ![Alt text](../figures/Thinsheet-Model.png)
