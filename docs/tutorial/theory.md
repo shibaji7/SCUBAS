@@ -25,7 +25,10 @@ By employing this transmission line model, researchers can gain valuable insight
 
 From theory we understand voltage $V(x)$ and current $I(x)$ along the cable are:
 $$
-V(x)=\frac{V_ke^{\gamma L}-V_i}{e^{\gamma L}-e^{-\gamma L}}e^{-\gamma (L-x)}+\frac{V_ie^{\gamma L}-V_k}{e^{\gamma L}-e^{-\gamma L}}e^{-\gamma x}\\
+V(x)=\frac{V_ke^{\gamma L}-V_i}{e^{\gamma L}-e^{-\gamma L}}e^{-\gamma (L-x)}+\frac{V_ie^{\gamma L}-V_k}{e^{\gamma L}-e^{-\gamma L}}e^{-\gamma x}
+$$
+
+$$
 I(x)=-\frac{1}{Z_0}\frac{V_ke^{\gamma L}-V_i}{e^{\gamma L}-e^{-\gamma L}}e^{-\gamma (L-x)}+\frac{1}{Z_0}\frac{V_ie^{\gamma L}-V_k}{e^{\gamma L}-e^{-\gamma L}}e^{-\gamma x}+\frac{E}{\gamma Z_0}
 $$
 where, $\gamma=\sqrt{ZY}$ $Z_0=\sqrt{\frac{Z}{Y}}$. Also, $L$, and $x$ are the length of cable and any random point on the cable.
@@ -33,6 +36,7 @@ where, $\gamma=\sqrt{ZY}$ $Z_0=\sqrt{\frac{Z}{Y}}$. Also, $L$, and $x$ are the l
 #### Equivalent-$\pi$ Circuit
 To combine multiple transmission line sections, it is useful to convert each section into  equivalent-$\pi$ circuits (Boteler, 2013) as shown in following figure. ![Alt text](https://github.com/shibaji7/SCUBAS/tree/main/scripts/figures/Thinsheet-Model.png)
 The equivalent-$\pi$ circuit can be represented with a voltage source, $E'$, and series impedance, $Z'$,  admittances, $Y'/2$, to ground at each end as shown in the figure (Boteler, 2013) with circuit components given by
+
 $$
 Z'=Z_0\sinh{\gamma L}
 $$
