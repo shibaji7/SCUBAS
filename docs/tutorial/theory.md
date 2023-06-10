@@ -20,7 +20,7 @@ More recently, Wang et al. in 2023 demonstrated that the generalized thin sheet 
 
 The figure below illustrates the schematic representation of the double-layer structure and its equivalent transmission line model incorporating $Z$ and $Y$ impedances.
 
-By employing this transmission line model, researchers can gain valuable insights into the electromagnetic response of the Earth's conductivity structure. This approach allows for a more accurate assessment of the propagation and attenuation of electromagnetic signals through the conductive and resistive layers. The generalized thin sheet analysis, coupled with the transmission line representation, provides a powerful tool for investigating various geophysical phenomena and exploring the behavior of the Earth's subsurface. ![Alt text](https://github.com/shibaji7/SCUBAS/tree/main/scripts/figures/Thinsheet-Model.png)
+By employing this transmission line model, researchers can gain valuable insights into the electromagnetic response of the Earth's conductivity structure. This approach allows for a more accurate assessment of the propagation and attenuation of electromagnetic signals through the conductive and resistive layers. The generalized thin sheet analysis, coupled with the transmission line representation, provides a powerful tool for investigating various geophysical phenomena and exploring the behavior of the Earth's subsurface. ![Alt text](figures/Thinsheet-Model.png)
 
 
 From theory we understand voltage $V(x)$ and current $I(x)$ along the cable are:
@@ -34,7 +34,7 @@ $$
 where, $\gamma=\sqrt{ZY}$ $Z_0=\sqrt{\frac{Z}{Y}}$. Also, $L$, and $x$ are the length of cable and any random point on the cable.
 
 #### Equivalent-$\pi$ Circuit
-To combine multiple transmission line sections, it is useful to convert each section into  equivalent-$\pi$ circuits (Boteler, 2013) as shown in following figure. ![Alt text](https://github.com/shibaji7/SCUBAS/tree/main/scripts/figures/Thinsheet-Model.png)
+To combine multiple transmission line sections, it is useful to convert each section into  equivalent-$\pi$ circuits (Boteler, 2013) as shown in following figure. ![Alt text](figures/Thinsheet-Model.png)
 The equivalent-$\pi$ circuit can be represented with a voltage source, $E'$, and series impedance, $Z'$,  admittances, $Y'/2$, to ground at each end as shown in the figure (Boteler, 2013) with circuit components given by
 
 $$
