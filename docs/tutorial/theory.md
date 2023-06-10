@@ -20,7 +20,7 @@ More recently, Wang et al. in 2023 demonstrated that the generalized thin sheet 
 
 The figure below illustrates the schematic representation of the double-layer structure and its equivalent transmission line model incorporating $Z$ and $Y$ impedances.
 
-By employing this transmission line model, researchers can gain valuable insights into the electromagnetic response of the Earth's conductivity structure. This approach allows for a more accurate assessment of the propagation and attenuation of electromagnetic signals through the conductive and resistive layers. The generalized thin sheet analysis, coupled with the transmission line representation, provides a powerful tool for investigating various geophysical phenomena and exploring the behavior of the Earth's subsurface. ![Alt text](../figures/Thinsheet-Model.png){ align=right }
+By employing this transmission line model, researchers can gain valuable insights into the electromagnetic response of the Earth's conductivity structure. This approach allows for a more accurate assessment of the propagation and attenuation of electromagnetic signals through the conductive and resistive layers. The generalized thin sheet analysis, coupled with the transmission line representation, provides a powerful tool for investigating various geophysical phenomena and exploring the behavior of the Earth's subsurface. ![Alt text](../figures/Thinsheet-Model.png)
 
 From theory we understand voltage $V(x)$ and current $I(x)$ along the cable are:
 
