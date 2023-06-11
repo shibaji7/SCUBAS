@@ -41,8 +41,7 @@ $$
 
 where $V_i=-V_k=V=\frac{E}{\gamma}$.
 
-!!! Important 
-    Example Code
+!!! Example Code    
     ``` py
     # Import all required libs
     import matplotlib as mpl
@@ -129,8 +128,7 @@ $$
 V(x)=\frac{V}{2L}(2+\gamma L)(2x-L)
 $$
 
-!!! Important 
-    Example Code
+!!! Example Code
     ``` py
     ####################################################################
     # Simulating the case: Induced electric field 0.3 V/km on a 
