@@ -43,7 +43,60 @@ where $V_i=-V_k=V=\frac{E}{\gamma}$.
 
 ##### Example Codes
 ``` py
+# Import all required libs
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+# Set matplotlib styles
+plt.style.use(["science", "ieee"])
+plt.rcParams["font.family"] = "sans-serif"
+plt.rcParams["font.sans-serif"] = ["Tahoma", "DejaVu Sans",
+                                   "Lucida Grande", "Verdana"]
+import pandas as pd
 
+# Import SCUBAS dependencies
+from scubas.datasets import PROFILES
+from scubas.models import OceanModel
+from scubas.plotlib import plot_transfer_function, potential_along_section, cable_potential, update_rc_params
+from scubas.cables import TransmissionLine, Cable
+from scubas.conductivity import ConductivityProfile as CP
+
+# Ocean-Earth conductivity profile of a Deep Ocean
+site = PROFILES.DO_3
+# Rended ocean model
+om = OceanModel(site)
+# Generate transfer function
+tf = om.get_TFs()
+# Transfer function of a Deep Ocean.
+# We are going to use this tranfer function to compute differen electrical cases
+_ = plot_transfer_function(tf)
+
+####################################################################
+# Simulating the case: Induced electric field 0.3 V/km on a 
+# shallow continental shelf with depth 100 m, length 600 km
+####################################################################
+e_CS = pd.DataFrame()
+e_CS["X"], e_CS["dTime"] = [300], [0]
+length=600
+tl = TransmissionLine(
+    sec_id="CS",
+    directed_length=dict(
+        length_north=length,
+    ),
+    elec_params=dict(
+        site=PROFILES.CS,
+        width=1.0,
+        flim=[1e-6, 1e0],
+    ),
+    active_termination=dict(
+        right=PROFILES.LD,
+        left=PROFILES.LD,
+    ),
+)
+tl.compute_eqv_pi_circuit(e_CS, ["X"])
+cable = Cable([tl], ["X"])
+Vc, Lc = cable._pot_along_cable_(0)
+tag = cable_potential(Vc, Lc, ylim=[-200, 200])
+_ = tag["axes"].text(0.05, 0.85, r"$L_{cs}$=%dkm"%length, ha="left", va="center", transform=tag["axes"].transAxes)
 ```
 
 #### Electrically Short Cable
