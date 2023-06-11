@@ -16,7 +16,6 @@ and conditions of MIT General Public License.
     options:
       members:
         - map_entry
-        - __init__
       show_root_heading: true
       show_source: true
 
