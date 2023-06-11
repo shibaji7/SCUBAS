@@ -10,6 +10,16 @@ This version of the MIT Public License incorporates the terms
 and conditions of MIT General Public License.
 -->
 
+
+::: scubas.utils.RecursiveNamespace
+    handler: python
+    options:
+      members:
+        - map_entry
+        - __init__
+      show_root_heading: true
+      show_source: true
+
 ::: scubas.utils.frexp102str
     options:
       show_root_heading: true
