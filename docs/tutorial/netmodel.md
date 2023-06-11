@@ -13,8 +13,6 @@ and conditions of MIT General Public License.
 The basic structure of the Ocean/Earth conductivity is shown in figure below. The surface layer is comprised of the deep ocean with shallow seas on either side and all these are underlain by a layer of sediments.  On the land on either side of the ocean there will be a surface sedimentary layer that may be very thin or several kilometres thick. Below these are the Earth’s crust, thinner under the oceans than under the land, and the resistive mantle lithosphere.  Deeper in the Earth, in the upper mantle, transition zone and lower mantle the temperature and pressure increase cause partial melting which increases the conductivity. Resistivity values for these layers from the LITHO1.0 model (Chakraborty et al, 2022) and example seawater and layer thicknesses for the different sections are shown in table below. ![Alt text](../figures/Ocean-Earth-Layer.png)
 
 
-|                    | Resistivity    | Layer Thickness (km)                              |
-| Layer              | ($\Omega-m$)   | ------------------------------------------------- |
 |                    |                | Deep Ocean    | Continental Shelf | Land          |
 | ------------------ | -------------- | ------------- | ----------------- | ------------- |
 | Seawater           | 0.3            | 4             | 0.1               | 0             |
