@@ -98,7 +98,8 @@ where $V_i=-V_k=V=\frac{E}{\gamma}$.
     cable = Cable([tl], ["X"])
     Vc, Lc = cable._pot_along_cable_(0)
     tag = cable_potential(Vc, Lc, ylim=[-200, 200])
-    _ = tag["axes"].text(0.05, 0.85, r"$L_{cs}$=%dkm"%length, ha="left", va="center", transform=tag["axes"].transAxes)
+    _ = tag["axes"].text(0.05, 0.85, r"$L_{cs}$=%dkm"%length, ha="left",\
+                    va="center", transform=tag["axes"].transAxes)
     ```
 
 #### Electrically Short Cable
@@ -127,3 +128,34 @@ $$
 $$
 V(x)=\frac{V}{2L}(2+\gamma L)(2x-L)
 $$
+
+!!! Important 
+    Example Code
+    ``` py
+    ####################################################################
+    # Simulating the case: Induced electric field 0.3 V/km on a 
+    # shallow continental shelf with depth 100 m, length 4000 km
+    ####################################################################
+    length=4000
+    tl = TransmissionLine(
+        sec_id="CS",
+        directed_length=dict(
+            length_north=length,
+        ),
+        elec_params=dict(
+            site=PROFILES.CS,
+            width=1.0,
+            flim=[1e-6, 1e0],
+        ),
+        active_termination=dict(
+            right=PROFILES.LD,
+            left=PROFILES.LD,
+        ),
+    )
+    tl.compute_eqv_pi_circuit(e_CS, ["X"])
+    cable = Cable([tl], ["X"])
+    Vc, Lc = cable._pot_along_cable_(0)
+    tag = cable_potential(Vc, Lc, ylim=[-200, 200])
+    _ = tag["axes"].text(0.05, 0.85, r"$L_{cs}$=%dkm"%length, ha="left",\
+            va="center", transform=tag["axes"].transAxes)
+    ```
