@@ -20,7 +20,7 @@ The figure here likely illustrates the transmission line with multiple sections,
 ![Alt text](../figures/AT-Cable-CS.png)
 
 
-In this case, electromagnetic induction in the transmission line in 'Active Termination' figure can be represented by the circuit shown in following figure.
+In this case, electromagnetic induction in the transmission line in 'Active Termination' figure can be represented by the circuit shown in following figure. ![Alt text](../figures/Short-Cable-AT.png)
 
 The current along the transmission line is then given by:
 
