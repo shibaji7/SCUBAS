@@ -17,22 +17,37 @@ import numpy as np
 
 
 class RecursiveNamespace(SimpleNamespace):
-    """ """
+    """A simple object subclass that provides attribute access to its namespace.
+    
+    Methods:
+        map_entry
+    """
 
     @staticmethod
-    def map_entry(entry):
+    def map_entry(entry: dict) -> dict:
+        """Methods to convert a dictionary to namespace
+        
+        Arguments:
+            entry: `dict` to convert into `scubas.utils.RecursiveNamespace`
+        
+        Returns:
+            If `dict` return `scubas.utils.RecursiveNamespace` else itself
+        """
         if isinstance(entry, dict):
             return RecursiveNamespace(**entry)
         return entry
 
     def __init__(self, **kwargs):
+        """Initialize the parameters provided by kwargs.        
+        """
         super().__init__(**kwargs)
         for key, val in kwargs.items():
             if type(val) == dict:
                 setattr(self, key, RecursiveNamespace(**val))
             elif type(val) == list:
                 setattr(self, key, list(map(self.map_entry, val)))
-
+        return
+    
 
 def frexp102str(x: float) -> str:
     """Convert to a float to `str` in the form of mantesa-exponent.

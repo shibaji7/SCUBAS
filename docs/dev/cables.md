@@ -9,3 +9,12 @@ document.
 This version of the MIT Public License incorporates the terms
 and conditions of MIT General Public License.
 -->
+
+::: scubas.utils.CableSection
+    handler: python
+    options:
+      members:
+        - map_entry
+        - __init__
+      show_root_heading: true
+      show_source: true
