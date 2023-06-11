@@ -41,7 +41,8 @@ $$
 
 where $V_i=-V_k=V=\frac{E}{\gamma}$.
 
-##### Example Codes
+!!! Important 
+    Example Code
 ``` py
 # Import all required libs
 import matplotlib as mpl
@@ -56,7 +57,8 @@ import pandas as pd
 # Import SCUBAS dependencies
 from scubas.datasets import PROFILES
 from scubas.models import OceanModel
-from scubas.plotlib import plot_transfer_function, potential_along_section, cable_potential, update_rc_params
+from scubas.plotlib import plot_transfer_function,\
+        potential_along_section, cable_potential, update_rc_params
 from scubas.cables import TransmissionLine, Cable
 from scubas.conductivity import ConductivityProfile as CP
 
