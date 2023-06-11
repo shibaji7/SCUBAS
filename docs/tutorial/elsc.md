@@ -90,8 +90,8 @@ where $V_i=-V_k=V=\frac{E}{\gamma}$.
             flim=[1e-6, 1e0],
         ),
         active_termination=dict(
-            right=PROFILES.LD,
-            left=PROFILES.LD,
+            right=None,
+            left=None,
         ),
     )
     tl.compute_eqv_pi_circuit(e_CS, ["X"])
@@ -148,8 +148,8 @@ $$
             flim=[1e-6, 1e0],
         ),
         active_termination=dict(
-            right=PROFILES.LD,
-            left=PROFILES.LD,
+            right=None,
+            left=None,
         ),
     )
     tl.compute_eqv_pi_circuit(e_CS, ["X"])
