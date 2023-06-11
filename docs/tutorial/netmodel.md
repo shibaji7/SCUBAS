@@ -34,8 +34,27 @@ To calculate the voltages produced in this transmission line model, the first st
 
 $$
 \begin{bmatrix}
-1 & 2 & 3\\
-a & b & c
+J_1\\J_2\\J_3\\J_4
+\end{bmatrix} = 
+\begin{bmatrix}
+y_1+y_{12} & -y_{12} & 0 & 0\\
+-y_{12} & y_{12}+y_{23}+y_2 & -y_{23} & 0\\
+0 & -y_{23} & y_{23}+y_{34}+y_{3} & -y_{34}\\
+0 & 0 & -y_{34} & y_{34}+y_4\\
+\end{bmatrix}.\begin{bmatrix}
+V_1\\V_2\\V_3\\V_4
 \end{bmatrix}
 $$
 
+The first matrix on the right-hand side of equation is termed the admittance matrix. This, multiplied by the column matrix of nodal voltages equals the column matrix of nodal current source values:
+
+$$
+\begin{bmatrix}
+V
+\end{bmatrix} = 
+\begin{bmatrix}
+Y
+\end{bmatrix}^{-1}.\begin{bmatrix}
+J
+\end{bmatrix}
+$$
