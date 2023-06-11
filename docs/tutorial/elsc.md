@@ -36,12 +36,14 @@ V_i=-U_k=-\frac{E}{\gamma}
 $$
 
 $$
-V(x)=Ve^{-\gamma (L-x)}-Ve^{-\gamma x}; where V_i=-V_k=V=\frac{E}{\gamma}
+V(x)=Ve^{-\gamma (L-x)}-Ve^{-\gamma x}
 $$
+
+where $V_i=-V_k=V=\frac{E}{\gamma}$.
 
 ##### Example Codes
 ``` py
-import tensorflow as tf
+
 ```
 
 #### Electrically Short Cable
