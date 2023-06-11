@@ -40,7 +40,7 @@ $$
 U_2=IZ_2-V_2
 $$
 
-!!! Example Code
+!!! Example
     ``` py
     # Import all required libs
     import matplotlib as mpl

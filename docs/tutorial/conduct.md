@@ -33,7 +33,8 @@ For each model the layer thicknesses and resistivities from table in [network mo
 | Land  | 0       | 3.0 | $5.0\times 10^{-6}$ | $3.873\times 10^{-3}$ | $7.746\times 10^{2}$ | 258.2 |
 
 
-!!! Example Code: Continental Shelf/Case 1
+!!! Example
+    Continental Shelf/Case 1
     ``` py
     # Import all required libs
     import matplotlib as mpl
@@ -83,7 +84,8 @@ For each model the layer thicknesses and resistivities from table in [network mo
                     va="center", transform=tag["axes"].transAxes)
     ```
     
-!!! Example Code: Shallow Ocean/Case 2
+!!! Example
+    Shallow Ocean/Case 2
     ``` py
     tlines = []
     tlines.append(
@@ -146,7 +148,8 @@ For each model the layer thicknesses and resistivities from table in [network mo
     _ = cable_potential(Vc, Lc, ylim=[-60, 60])
     ```
     
-!!! Example Code: Deep Ocean/Case 3
+!!! Example
+    Deep Ocean/Case 3
     ``` py
     # Compute for deep ocean
     tlines = []
