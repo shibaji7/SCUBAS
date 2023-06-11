@@ -31,7 +31,6 @@ and conditions of MIT General Public License.
       show_source: true
       
 ::: scubas.datasets.PROFILES
-    handler: python
     options:
       show_root_heading: true
       show_source: true

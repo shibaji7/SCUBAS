@@ -9,3 +9,23 @@ document.
 This version of the MIT Public License incorporates the terms
 and conditions of MIT General Public License.
 -->
+
+::: scubas.plotlib.update_rc_params
+    options:
+      show_root_heading: true
+      show_source: true
+      
+::: scubas.plotlib.plot_transfer_function
+    options:
+      show_root_heading: true
+      show_source: true
+
+::: scubas.plotlib.potential_along_section
+    options:
+      show_root_heading: true
+      show_source: true
+
+::: scubas.plotlib.cable_potential
+    options:
+      show_root_heading: true
+      show_source: true
