@@ -14,3 +14,13 @@ and conditions of MIT General Public License.
     options:
       show_root_heading: true
       show_source: true
+      
+::: scubas.utils.fft
+    options:
+      show_root_heading: true
+      show_source: true
+      
+::: scubas.utils.ifft
+    options:
+      show_root_heading: true
+      show_source: true

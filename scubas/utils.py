@@ -52,15 +52,15 @@ def frexp102str(x: float) -> str:
 
 
 def fft(X: np.array, dT: float, remove_zero_frequency:bool=True) -> tuple:
-    """This function is responsible for FFT using NumPy package of a real signal (X).
+    """This method runs FFT using NumPy package of a real signal (X).
     
     Arguments:
         X: Timeseries data 
-        dT:
-        remove_zero_frequency:
+        dT: Timedelta in seconds
+        remove_zero_frequency: If true replace the first 0 frequency (DC component)
         
     Returns:
-        
+        FFT values with frequency as a tuple.
     """
     n = len(X)
     Y = 2.0 / n * np.fft.rfft(X)
@@ -70,10 +70,14 @@ def fft(X: np.array, dT: float, remove_zero_frequency:bool=True) -> tuple:
     return (Y, f)
 
 
-def ifft(Y):
-    """
-    This function is responsible for IFFT using
-    numpy package of a complex FFT signal (Y).
+def ifft(Y: np.array) -> np.array:
+    """This method runs Inverse FFT using NumPy package of a complex signal (Y).
+    
+    Arguments:
+        Y: Complex FFT dataset
+        
+    Returns:
+        Timeseries values.
     """
     n = len(Y)
     X = np.fft.irfft(Y) * 2 * n
