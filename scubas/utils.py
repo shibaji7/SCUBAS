@@ -14,6 +14,7 @@ import math
 from types import SimpleNamespace
 
 import numpy as np
+from math import radians, degrees, sin, cos, asin, acos, sqrt
 
 
 class RecursiveNamespace(SimpleNamespace):
@@ -118,3 +119,68 @@ def component_sign_mappings(fromto="BxEy"):
         "ByEx": 1.0,
     }
     return _map_[fromto]
+
+
+class GreatCircle(object):
+    """An object to calculate Great Circle distances (km) between two location given by latitude/longitude
+    
+    Methods:
+        great_circle
+        haversine
+    """
+    
+    def __init__(self, initial, final, Re=6371.):
+        """Initialize the location points
+        """
+        self.initial = initial
+        self.final = final
+        self.Re = Re
+        return
+    
+    def check_location(self, loc):
+        """
+        Check lat/lon exists in file or not
+        """
+        tag = True if (hasattr(loc, "lat") and hasattr(loc, "lon")) else False
+        return tag
+    
+    def great_circle(self, initial=None, final=None):
+        """The Great Circle distance formula computes the shortest distance 
+        path of two points on the surface of the sphere. That means, when applies 
+        this to calculate distance of two locations on Earth, the formula assumes
+        that the Earth is spherical.
+        """
+        initial = initial if initial else self.initial
+        final = final if final else self.final
+        if (
+            self.check_location(initial)
+            and self.check_location(final)
+        ):
+            lon1, lat1, lon2, lat2 = map(
+                radians, [self.initial.lon, self.initial.lat, self.final.lon, self.final.lat2]
+            )
+            return self.Re * (
+                acos(sin(lat1) * sin(lat2) + cos(lat1) * cos(lat2) * cos(lon1 - lon2))
+            )
+        else:
+            return np.nan
+        
+    def haversine(self, initial=None, final=None):
+        """Haversine formula is also another formula to calculate distance of two
+        locations on a sphere using the law of haversine.
+        """
+        initial = initial if initial else self.initial
+        final = final if final else self.final
+        if (
+            self.check_location(initial)
+            and self.check_location(final)
+        ):
+            lon1, lat1, lon2, lat2 = map(
+                radians, [self.initial.lon, self.initial.lat, self.final.lon, self.final.lat2]
+            )
+            dlon = lon2 - lon1
+            dlat = lat2 - lat1
+            a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
+            return 2 * self.Re * asin(sqrt(a))
+        else:
+            return np.nan

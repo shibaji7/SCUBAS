@@ -43,7 +43,7 @@ class CableSection(object):
         self.sec_id = sec_id
         self.directed_length = RecursiveNamespace(**directed_length)
         self.components = []
-        self.compute_lengths()
+        self.compute_lengths(type="great_circle")
         return
 
     def check_location(self, loc):
@@ -53,7 +53,7 @@ class CableSection(object):
         tag = True if (hasattr(loc, "lat") and hasattr(loc, "lon")) else False
         return tag
 
-    def compute_lengths(self):
+    def compute_lengths(self, type="great_circle"):
         """
         Compute all the length of the Cable Section
         """
@@ -211,7 +211,7 @@ class TransmissionLine(CableSection):
         """
         width = width if width else self.elec_params.width
         site = site if site else self.elec_params.site
-        logger.info(f"Cable width: {width}")
+        logger.info(f"Cable width {self.sec_id}: {width}")
         if site.name == "Land":
             C = width * ((site.get_thicknesses(0) / site.get_resistivities(0)))
             R = (
@@ -272,12 +272,15 @@ class TransmissionLine(CableSection):
         self.V = self.V.set_index("Time")
         return
 
-    def _pot_alongCS_(self, Vi=None, Vk=None, ln=1000):
+    def _pot_alongCS_(self, Vi=None, Vk=None, ln=1000, idx=None):
         """
         Caclulate potentials along the cable section
         """
+        logger.info(f"Pot along cable section at: {idx}")
         Vi = Vi if Vi is not None else self.end_pot.Vi
         Vk = Vk if Vk is not None else self.end_pot.Vk
+        if idx is not None:
+            Vi, Vk = self.end_pot.Vi[idx], self.end_pot.Vk[idx]
         L = self.length * 1e3
         x = np.linspace(0, L, ln + 1)
         V = (
@@ -361,6 +364,7 @@ class Cable(object):
                         ]
                     )
                     if sections[nid].active_termination.left:
+                        logger.info("Adding active termination: left")
                         Yii[nid] = Yii[nid] + sections[nid].active_termination.left.Yn
                         Ji = (
                             sections[nid].active_termination.left.Jn[a]
@@ -375,6 +379,7 @@ class Cable(object):
                         ]
                     )
                     if sections[-1].active_termination.right:
+                        logger.info("Adding active termination: right")
                         Yii[nid] = Yii[nid] + sections[-1].active_termination.right.Yn
                         Ji = Ji - sections[-1].active_termination.right.Jn[a]
                 else:
