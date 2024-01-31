@@ -32,6 +32,8 @@ If you have any questions or concerns please submit an **Issue** on the [SCUBAS 
     - [Network Modeling](tutorial/netmodel.md)
     - [Case Studies/Codes](tutorial/conduct.md)
     - [Event Study (1989 Strom)](tutorial/1989.md)
+    - [Extreme Value Analysis](tutorial/eva.md)
+    - [Uncertainity Quantification](tutorial/uq.md)
   - Code Documentation:
     - [Cables](dev/cables.md)
     - [Ocean/Earth Conductivity](dev/conductivity.md)
