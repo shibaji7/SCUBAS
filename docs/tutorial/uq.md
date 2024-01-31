@@ -27,10 +27,10 @@ The primary goal is to employ advanced techniques, including Monte Carlo simulat
 ### Monte Carlo Simulations:
 > The study will leverage Monte Carlo simulations, specifically Markov Chain Monte Carlo (MCMC), to quantify variations in Ocean-Earth thickness structures and uncertainties in interpolated magnetic field estimates. This method involves sampling input parameters from distributions and propagating them through the SCUBAS model. The specific steps involves:
 >
-> * Divide the cables into different segments $$\mathcal{N}$$ (e.g., 9).
-> * For each segment create virtual 10-(user provided $$\mathcal{V}$$) samples of latitude/longitude points along the cable (say, segment-sample-virtual-point `SSVP`).
-> * For $$\mathcal{N}$$ and $$\mathcal{V}$$ `SSVP` we have $$\mathcal{N}\times\mathcal{V}$$ possible Ocean-Earth structures to run simulations. 
-> * Run SCUBAS for all these $$\mathcal{N}\times\mathcal{V}$$ combinations, and from these solutions quantify uncertainty in the output use MC-simulation.
+> * Divide the cables into different segments $\mathcal{N}$ (e.g., 9).
+> * For each segment create virtual 10-(user provided $\mathcal{V}$) samples of latitude/longitude points along the cable (say, segment-sample-virtual-point `SSVP`).
+> * For $\mathcal{N}$ and $\mathcal{V}$ `SSVP` we have $\mathcal{N}\times\mathcal{V}$ possible Ocean-Earth structures to run simulations. 
+> * Run SCUBAS for all these $\mathcal{N}\times\mathcal{V}$ combinations, and from these solutions quantify uncertainty in the output use MC-simulation.
 > * For now we have no-way to estimate error in input magnetic field dataset. If given we can generate another set of magnetic field input and then run MC-simulation to propagate the errors in the output.
 
 
