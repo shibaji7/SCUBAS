@@ -13,10 +13,15 @@ and conditions of MIT General Public License.
 If SCUBAS contributes to a project that leads to a scientific publication, please acknowledge this fact by citing the papers listed below and intermagnet (if used).  
 
 # How to cite SCUBAS
-
 - Chakraborty S, Boteler DH, Shi X, Murphy BS, Hartinger MD, Wang X, Lucas G and Baker JBH (2022) Modeling geomagnetic induction in submarine cables. *Front. Phys.* 10:1022475. [doi:10.3389/fphy.2022.1022475](https://doi.org/10.3389/fphy.2022.1022475)
 - Boteler DH, Pirjola RJ. Magnetic and electric fields produced in the sea during geomagnetic disturbances. *Pure Appl Geophys* (2003) 160:1695–716. [doi:10.1007/s00024-003-2372-6](https://doi.org/10.1007/s00024-003-2372-6)
 - Wang X, Boteler D, Pirjola R. Distributed-source transmission line theory for modeling the coast effect on geoelectric fields. *IEEE Trans Power Deliv* (2022).
+
+# Publications using SCUBAS
+- Boteler, D.H., Chakraborty, S., Shi, X., Hartinger, M.D., Wang, X., (2023) An Examination of Geomagnetic Induction in Submarine Cables, Space Weather, accepted October 2023. Doi: 10.1029/2023SW003687.
+
+- Boteler, D. , Chakraborty, S. , Shi, X. , Hartinger, M. and Wang, X. (2023) Transmission Line Modelling of Geomagnetic Induction in the Ocean/Earth Conductivity Structure. International Journal of Geosciences, 14, 767-791. [doi: 10.4236/ijg.2023.148041](https://www.scirp.org/journal/paperinformation?paperid=127339).
+
 
 # How to cite INTERMAGNET
 
