@@ -32,6 +32,7 @@ def uplaod_pip():
     os.system("twine upload dist/* --verbose")
     return
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -62,4 +63,3 @@ if __name__ == "__main__":
         build()
     if args.upip:
         uplaod_pip()
-        
