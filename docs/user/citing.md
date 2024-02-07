@@ -18,7 +18,7 @@ If SCUBAS contributes to a project that leads to a scientific publication, pleas
 - Wang X, Boteler D, Pirjola R. Distributed-source transmission line theory for modeling the coast effect on geoelectric fields. *IEEE Trans Power Deliv* (2022).
 
 # Publications using SCUBAS
-- Boteler, D.H., Chakraborty, S., Shi, X., Hartinger, M.D., Wang, X., (2023) An Examination of Geomagnetic Induction in Submarine Cables, Space Weather, accepted October 2023. Doi: 10.1029/2023SW003687.
+- Boteler, D. H., Chakraborty, S., Shi, X., Hartinger, M. D., & Wang, X. (2024). An examination of geomagnetic induction in submarine cables. Space Weather, 22, e2023SW003687. https://doi.org/10.1029/2023SW003687
 
 - Boteler, D. , Chakraborty, S. , Shi, X. , Hartinger, M. and Wang, X. (2023) Transmission Line Modelling of Geomagnetic Induction in the Ocean/Earth Conductivity Structure. International Journal of Geosciences, 14, 767-791. [doi: 10.4236/ijg.2023.148041](https://www.scirp.org/journal/paperinformation?paperid=127339).
 
