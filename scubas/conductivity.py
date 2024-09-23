@@ -424,7 +424,7 @@ class ConductivityProfile(object):
         )
         rf = pd.DataFrame()
         rf["thickness"], rf["resistivity"], rf["name"] = (
-            resistivity_profile[:, 0],
+            np.array(resistivity_profile[:, 0]).astype(float),
             resistivity_profile[:, 1],
             resistivity_profile[:, 2],
         )
@@ -553,3 +553,47 @@ class ConductivityProfile(object):
                 )
             profiles.append(profile)
         return profiles
+
+    @staticmethod
+    def compile_bined_profiles(
+        bined_latlons,
+        n=100,
+        to_site=True,
+        site_names=[],
+        site_descriptions=[],
+        random_seed=0,
+        **conductivity_params,
+    ):
+        """
+        Compile MCMC profiles for a binned latlons
+        """
+        np.random.seed(random_seed)
+        cp = ConductivityProfile(**conductivity_params)
+        mcmc_profiles, profiles = [], []
+        for i, latlon in enumerate(bined_latlons):
+            profile = cp._compile_profile_(latlon)
+            profile.fillna(0, inplace=True)
+            profiles.append(profile)
+        for _ in range(n):
+            mc_profiles = []
+            for i in range(len(profiles) - 1):
+                profile = profiles[i].copy()
+                # profile.thickness = np.random.uniform(
+                #     np.array(profiles[i].thickness), np.array(profiles[i + 1].thickness)
+                # )
+                logger.info(f"Compiled Profile \n {profile}")
+                if to_site:
+                    site_name = site_names[i] if i < len(site_names) else ""
+                    site_description = (
+                        site_descriptions[i] if i < len(site_descriptions) else ""
+                    )
+                    profile = Site.init(
+                        1.0 / profile["resistivity"].to_numpy(dtype=float),
+                        profile["thickness"].to_numpy(dtype=float),
+                        profile["name"],
+                        site_description,
+                        site_name,
+                    )
+                mc_profiles.append(profile)
+            mcmc_profiles.append(mc_profiles)
+        return mcmc_profiles
