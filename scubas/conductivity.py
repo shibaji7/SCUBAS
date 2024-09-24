@@ -579,13 +579,17 @@ class ConductivityProfile(object):
             mc_profiles = []
             for i in range(len(profiles) - 1):
                 profile = profiles[i].copy()
-                profile.thickness = np.random.uniform(
-                    np.array(profiles[i].thickness), np.array(profiles[i + 1].thickness)
+                profile.thickness = (
+                    np.random.uniform(
+                        np.array(profiles[i].thickness),
+                        np.array(profiles[i + 1].thickness),
+                    )
+                    * 1e3
                 )
                 if (i == 0) or (i == len(profiles) - 2):
                     profile.thickness[0] = np.random.uniform(
                         continental_shelves_thickness_range[0],
-                        continental_shelves_thickness_range[1]
+                        continental_shelves_thickness_range[1],
                     )
                 logger.info(f"Compiled Profile \n {profile}")
                 if to_site:
@@ -595,7 +599,7 @@ class ConductivityProfile(object):
                     )
                     profile = Site.init(
                         1.0 / profile["resistivity"].to_numpy(dtype=float),
-                        profile["thickness"].to_numpy(dtype=float) * 1e3,
+                        profile["thickness"].to_numpy(dtype=float),
                         profile["name"],
                         site_description,
                         site_name,
