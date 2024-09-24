@@ -558,6 +558,7 @@ class ConductivityProfile(object):
     def compile_bined_profiles(
         bined_latlons,
         n=100,
+        continental_shelves_thickness_range=[0.01, 1.0],
         to_site=True,
         site_names=[],
         site_descriptions=[],
@@ -582,7 +583,10 @@ class ConductivityProfile(object):
                     np.array(profiles[i].thickness), np.array(profiles[i + 1].thickness)
                 )
                 if (i == 0) or (i == len(profiles) - 2):
-                    profile.thickness[0] = np.random.uniform(0.01, 0.5)
+                    profile.thickness[0] = np.random.uniform(
+                        continental_shelves_thickness_range[0],
+                        continental_shelves_thickness_range[1]
+                    )
                 logger.info(f"Compiled Profile \n {profile}")
                 if to_site:
                     site_name = site_names[i] if i < len(site_names) else ""
