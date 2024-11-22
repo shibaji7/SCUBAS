@@ -153,7 +153,7 @@ class GreatCircle(object):
         if self.check_location(initial) and self.check_location(final):
             lon1, lat1, lon2, lat2 = map(
                 radians,
-                [self.initial.lon, self.initial.lat, self.final.lon, self.final.lat2],
+                [self.initial.lon, self.initial.lat, self.final.lon, self.final.lat],
             )
             return self.Re * (
                 acos(sin(lat1) * sin(lat2) + cos(lat1) * cos(lat2) * cos(lon1 - lon2))

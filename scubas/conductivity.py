@@ -538,6 +538,7 @@ class ConductivityProfile(object):
                 bined_latlons[i, :], bined_latlons[i + 1, :]
             )
             profile = cp._compile_profile_(ipts)
+            profile.thickness = profile.thickness * 1e3
             logger.info(f"Compiled Profile \n {profile}")
             if to_site:
                 site_name = site_names[i] if i < len(site_names) else ""
@@ -555,7 +556,7 @@ class ConductivityProfile(object):
         return profiles
 
     @staticmethod
-    def compile_bined_profiles(
+    def compile_mcmc_bined_profiles(
         bined_latlons,
         n=100,
         continental_shelves_thickness_range=[0.01, 1.0],
