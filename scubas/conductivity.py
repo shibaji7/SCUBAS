@@ -446,7 +446,7 @@ class ConductivityProfile(object):
         if kind == "rounded":
             latlon = np.rint(latlon)
         logger.info(f"Lat-lon: {latlon}")
-        profile = self._compile_profile_(latlon)
+        profile = cp._compile_profile_(latlon)
         logger.info(f"Compiled Profile \n {profile}")
         if to_site:
             profile = Site.init(
