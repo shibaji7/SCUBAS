@@ -100,6 +100,16 @@ class Site(object):
         Z_output[2, :] = -Z_output[1, :]
         return Z_output
 
+    def calcP(self, freqs, layer=0):
+        """
+        Calculate the skin depth of the model
+        """
+        freqs = np.asarray(freqs)
+        omega = 2 * np.pi * freqs
+        Z = self.calcZ(freqs=freqs, layer=layer)[layer, :]
+        p = Z / (1j * omega)
+        return p
+
     @staticmethod
     def init(conductivities, thicknesses, names, desciption, site_name):
         layers = []
@@ -138,6 +148,19 @@ PROFILES = SimpleNamespace(
             site_name="Ocean Model",
         ),
         DB=Site.init(
+            conductivities=[0.00005, 0.005, 0.001, 0.01, 0.3333333],
+            thicknesses=[15000, 10000, 125000, 200000, np.inf],
+            names=[
+                "Sediments",
+                "Crust",
+                "Lithosphere",
+                "Upper Mantle",
+                "Lower Mantle",
+            ],
+            desciption="This model is suggested by David.",
+            site_name="David's Model",
+        ),
+        Quebec=Site.init(
             conductivities=[0.00005, 0.005, 0.001, 0.01, 0.3333333],
             thicknesses=[15000, 10000, 125000, 200000, np.inf],
             names=[
