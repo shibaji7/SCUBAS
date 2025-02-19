@@ -47,7 +47,7 @@ class Current(object):
         """
         Current systems for one time instance / one location
             h: Height given in unit
-            a: Width of the current, Cauchy distributed
+            a: Width of the current, 'Cauchy Distributed'
             I: Currents in Amps/M Amps
             p: List of skin depths of the wave Z/(j*omega)
             omega: List of angular frequencies in rad/s
@@ -100,22 +100,22 @@ class Current(object):
         logger.info(
             f"Direction of the produced magnetic fields: {[d for d in B_field_directions]}"
         )
+        # Modified height by Cauchy distributed current source
+        h = self.a + self.h
         self.B_fields = [
             dict(
                 direction=B_field_directions[0],
                 value=(C.mu_0 * self.I / (2 * np.pi))
                 * (
-                    (self.h / (self.h**2 + x**2))
-                    + ((self.h + 2 * self.p) / ((self.h + 2 * self.p) ** 2 + x**2))
+                    (h / (h**2 + x**2))
+                    + ((h + 2 * self.p) / ((h + 2 * self.p) ** 2 + x**2))
                 ),
             ),
             dict(
                 direction=B_field_directions[1],
                 value=-1
                 * (C.mu_0 * self.I / (2 * np.pi))
-                * (
-                    (x / (self.h**2 + x**2)) - (x / ((self.h + 2 * self.p) ** 2 + x**2))
-                ),
+                * ((x / (h**2 + x**2)) - (x / ((h + 2 * self.p) ** 2 + x**2))),
             ),
         ]
         for b in self.B_fields:
@@ -128,7 +128,7 @@ class Current(object):
 
     def __compute_E_field__(
         self,
-        x: float = 0.0,
+        x: np.array = np.zeros((1)),
         length_unit: str = "km",
     ):
         """
@@ -139,15 +139,14 @@ class Current(object):
         x *= length_unit_multiplier  # to meters
         E_field_directions = [self.current_direction]
         logger.info(f"Direction of the E_field: {E_field_directions}")
+        # Modified height by Cauchy distributed current source
+        h = self.a + self.h
         self.E_fields = [
             dict(
                 direction=E_field_directions[0],
                 value=-1j
                 * (self.omega * C.mu_0 * self.I / (2 * np.pi))
-                * np.log(
-                    np.sqrt((self.h + 2 * self.p) ** 2 + x**2)
-                    / np.sqrt(self.h**2 + x**2)
-                ),
+                * np.log(np.sqrt((h + 2 * self.p) ** 2 + x**2) / np.sqrt(h**2 + x**2)),
             ),
         ]
         for e in self.E_fields:
