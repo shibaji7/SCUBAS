@@ -69,7 +69,7 @@ class Site(object):
         o["thicknesses"] = self.get_thicknesses(index)
         return o
 
-    def calcZ(self, freqs, layer=0):
+    def calcZ(self, freqs, layer=0, return_all_layers=False):
         freqs = np.asarray(freqs)
         resistivities = np.asarray(self.get_resistivities())
         thicknesses = np.asarray(self.get_thicknesses())
@@ -96,19 +96,39 @@ class Site(object):
             Z[:, 0] = 0.0
         layer = layer if layer else 0
         Z_output = np.zeros(shape=(4, nfreq), dtype=complex)
+        #################################################################
+        # This factor '(1.0e-3 / C.mu_0)' converts K(f) and Z(f),
+        # multiplying this factor makes Z -> K, devide this factor
+        # regain Z.
+        #################################################################
         Z_output[1, :] = Z[layer, :] * (1.0e-3 / C.mu_0)
         Z_output[2, :] = -Z_output[1, :]
-        return Z_output
+        if return_all_layers:
+            return Z_output, Z
+        else:
+            return Z_output
 
-    def calcP(self, freqs, layer=0):
+    def calcP(self, freqs, layer=0, return_Z=False):
         """
         Calculate the skin depth of the model
         """
         freqs = np.asarray(freqs)
         omega = 2 * np.pi * freqs
-        Z = self.calcZ(freqs=freqs, layer=layer)[layer, :]
-        p = Z / (1j * omega)
-        return p
+
+        if return_Z:
+            Z_output, Z = self.calcZ(freqs=freqs, layer=layer, return_all_layers=True)
+        else:
+            Z_output = self.calcZ(freqs=freqs, layer=layer, return_all_layers=False)
+        #################################################################
+        # This factor '(1.0e-3 / C.mu_0)' converts K(f) and Z(f),
+        # multiplying this factor makes Z -> K, devide this factor
+        # regain Z.
+        #################################################################
+        p = Z_output[1, :] / (1j * omega * C.mu_0) / (1.0e-3 / C.mu_0)
+        if return_Z:
+            return p, Z_output, Z
+        else:
+            return p
 
     @staticmethod
     def init(conductivities, thicknesses, names, desciption, site_name):

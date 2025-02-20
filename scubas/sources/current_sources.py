@@ -27,6 +27,19 @@ class Direction(Enum):
     GEO_EAST_WEST = 2
     GEO_VERT_DOWN = 3
 
+    @classmethod
+    def enumerate_key(cls, parameter: str = "B"):
+        """
+        Enumerate possible keys based on parameter
+        """
+        if cls == Direction.GEO_EAST_WEST:
+            key = rf"${parameter}$_y"
+        if cls == Direction.GEO_NORTH_SOUTH:
+            key = rf"${parameter}$_x"
+        if cls == Direction.GEO_VERT_DOWN:
+            key = rf"${parameter}$_z"
+        return key
+
 
 class Current(object):
 
@@ -43,6 +56,7 @@ class Current(object):
         current_direction: Direction = Direction.GEO_EAST_WEST,
         t: int = 0,
         layer: int = 0,
+        return_Z: bool = False,
     ):
         """
         Current systems for one time instance / one location
@@ -73,7 +87,11 @@ class Current(object):
         self.t = t
         # If site is given calculate the skin depth p at top layer
         if site:
-            self.p = self.site.calcP(self.freq, layer=layer)
+            ret = self.site.calcP(self.freq, layer=layer, return_Z=return_Z)
+            if return_Z:
+                self.p, self.Z_out, self.Z = ret
+            else:
+                self.p = ret
         return
 
     def compute_B_field(
@@ -101,26 +119,28 @@ class Current(object):
             f"Direction of the produced magnetic fields: {[d for d in B_field_directions]}"
         )
         # Modified height by Cauchy distributed current source
-        h = self.a + self.h
+        h, h_mod, factor = (
+            self.a + self.h,
+            self.a + self.h + (2 * self.p),
+            (C.mu_0 * self.I / (2 * np.pi)),
+        )
         self.B_fields = [
             dict(
                 direction=B_field_directions[0],
-                value=(C.mu_0 * self.I / (2 * np.pi))
-                * (
-                    (h / (h**2 + x**2))
-                    + ((h + 2 * self.p) / ((h + 2 * self.p) ** 2 + x**2))
-                ),
+                total=factor * ((h / (h**2 + x**2)) + (h_mod / (h_mod**2 + x**2))),
+                external=factor * (h / (h**2 + x**2)),
+                internal=factor * (h_mod / (h_mod**2 + x**2)),
             ),
             dict(
                 direction=B_field_directions[1],
-                value=-1
-                * (C.mu_0 * self.I / (2 * np.pi))
-                * ((x / (h**2 + x**2)) - (x / ((h + 2 * self.p) ** 2 + x**2))),
+                total=-1 * factor * ((x / (h**2 + x**2)) - (x / (h_mod**2 + x**2))),
+                external=-1 * factor * (x / (h**2 + x**2)),
+                internal=factor * (x / (h_mod**2 + x**2)),
             ),
         ]
         for b in self.B_fields:
             logger.warning(
-                f"Magnetic field B along {b['direction']} is {b['value'].min()},{b['value'].max()}"
+                f"Magnetic field B along {b['direction']} is {b['total'].min()},{b['total'].max()}"
             )
         self.__compute_E_field__(x, "m")
         self.B_field_units = "T"
@@ -144,14 +164,14 @@ class Current(object):
         self.E_fields = [
             dict(
                 direction=E_field_directions[0],
-                value=-1j
+                total=-1j
                 * (self.omega * C.mu_0 * self.I / (2 * np.pi))
                 * np.log(np.sqrt((h + 2 * self.p) ** 2 + x**2) / np.sqrt(h**2 + x**2)),
             ),
         ]
         for e in self.E_fields:
             logger.warning(
-                f"Magnetic field E along {e['direction']} is {e['value'].min()},{e['value'].max()}"
+                f"Magnetic field E along {e['direction']} is {e['total'].min()},{e['total'].max()}"
             )
         self.E_field_units = "V/m"
         return
