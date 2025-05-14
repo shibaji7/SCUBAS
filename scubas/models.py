@@ -166,7 +166,9 @@ class OceanModel(object):
         """
         self.Bfield = pd.DataFrame()
         for file in files:
+            logger.info(f"Read file: {file}")
             file_type = file.split(".")[-1]
+            logger.info(f"Reading file types: {file_type}")
             if file_type == "txt":
                 o = self.read_iaga(file, return_xyzf, return_header=False)
             elif file_type == "csv":

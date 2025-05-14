@@ -1,7 +1,7 @@
 # read the contents of your README file
 from pathlib import Path
 
-from setuptools import setup
+from setuptools import find_packages, setup
 
 this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
@@ -9,9 +9,12 @@ long_description = (this_directory / "README.md").read_text()
 setup(
     name="scubas",
     version="0.1.5",
-    packages=["scubas"],
+    packages=find_packages(),
     package_dir={"scubas": "scubas"},
     package_data={"scubas": []},
+    include_package_data=True,
+    use_scm_version=True,
+    setup_requires=["setuptools_scm"],
     author="Shibaji Chakraborty",
     author_email="shibaji7@vt.edu",
     maintainer="Shibaji Chakraborty",

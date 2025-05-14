@@ -247,6 +247,9 @@ class TransmissionLine(CableSection):
             E = (
                 np.array(Efield[a]) * 1.0e-3 / 1.0e3
             )  # Assuming input mV/km convert to V/m
+            logger.warning(
+                f"Component length, {a}, {L} km, with Z0:{self.Z0}, gma:{self.gma}, Z:{self.Z} / {np.sinh(self.gma * L)}"
+            )
             self.Ye[a] = 1.0 / (self.Z0 * np.sinh(self.gma * L))
             self.Yp2[a] = (np.cosh(self.gma * L) - 1) * self.Ye[a]
             self.Ie[a] = E / self.Z
