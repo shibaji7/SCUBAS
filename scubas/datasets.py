@@ -68,7 +68,7 @@ class Site(object):
         o["resistivities"] = self.get_resistivities(index)
         o["thicknesses"] = self.get_thicknesses(index)
         return o
-    
+
     def set_thicknesses(self, t, index=0):
         self.layers[index].thickness = t
         return self

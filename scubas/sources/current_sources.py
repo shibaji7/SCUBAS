@@ -42,7 +42,6 @@ class Direction(Enum):
 
 
 class Current(object):
-
     def __init__(
         self,
         h: float = 110.0,
@@ -127,13 +126,16 @@ class Current(object):
         self.B_fields = [
             dict(
                 direction=B_field_directions[0],
-                total=factor * ((h / (h**2 + x**2)) + (h_mod / (h_mod**2 + x**2))),
+                total=factor
+                * ((h / (h**2 + x**2)) + (h_mod / (h_mod**2 + x**2))),
                 external=factor * (h / (h**2 + x**2)),
                 internal=factor * (h_mod / (h_mod**2 + x**2)),
             ),
             dict(
                 direction=B_field_directions[1],
-                total=-1 * factor * ((x / (h**2 + x**2)) - (x / (h_mod**2 + x**2))),
+                total=-1
+                * factor
+                * ((x / (h**2 + x**2)) - (x / (h_mod**2 + x**2))),
                 external=-1 * factor * (x / (h**2 + x**2)),
                 internal=factor * (x / (h_mod**2 + x**2)),
             ),
@@ -166,7 +168,9 @@ class Current(object):
                 direction=E_field_directions[0],
                 total=-1j
                 * (self.omega * C.mu_0 * self.I / (2 * np.pi))
-                * np.log(np.sqrt((h + 2 * self.p) ** 2 + x**2) / np.sqrt(h**2 + x**2)),
+                * np.log(
+                    np.sqrt((h + 2 * self.p) ** 2 + x**2) / np.sqrt(h**2 + x**2)
+                ),
             ),
         ]
         for e in self.E_fields:
