@@ -24,6 +24,7 @@ from scipy.io import netcdf_file
 
 from scubas.datasets import Site
 from scubas.utils import RecursiveNamespace
+from pathlib import Path
 
 
 class ConductivityProfile(object):
@@ -87,7 +88,12 @@ class ConductivityProfile(object):
         filename = ".scubas_config/" + self.earth_model
         if not os.path.exists(filename):
             uri = self.cprop.uri
-            os.system(f"wget -O {filename} {uri}")
+            command = f"wget -O {filename} {uri}"
+            exit_code = os.system(command)
+            if exit_code != 0:
+                Path(filename).unlink(missing_ok=True)   # remove potentially corrupted file
+                raise RuntimeError(f"Error {exit_code} running {command}") 
+
         with netcdf_file(filename) as f:
             latitude = np.copy(f.variables["latitude"][:])
             longitude = np.copy(f.variables["longitude"][:])
