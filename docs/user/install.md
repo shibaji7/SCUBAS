@@ -26,7 +26,7 @@ and conditions of MIT General Public License.
 
 ## Prerequisites
 
-scubas requires **python 3.6** or later and **matplotlib 3.3.4** or later.
+scubas requires **python 3.11** or later and **matplotlib 3.3.4** or later.
 
 Depending on your operating system or distribution, the following package installers, development environments or data parsers are required: 
  

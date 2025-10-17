@@ -6,24 +6,34 @@ theme:
     - content.code.copy
     - content.code.select
     - content.code.annotate
+    - navigation.tabs
+    - navigation.sections
+    - navigation.indexes
+    - navigation.path
 
 plugins:
     - search
     - glightbox
+    - awesome-pages
     - mkdocstrings:
         enabled: !ENV [ENABLE_MKDOCSTRINGS, true]
-        custom_templates: templates
         default_handler: python
         handlers:
           python:
+            paths: [".."]  
             options:
+              show_root_heading: true
               show_source: true
+              members_order: source
      
 markdown_extensions:
     - extra
     - admonition
     - toc
+    - tables
     - attr_list
+    - toc:
+        permalink: true
     - pymdownx.arithmatex:
         generic: true
     - pymdownx.betterem
@@ -39,6 +49,9 @@ markdown_extensions:
     - pymdownx.inlinehilite
     - pymdownx.snippets
     - pymdownx.superfences
+    - pymdownx.highlight
+    - pymdownx.details
+    - footnotes
         
 extra_javascript:
     - javascripts/mathjax.js
