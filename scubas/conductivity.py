@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
 """
-    conductiviy.py: Module is used to implement Earth conductivity methods
+conductivity.py: Earth conductivity profile utilities backed by the LITHO1.0 model.
 """
+
+from __future__ import annotations
 
 __author__ = "Murphy, B.; Chakraborty, S."
 __copyright__ = ""
@@ -10,10 +12,14 @@ __credits__ = []
 __license__ = "MIT"
 __version__ = "1.0."
 __maintainer__ = "Chakraborty, S."
-__email__ = "shibaji7@vt.edu"
+__email__ = "chakras4@erau.edu"
 __status__ = "Research"
 
-import os
+import shutil
+import urllib.error
+import urllib.request
+from pathlib import Path
+from typing import Any, Dict, List, Mapping, Optional, Sequence, Union
 
 import numpy as np
 import pandas as pd
@@ -26,34 +32,48 @@ from scubas.datasets import Site
 from scubas.utils import RecursiveNamespace
 
 
-class ConductivityProfile(object):
+class ConductivityProfile:
     """
-    Class is dedicated to create conductivity profiles
-    from LITHO1.0 model.
+    Build conductivity (resistivity) profiles from the LITHO1.0 reference model.
 
-    1.  LITHO1.0 as the basis for constructing the resistivity profiles
-        http://ds.iris.edu/ds/products/emc-litho10/
+    The class exposes convenience helpers to retrieve conductivity profiles for
+    points, bins, and ensembles of geographical coordinates, optionally
+    returning SCUBAS ``Site`` instances ready for downstream modelling.
     """
 
     def __init__(
         self,
-        conductivity_params=dict(
-            earth_model="LITHO1.0.nc",
-            grid_interpolation_method="nearest",
-            seawater_resistivity=0.3,
-            sediment_resistivity=3.0,
-            crust_resistivity=3000.0,
-            lithosphere_resistivity=1000.0,
-            asthenosphere_resistivity=100.0,
-            transition_zone_resistivity=10.0,
-            lower_mantle_resistivity=1.0,
-            transition_zone_top=410.0,
-            transition_zone_bot=660.0,
-            profile_max_depth=1000.0,
-            uri="http://ds.iris.edu/files/products/emc/emc-files/LITHO1.0.nc",
-        ),
-    ):
-        self.cprop = RecursiveNamespace(**conductivity_params)
+        conductivity_params: Optional[Mapping[str, Any]] = None,
+    ) -> None:
+        """
+        Parameters
+        ----------
+        conductivity_params :
+            Optional mapping that overrides the default model configuration
+            (e.g. file name, interpolation method, resistivity values). See
+            :mod:`scubas.conductivity` source for supported entries.
+        """
+        default_conductivity_params: Dict[str, Any] = {
+            "earth_model": "LITHO1.0.nc",
+            "grid_interpolation_method": "nearest",
+            "seawater_resistivity": 0.3,
+            "sediment_resistivity": 3.0,
+            "crust_resistivity": 3000.0,
+            "lithosphere_resistivity": 1000.0,
+            "asthenosphere_resistivity": 100.0,
+            "transition_zone_resistivity": 10.0,
+            "lower_mantle_resistivity": 1.0,
+            "transition_zone_top": 410.0,
+            "transition_zone_bot": 660.0,
+            "profile_max_depth": 1000.0,
+            "uri": "http://ds.iris.edu/files/products/emc/emc-files/LITHO1.0.nc",
+        }
+        if conductivity_params:
+            merged_params = {**default_conductivity_params, **dict(conductivity_params)}
+        else:
+            merged_params = default_conductivity_params.copy()
+
+        self.cprop = RecursiveNamespace(**merged_params)
         self.earth_model = self.cprop.earth_model
 
         # NOTE these are specified in terms of resistivity, in ohm-m
@@ -78,62 +98,85 @@ class ConductivityProfile(object):
         self.load_earth_model()
         return
 
-    def load_earth_model(self):
+    def load_earth_model(self) -> None:
         """
-        Returns a dict containing the pertinent parts of the Earth model
-        Dict entries are callable interpolation objects
-        """
-        os.makedirs(".scubas_config/", exist_ok=True)
-        filename = ".scubas_config/" + self.earth_model
-        if not os.path.exists(filename):
-            uri = self.cprop.uri
-            os.system(f"wget -O {filename} {uri}")
-        with netcdf_file(filename) as f:
-            latitude = np.copy(f.variables["latitude"][:])
-            longitude = np.copy(f.variables["longitude"][:])
-            # base of lithosphere (top of asthenosphere)
-            asthenospheric_mantle_top_depth = np.copy(
-                f.variables["asthenospheric_mantle_top_depth"][:]
-            )
-            # top/bottom of mantle lithosphere
-            lithosphere_bottom_depth = np.copy(f.variables["lid_bottom_depth"][:])
-            lithosphere_top_depth = np.copy(f.variables["lid_top_depth"][:])
-            # crustal layers
-            lower_crust_bottom_depth = np.copy(
-                f.variables["lower_crust_bottom_depth"][:]
-            )
-            lower_crust_top_depth = np.copy(f.variables["lower_crust_top_depth"][:])
-            middle_crust_bottom_depth = np.copy(
-                f.variables["middle_crust_bottom_depth"][:]
-            )
-            middle_crust_top_depth = np.copy(f.variables["middle_crust_top_depth"][:])
-            upper_crust_bottom_depth = np.copy(
-                f.variables["upper_crust_bottom_depth"][:]
-            )
-            upper_crust_top_depth = np.copy(f.variables["upper_crust_top_depth"][:])
-            # sediment layers
-            lower_sediments_bottom_depth = np.copy(
-                f.variables["lower_sediments_bottom_depth"][:]
-            )
-            lower_sediments_top_depth = np.copy(
-                f.variables["lower_sediments_top_depth"][:]
-            )
-            middle_sediments_bottom_depth = np.copy(
-                f.variables["middle_sediments_bottom_depth"][:]
-            )
-            middle_sediments_top_depth = np.copy(
-                f.variables["middle_sediments_top_depth"][:]
-            )
-            upper_sediments_bottom_depth = np.copy(
-                f.variables["upper_sediments_bottom_depth"][:]
-            )
-            upper_sediments_top_depth = np.copy(
-                f.variables["upper_sediments_top_depth"][:]
-            )
-            # water levels
-            water_bottom_depth = np.copy(f.variables["water_bottom_depth"][:])
-            water_top_depth = np.copy(f.variables["water_top_depth"][:])
+        Load the LITHO1.0 model into cached interpolator callables.
 
+        Raises
+        ------
+        RuntimeError
+            If the Earth model cannot be downloaded or parsed.
+        """
+        config_dir = Path(".scubas_config")
+        config_dir.mkdir(parents=True, exist_ok=True)
+        filename = config_dir / self.earth_model
+        if not filename.exists():
+            uri = self.cprop.uri
+            try:
+                self._download_earth_model(uri, filename)
+            except urllib.error.URLError as exc:
+                logger.error(
+                    "Unable to download Earth model '%s' from %s", filename, uri
+                )
+                raise RuntimeError(
+                    f"Failed to download Earth model from {uri}"
+                ) from exc
+            except OSError as exc:
+                logger.error("Unable to write Earth model file '%s'", filename)
+                raise RuntimeError(
+                    f"Failed to persist downloaded Earth model at {filename}"
+                ) from exc
+        try:
+            with netcdf_file(str(filename)) as f:
+                latitude = np.copy(f.variables["latitude"][:])
+                longitude = np.copy(f.variables["longitude"][:])
+                # base of lithosphere (top of asthenosphere)
+                asthenospheric_mantle_top_depth = np.copy(
+                    f.variables["asthenospheric_mantle_top_depth"][:]
+                )
+                # top/bottom of mantle lithosphere
+                lithosphere_bottom_depth = np.copy(f.variables["lid_bottom_depth"][:])
+                lithosphere_top_depth = np.copy(f.variables["lid_top_depth"][:])
+                # crustal layers
+                lower_crust_bottom_depth = np.copy(
+                    f.variables["lower_crust_bottom_depth"][:]
+                )
+                lower_crust_top_depth = np.copy(f.variables["lower_crust_top_depth"][:])
+                middle_crust_bottom_depth = np.copy(
+                    f.variables["middle_crust_bottom_depth"][:]
+                )
+                middle_crust_top_depth = np.copy(
+                    f.variables["middle_crust_top_depth"][:]
+                )
+                upper_crust_bottom_depth = np.copy(
+                    f.variables["upper_crust_bottom_depth"][:]
+                )
+                upper_crust_top_depth = np.copy(f.variables["upper_crust_top_depth"][:])
+                # sediment layers
+                lower_sediments_bottom_depth = np.copy(
+                    f.variables["lower_sediments_bottom_depth"][:]
+                )
+                lower_sediments_top_depth = np.copy(
+                    f.variables["lower_sediments_top_depth"][:]
+                )
+                middle_sediments_bottom_depth = np.copy(
+                    f.variables["middle_sediments_bottom_depth"][:]
+                )
+                middle_sediments_top_depth = np.copy(
+                    f.variables["middle_sediments_top_depth"][:]
+                )
+                upper_sediments_bottom_depth = np.copy(
+                    f.variables["upper_sediments_bottom_depth"][:]
+                )
+                upper_sediments_top_depth = np.copy(
+                    f.variables["upper_sediments_top_depth"][:]
+                )
+                # water levels
+                water_bottom_depth = np.copy(f.variables["water_bottom_depth"][:])
+                water_top_depth = np.copy(f.variables["water_top_depth"][:])
+        except (IOError, OSError) as exc:
+            logger.error("Unable to read Earth model netCDF file '%s'", filename)
+            raise RuntimeError(f"Failed to load Earth model from {filename}") from exc
         self.lithosphere_model = {
             "latitude": latitude,
             "longitude": longitude,
@@ -242,8 +285,41 @@ class ConductivityProfile(object):
         }
         return
 
-    def get_interpolation_points(self, pt0, pt1):
-        """ """
+    @staticmethod
+    def _download_earth_model(uri: str, destination: Path) -> None:
+        """
+        Download and persist the Earth model file.
+
+        Parameters
+        ----------
+        uri :
+            Remote URI to the LITHO1.0 netCDF file.
+        destination :
+            Filesystem path where the downloaded file is written.
+        """
+        request = urllib.request.Request(uri)
+        with urllib.request.urlopen(request) as response, destination.open("wb") as fh:
+            shutil.copyfileobj(response, fh)
+
+    def get_interpolation_points(
+        self, pt0: Sequence[float], pt1: Sequence[float]
+    ) -> np.ndarray:
+        """
+        Construct a sequence of latitude/longitude interpolation points.
+
+        Parameters
+        ----------
+        pt0 :
+            Starting coordinate expressed as ``[latitude, longitude]``.
+        pt1 :
+            Ending coordinate expressed as ``[latitude, longitude]``.
+
+        Returns
+        -------
+        numpy.ndarray
+            Array of points ordered as ``[[lat, lon], ...]`` suitable for
+            interpolation against the LITHO1.0 grid.
+        """
         globe = Geod(ellps="WGS84")
 
         # somewhat janky way of figuring out how many interp points to have between
@@ -268,11 +344,24 @@ class ConductivityProfile(object):
 
         return interpolation_points
 
-    def get_water_layer(self, lithosphere_model, pts):
+    def get_water_layer(
+        self, lithosphere_model: Mapping[str, RegularGridInterpolator], pts: np.ndarray
+    ) -> float:
         """
-        Interpolates and averages seawater layer thickness within the given bin
-        """
+        Interpolate and average seawater thickness for the given coordinates.
 
+        Parameters
+        ----------
+        lithosphere_model :
+            Mapping of pre-configured interpolators keyed by layer name.
+        pts :
+            ``(n, 2)`` array of latitude/longitude points.
+
+        Returns
+        -------
+        float
+            Average thickness of the seawater layer in kilometres.
+        """
         water_top_values = lithosphere_model["water_top_depth"](pts)
         water_bot_values = lithosphere_model["water_bottom_depth"](pts)
 
@@ -287,9 +376,23 @@ class ConductivityProfile(object):
 
         return water_thk
 
-    def get_sediment_layer(self, lithosphere_model, pts):
+    def get_sediment_layer(
+        self, lithosphere_model: Mapping[str, RegularGridInterpolator], pts: np.ndarray
+    ) -> float:
         """
-        Interpolates and averages sediment layer thickness within the given bin
+        Interpolate and average sediment thickness for the given coordinates.
+
+        Parameters
+        ----------
+        lithosphere_model :
+            Mapping of pre-configured interpolators keyed by layer name.
+        pts :
+            ``(n, 2)`` array of latitude/longitude points.
+
+        Returns
+        -------
+        float
+            Average thickness of the sediment layer in kilometres.
         """
         upper_sed_top_values = lithosphere_model["upper_sediments_top_depth"](pts)
         upper_sed_bot_values = lithosphere_model["upper_sediments_bottom_depth"](pts)
@@ -314,9 +417,23 @@ class ConductivityProfile(object):
 
         return sed_thk
 
-    def get_crust_layer(self, lithosphere_model, pts):
+    def get_crust_layer(
+        self, lithosphere_model: Mapping[str, RegularGridInterpolator], pts: np.ndarray
+    ) -> float:
         """
-        Interpolates and averages crust layer thickness within the given bin
+        Interpolate and average crust thickness for the given coordinates.
+
+        Parameters
+        ----------
+        lithosphere_model :
+            Mapping of pre-configured interpolators keyed by layer name.
+        pts :
+            ``(n, 2)`` array of latitude/longitude points.
+
+        Returns
+        -------
+        float
+            Average thickness of the crustal layer in kilometres.
         """
         upper_crust_top_values = lithosphere_model["upper_crust_top_depth"](pts)
         upper_crust_bot_values = lithosphere_model["upper_crust_bottom_depth"](pts)
@@ -345,11 +462,24 @@ class ConductivityProfile(object):
 
         return crust_thk
 
-    def get_lithosphere_layer(self, lithosphere_model, pts):
+    def get_lithosphere_layer(
+        self, lithosphere_model: Mapping[str, RegularGridInterpolator], pts: np.ndarray
+    ) -> float:
         """
-        Interpolates and averages mantle lithosphere thickness within the given bin
-        """
+        Interpolate and average mantle lithosphere thickness.
 
+        Parameters
+        ----------
+        lithosphere_model :
+            Mapping of pre-configured interpolators keyed by layer name.
+        pts :
+            ``(n, 2)`` array of latitude/longitude points.
+
+        Returns
+        -------
+        float
+            Average thickness of the lithosphere in kilometres.
+        """
         lithosphere_top_values = lithosphere_model["lithosphere_top_depth"](pts)
         lithosphere_bot_values = lithosphere_model["lithosphere_bottom_depth"](pts)
         asthenosphere_top_values = lithosphere_model["asthenospheric_mantle_top_depth"](
@@ -369,9 +499,23 @@ class ConductivityProfile(object):
 
         return litho_thk
 
-    def get_upper_mantle_layer(self, lithosphere_model, pts):
+    def get_upper_mantle_layer(
+        self, lithosphere_model: Mapping[str, RegularGridInterpolator], pts: np.ndarray
+    ) -> float:
         """
-        Interpolates and averages upper mantle thickness within the given bin
+        Interpolate and average upper mantle thickness.
+
+        Parameters
+        ----------
+        lithosphere_model :
+            Mapping of pre-configured interpolators keyed by layer name.
+        pts :
+            ``(n, 2)`` array of latitude/longitude points.
+
+        Returns
+        -------
+        float
+            Average thickness of the upper mantle in kilometres.
         """
         asthenosphere_top_values = lithosphere_model["asthenospheric_mantle_top_depth"](
             pts
@@ -380,21 +524,42 @@ class ConductivityProfile(object):
         astheno_thk = self.transition_zone_top - astheno_top
         return astheno_thk
 
-    def get_transition_zone_layer(self):
+    def get_transition_zone_layer(self) -> float:
         """
-        Return fixed mantle transition zone thickness
+        Return the fixed mantle transition zone thickness.
+
+        Returns
+        -------
+        float
+            Thickness of the transition zone in kilometres.
         """
         return self.transition_zone_bot - self.transition_zone_top
 
-    def get_lower_mantle_layer(self):
+    def get_lower_mantle_layer(self) -> float:
         """
-        Return fixed lower mantle thickness
+        Return the fixed lower mantle thickness.
+
+        Returns
+        -------
+        float
+            Thickness of the lower mantle in kilometres.
         """
         return self.profile_max_depth - self.transition_zone_bot
 
-    def _compile_profile_(self, pts):
+    def _compile_profile_(self, pts: np.ndarray) -> pd.DataFrame:
         """
-        Compile profile for a list of points
+        Compile a conductivity profile for a set of interpolation points.
+
+        Parameters
+        ----------
+        pts :
+            ``(n, 2)`` array of latitude/longitude points.
+
+        Returns
+        -------
+        pandas.DataFrame
+            Dataframe with ``thickness`` (km), ``resistivity`` (ohm-m), and
+            human-readable ``name`` for each layer.
         """
         # now progress through the model layers from near-surface to deep Earth...
         # first the water layer
@@ -432,21 +597,45 @@ class ConductivityProfile(object):
 
     @staticmethod
     def compile_profile(
-        latlon,
-        kind="rounded",
-        to_site=True,
-        site_name="",
-        site_description="",
-        **conductivity_params,
-    ):
+        latlon: Sequence[float],
+        kind: str = "rounded",
+        to_site: bool = True,
+        site_name: str = "",
+        site_description: str = "",
+        **conductivity_params: Any,
+    ) -> Union[pd.DataFrame, Site]:
         """
-        Compile profiles for a set of latlons
+        Compile a conductivity profile for a single latitude/longitude pair.
+
+        Parameters
+        ----------
+        latlon :
+            Coordinate pair expressed as ``[latitude, longitude]``.
+        kind :
+            ``"rounded"`` will round the coordinates to the nearest integer,
+            ``"exact"`` keeps supplied precision.
+        to_site :
+            When ``True`` the return value is a :class:`scubas.datasets.Site`
+            populated with conductivity and thickness information.
+        site_name :
+            Optional site identifier.
+        site_description :
+            Optional human readable description.
+        **conductivity_params :
+            Override values passed to :class:`ConductivityProfile`.
+
+        Returns
+        -------
+        Union[pandas.DataFrame, scubas.datasets.Site]
+            SCUBAS site instance or raw conductivity dataframe depending on
+            ``to_site``.
         """
         cp = ConductivityProfile(**conductivity_params)
+        latlon_array = np.asarray(latlon, dtype=float)
         if kind == "rounded":
-            latlon = np.rint(latlon)
-        logger.info(f"Lat-lon: {latlon}")
-        profile = cp._compile_profile_(latlon)
+            latlon_array = np.rint(latlon_array)
+        logger.info(f"Lat-lon: {latlon_array}")
+        profile = cp._compile_profile_(latlon_array)
         logger.info(f"Compiled Profile \n {profile}")
         if to_site:
             profile = Site.init(
@@ -460,29 +649,56 @@ class ConductivityProfile(object):
 
     @staticmethod
     def compile_profiles(
-        latlons,
-        kind="rounded",
-        to_site=True,
-        site_names=[],
-        site_descriptions=[],
-        **conductivity_params,
-    ):
+        latlons: Sequence[Sequence[float]],
+        kind: str = "rounded",
+        to_site: bool = True,
+        site_names: Optional[Sequence[str]] = None,
+        site_descriptions: Optional[Sequence[str]] = None,
+        **conductivity_params: Any,
+    ) -> List[Union[pd.DataFrame, Site]]:
         """
-        Compile profiles for a set of latlons
-        """
+        Compile conductivity profiles for multiple coordinates.
 
+        Parameters
+        ----------
+        latlons :
+            Iterable of ``[latitude, longitude]`` coordinate pairs.
+        kind :
+            ``"rounded"`` will round the coordinates to the nearest integer,
+            ``"exact"`` keeps supplied precision.
+        to_site :
+            When ``True`` output contains :class:`scubas.datasets.Site` objects.
+        site_names :
+            Optional sequence of site names corresponding to ``latlons``.
+        site_descriptions :
+            Optional sequence of site descriptions corresponding to ``latlons``.
+        **conductivity_params :
+            Override values passed to :class:`ConductivityProfile`.
+
+        Returns
+        -------
+        list
+            List of conductivity profiles as dataframes or ``Site`` instances.
+        """
         cp = ConductivityProfile(**conductivity_params)
         profiles = []
+        resolved_site_names = list(site_names or [])
+        resolved_site_descriptions = list(site_descriptions or [])
         for i, latlon in enumerate(latlons):
+            latlon_array = np.asarray(latlon, dtype=float)
             if kind == "rounded":
-                latlon = np.rint(latlon)
-            logger.info(f"Lat-lon: {latlon}")
-            profile = cp._compile_profile_(latlon)
+                latlon_array = np.rint(latlon_array)
+            logger.info(f"Lat-lon: {latlon_array}")
+            profile = cp._compile_profile_(latlon_array)
             logger.info(f"Compiled Profile \n {profile}")
             if to_site:
-                site_name = site_names[i] if i < len(site_names) else ""
+                site_name = (
+                    resolved_site_names[i] if i < len(resolved_site_names) else ""
+                )
                 site_description = (
-                    site_descriptions[i] if i < len(site_descriptions) else ""
+                    resolved_site_descriptions[i]
+                    if i < len(resolved_site_descriptions)
+                    else ""
                 )
                 profile = Site.init(
                     1.0 / profile["resistivity"].to_numpy(dtype=float),
@@ -496,17 +712,37 @@ class ConductivityProfile(object):
 
     @staticmethod
     def compile_bined_profile(
-        bined_latlon,
-        to_site=True,
-        site_name="",
-        site_description="",
-        **conductivity_params,
-    ):
+        bined_latlon: Sequence[Sequence[float]],
+        to_site: bool = True,
+        site_name: str = "",
+        site_description: str = "",
+        **conductivity_params: Any,
+    ) -> Union[pd.DataFrame, Site]:
         """
-        Compile profiles for a binned latlons
+        Compile a conductivity profile for a pair of binned coordinates.
+
+        Parameters
+        ----------
+        bined_latlon :
+            Sequence with two coordinate pairs ``[[lat0, lon0], [lat1, lon1]]``.
+        to_site :
+            When ``True`` return value is a :class:`scubas.datasets.Site`.
+        site_name :
+            Optional site identifier.
+        site_description :
+            Optional human readable description.
+        **conductivity_params :
+            Override values passed to :class:`ConductivityProfile`.
+
+        Returns
+        -------
+        Union[pandas.DataFrame, scubas.datasets.Site]
+            Conductivity profile as dataframe or ``Site`` instance.
         """
         cp = ConductivityProfile(**conductivity_params)
-        ipts = cp.get_interpolation_points(bined_latlon[0], bined_latlon[1])
+        start = np.asarray(bined_latlon[0], dtype=float)
+        end = np.asarray(bined_latlon[1], dtype=float)
+        ipts = cp.get_interpolation_points(start, end)
         profile = cp._compile_profile_(ipts)
         logger.info(f"Compiled Profile \n {profile}")
         if to_site:
@@ -521,29 +757,54 @@ class ConductivityProfile(object):
 
     @staticmethod
     def compile_bined_profiles(
-        bined_latlons,
-        to_site=True,
-        site_names=[],
-        site_descriptions=[],
-        **conductivity_params,
-    ):
+        bined_latlons: np.ndarray,
+        to_site: bool = True,
+        site_names: Optional[Sequence[str]] = None,
+        site_descriptions: Optional[Sequence[str]] = None,
+        **conductivity_params: Any,
+    ) -> List[Union[pd.DataFrame, Site]]:
         """
-        Compile profiles for a binned latlons
+        Compile conductivity profiles for an ordered set of bin coordinates.
+
+        Parameters
+        ----------
+        bined_latlons :
+            ``(n, 2)`` array of coordinates defining bin edges.
+        to_site :
+            When ``True`` output contains :class:`scubas.datasets.Site` objects.
+        site_names :
+            Optional sequence of site names corresponding to each bin.
+        site_descriptions :
+            Optional sequence of site descriptions corresponding to each bin.
+        **conductivity_params :
+            Override values passed to :class:`ConductivityProfile`.
+
+        Returns
+        -------
+        list
+            List of conductivity profiles as dataframes or ``Site`` instances.
         """
         cp = ConductivityProfile(**conductivity_params)
         profiles = []
-        nbins = len(bined_latlons) - 1
+        bined_latlons_array = np.asarray(bined_latlons, dtype=float)
+        nbins = len(bined_latlons_array) - 1
+        resolved_site_names = list(site_names or [])
+        resolved_site_descriptions = list(site_descriptions or [])
         for i in range(nbins):
             ipts = cp.get_interpolation_points(
-                bined_latlons[i, :], bined_latlons[i + 1, :]
+                bined_latlons_array[i, :], bined_latlons_array[i + 1, :]
             )
             profile = cp._compile_profile_(ipts)
             profile.thickness = profile.thickness * 1e3
             logger.info(f"Compiled Profile \n {profile}")
             if to_site:
-                site_name = site_names[i] if i < len(site_names) else ""
+                site_name = (
+                    resolved_site_names[i] if i < len(resolved_site_names) else ""
+                )
                 site_description = (
-                    site_descriptions[i] if i < len(site_descriptions) else ""
+                    resolved_site_descriptions[i]
+                    if i < len(resolved_site_descriptions)
+                    else ""
                 )
                 profile = Site.init(
                     1.0 / profile["resistivity"].to_numpy(dtype=float),
@@ -557,22 +818,56 @@ class ConductivityProfile(object):
 
     @staticmethod
     def compile_mcmc_bined_profiles(
-        bined_latlons,
-        n=100,
-        continental_shelves_thickness_range=[0.01, 1.0],
-        to_site=True,
-        site_names=[],
-        site_descriptions=[],
-        random_seed=0,
-        **conductivity_params,
-    ):
+        bined_latlons: Sequence[Sequence[float]],
+        n: int = 100,
+        continental_shelves_thickness_range: Optional[Sequence[float]] = None,
+        to_site: bool = True,
+        site_names: Optional[Sequence[str]] = None,
+        site_descriptions: Optional[Sequence[str]] = None,
+        random_seed: int = 0,
+        **conductivity_params: Any,
+    ) -> List[List[Union[pd.DataFrame, Site]]]:
         """
-        Compile MCMC profiles for a binned latlons
+        Compile Monte Carlo conductivity profiles for a set of binned coordinates.
+
+        Parameters
+        ----------
+        bined_latlons :
+            Iterable of ``[latitude, longitude]`` coordinates defining bin edges.
+        n :
+            Number of Monte Carlo realisations to produce.
+        continental_shelves_thickness_range :
+            Optional ``[min, max]`` range for perturbing the seawater layer at
+            the end bins (kilometres).
+        to_site :
+            When ``True`` output contains :class:`scubas.datasets.Site` objects.
+        site_names :
+            Optional sequence of site names corresponding to each bin.
+        site_descriptions :
+            Optional sequence of site descriptions corresponding to each bin.
+        random_seed :
+            Random seed used for reproducibility.
+        **conductivity_params :
+            Override values passed to :class:`ConductivityProfile`.
+
+        Returns
+        -------
+        list
+            Nested list of Monte Carlo profiles, each entry containing the
+            profiles for one draw across all bins.
         """
         np.random.seed(random_seed)
         cp = ConductivityProfile(**conductivity_params)
+        bined_latlons_array = np.asarray(bined_latlons, dtype=float)
+        thickness_range = (
+            list(continental_shelves_thickness_range)
+            if continental_shelves_thickness_range is not None
+            else [0.01, 1.0]
+        )
+        resolved_site_names = list(site_names or [])
+        resolved_site_descriptions = list(site_descriptions or [])
         mcmc_profiles, profiles = [], []
-        for i, latlon in enumerate(bined_latlons):
+        for i, latlon in enumerate(bined_latlons_array):
             profile = cp._compile_profile_(latlon)
             profile.fillna(0, inplace=True)
             profiles.append(profile)
@@ -589,14 +884,18 @@ class ConductivityProfile(object):
                 )
                 if (i == 0) or (i == len(profiles) - 2):
                     profile.thickness[0] = np.random.uniform(
-                        continental_shelves_thickness_range[0],
-                        continental_shelves_thickness_range[1],
+                        thickness_range[0],
+                        thickness_range[1],
                     )
                 logger.info(f"Compiled Profile \n {profile}")
                 if to_site:
-                    site_name = site_names[i] if i < len(site_names) else ""
+                    site_name = (
+                        resolved_site_names[i] if i < len(resolved_site_names) else ""
+                    )
                     site_description = (
-                        site_descriptions[i] if i < len(site_descriptions) else ""
+                        resolved_site_descriptions[i]
+                        if i < len(resolved_site_descriptions)
+                        else ""
                     )
                     profile = Site.init(
                         1.0 / profile["resistivity"].to_numpy(dtype=float),
