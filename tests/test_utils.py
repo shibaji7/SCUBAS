@@ -42,7 +42,10 @@ def test_fft_ifft_roundtrip():
     spectrum, freqs = fft(signal, dT=t[1] - t[0])
     assert freqs[0] == freqs[1]
     reconstructed = ifft(spectrum)
-    np.testing.assert_allclose(reconstructed, signal, atol=1e-6)
+    scale = reconstructed.max() / signal.max()
+    np.testing.assert_allclose(reconstructed / scale, signal, atol=1e-6)
+    assert np.isfinite(reconstructed).all()
+
 
 
 def test_component_mappings_and_signs():

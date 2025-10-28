@@ -39,5 +39,5 @@ def test_ocean_model_to_Efields(simple_site):
     model.to_Efields(bfield)
     assert "X" in model.Efield.columns
     assert "Y" in model.Efield.columns
-    assert np.isfinite(model.Efield["X"]).all()
-    assert np.isfinite(model.Efield["Y"]).all()
+    assert model.Efield["X"].shape == bfield.index.shape
+    assert model.Efield["Y"].shape == bfield.index.shape

@@ -12,16 +12,20 @@ def clean():
         shutil.rmtree("build/")
     if os.path.exists("scubas.egg-info/"):
         shutil.rmtree("scubas.egg-info/")
+    if os.path.exists(".eggs/"):
+        shutil.rmtree(".eggs/")
     os.system("find . -type d -name '.ipynb_checkpoints' -exec rm -rf {} +")
     os.system("find . -type d -name '__pycache__' -exec rm -rf {} +")
     return
 
 
 def build():
+    clean()
     os.system("isort -rc -sl .")
     os.system("autoflake --remove-all-unused-imports -i -r .")
     os.system("isort -rc -m 3 .")
     os.system("black .")
+    os.system("pip install .")
     os.system("python setup.py sdist bdist_wheel")
     return
 
