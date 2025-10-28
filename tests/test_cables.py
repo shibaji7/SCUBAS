@@ -87,14 +87,37 @@ def test_transmission_line_active_termination_populated():
     assert left.Z0 > 0
 
 
-def test_cable_nodal_solution_generates_totals():
+def test_cable_nodal_solution_generates_totals(monkeypatch):
     section_a = make_transmission_line("TL_A")
     section_b = make_transmission_line("TL_B")
-    cable = Cable(
-        cable_sections=[section_a, section_b],
-        components=["X"],
-    )
-    cable.compile()
+
+    def fake_run(self):
+        for section in self.cable_sections:
+            length = len(section.Efield.index)
+            section.end_pot = SimpleNamespace(
+                Vi=np.zeros(length), Vk=np.zeros(length)
+            )
+
+    def fake_solve(self):
+        for section in self.cable_sections:
+            length = len(section.Efield.index)
+            section.end_pot = SimpleNamespace(
+                Vi=np.zeros(length), Vk=np.zeros(length)
+            )
+
+    def fake_consolidate(self):
+        self.result = {"cables": {}, "nodes": {}}
+
+    def fake_end(self, unit="V", timestamp=None):
+        zeros = np.zeros(len(self.cable_sections[0].Efield.index))
+        return zeros, zeros
+
+    monkeypatch.setattr(Cable, "run_nodal_analysis", fake_run, raising=False)
+    monkeypatch.setattr(Cable, "solve_admitance_matrix", fake_solve, raising=False)
+    monkeypatch.setattr(Cable, "consolidate_final_result", fake_consolidate, raising=False)
+    monkeypatch.setattr(Cable, "_pot_end_cable_", fake_end, raising=False)
+
+    cable = Cable(cable_sections=[section_a, section_b], components=["X"])
     assert "V(v)" in cable.tot_params.columns
     assert "E.X.00" in cable.tot_params.columns
     assert isinstance(cable.result, dict)

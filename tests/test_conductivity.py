@@ -2,6 +2,8 @@ import numpy as np
 import pandas as pd
 import pytest
 
+pytest.importorskip("pyproj")
+
 from scubas.conductivity import ConductivityProfile
 from scubas.datasets import Site
 
