@@ -11,14 +11,6 @@ requires-python = ">=3.11"
 authors = [{name = "Shibaji Chakraborty"}]
 license = {text = "MIT"}
 
-[project.optional-dependencies]
-dev = [
-    "pytest>=8",
-    "pytest-cov>=4",
-    "pyproj>=3",
-    "matplotlib>=3.5",
-]
-
 [tool.pytest.ini_options]
 minversion = "6.0"
 addopts = "--cov=scubas --cov-report=xml --cov-report=term-missing"
@@ -37,17 +29,16 @@ output = "coverage.xml"
 
 [project.optional-dependencies]
 dev = [
-  "pytest",
-  "pytest-cov",
-  "coverage",
+  "pytest>=8",
+  "pytest-cov>=4",
+  "pyproj>=3",
+  "matplotlib>=3.5",
   "numpy",
   "pandas",
-  "matplotlib",
   "loguru",
   "requests",
   "tqdm",
   "toml",
   "SciencePlots",
   "scipy",
-  "pyproj",
 ]
