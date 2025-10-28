@@ -94,16 +94,12 @@ def test_cable_nodal_solution_generates_totals(monkeypatch):
     def fake_run(self):
         for section in self.cable_sections:
             length = len(section.Efield.index)
-            section.end_pot = SimpleNamespace(
-                Vi=np.zeros(length), Vk=np.zeros(length)
-            )
+            section.end_pot = SimpleNamespace(Vi=np.zeros(length), Vk=np.zeros(length))
 
     def fake_solve(self):
         for section in self.cable_sections:
             length = len(section.Efield.index)
-            section.end_pot = SimpleNamespace(
-                Vi=np.zeros(length), Vk=np.zeros(length)
-            )
+            section.end_pot = SimpleNamespace(Vi=np.zeros(length), Vk=np.zeros(length))
 
     def fake_consolidate(self):
         self.result = {"cables": {}, "nodes": {}}
@@ -114,7 +110,9 @@ def test_cable_nodal_solution_generates_totals(monkeypatch):
 
     monkeypatch.setattr(Cable, "run_nodal_analysis", fake_run, raising=False)
     monkeypatch.setattr(Cable, "solve_admitance_matrix", fake_solve, raising=False)
-    monkeypatch.setattr(Cable, "consolidate_final_result", fake_consolidate, raising=False)
+    monkeypatch.setattr(
+        Cable, "consolidate_final_result", fake_consolidate, raising=False
+    )
     monkeypatch.setattr(Cable, "_pot_end_cable_", fake_end, raising=False)
 
     cable = Cable(cable_sections=[section_a, section_b], components=["X"])

@@ -42,61 +42,69 @@ $$
 
 !!! Example
     ``` py
-    # Import all required libs
-    import matplotlib as mpl
+    # Core scientific stack
     import matplotlib.pyplot as plt
-    # Set matplotlib styles
-    plt.style.use(["science", "ieee"])
-    plt.rcParams["font.family"] = "sans-serif"
-    plt.rcParams["font.sans-serif"] = ["Tahoma", "DejaVu Sans",
-                                       "Lucida Grande", "Verdana"]
+    import numpy as np
     import pandas as pd
 
-    # Import SCUBAS dependencies
+    # SCUBAS dependencies
     from scubas.datasets import PROFILES
+    from scubas.cables import Cable, TransmissionLine
     from scubas.models import OceanModel
-    from scubas.plotlib import plot_transfer_function,\
-            potential_along_section, cable_potential, update_rc_params
-    from scubas.cables import TransmissionLine, Cable
-    from scubas.conductivity import ConductivityProfile as CP
+    from scubas.plotlib import plot_transfer_function, update_rc_params
 
-    # Ocean-Earth conductivity profile of a Deep Ocean
-    site = PROFILES.DO_3
-    # Rended ocean model
-    om = OceanModel(site)
-    # Generate transfer function
-    tf = om.get_TFs()
-    # Transfer function of a Deep Ocean.
-    # We are going to use this tranfer function to compute differen electrical cases
-    _ = plot_transfer_function(tf)
+    # Configure Matplotlib using the helper (gracefully falls back if SciencePlots is missing)
+    update_rc_params(
+        {
+            "font.family": "sans-serif",
+            "font.sans-serif": ["Tahoma", "DejaVu Sans", "Lucida Grande", "Verdana"],
+        },
+        science=True,
+    )
+
+    # Render the ocean model transfer function for the deep ocean profile
+    ocean_site = PROFILES.DO_3
+    ocean_model = OceanModel(ocean_site)
+    tf_artifacts = plot_transfer_function(ocean_model.get_TFs())
+    tf_artifacts.figure.suptitle("Deep Ocean Transfer Function")
 
     ####################################################################
-    # Simulating the case: Induced electric field 0.3 V/km on a 
+    # Simulating the case: Induced electric field 0.3 V/km on a
     # shallow continental shelf with depth 100 m, length 600 km
     ####################################################################
-    e_CS = pd.DataFrame()
-    e_CS["X"], e_CS["dTime"] = [300], [0]
-    length=600
-    tl = TransmissionLine(
-        sec_id="CS",
-        directed_length=dict(
-            length_north=length,
-        ),
-        elec_params=dict(
-            site=PROFILES.CS,
-            width=1.0,
-            flim=[1e-6, 1e0],
-        ),
-        # Added active termination
-        active_termination=dict(
-            right=PROFILES.LD, # Added Land profiles on either side
-            left=PROFILES.LD,
-        ),
+
+    length = 600.0
+    induced_field = pd.DataFrame({"X": np.array([300.0])}, index=pd.RangeIndex(1, name="Time"))
+
+    tl_active = TransmissionLine(
+        sec_id="CS-active",
+        directed_length={"length_north": length},
+        elec_params={"site": PROFILES.CS, "width": 1.0, "flim": [1e-6, 1.0]},
+        active_termination={"right": {"site": PROFILES.LD, "width": 1.0}, "left": {"site": PROFILES.LD, "width": 1.0}},
     )
-    tl.compute_eqv_pi_circuit(e_CS, ["X"])
-    cable = Cable([tl], ["X"])
-    Vc, Lc = cable._pot_along_cable_(0)
-    tag = cable_potential(Vc, Lc, ylim=[-200, 200])
-    _ = tag["axes"].text(0.05, 0.85, r"$L_{cs}$=%dkm"%length, ha="left",\
-                    va="center", transform=tag["axes"].transAxes)
+    tl_passive = TransmissionLine(
+        sec_id="CS-passive",
+        directed_length={"length_north": length},
+        elec_params={"site": PROFILES.CS, "width": 1.0, "flim": [1e-6, 1.0]},
+    )
+
+    tl_active.compute_eqv_pi_circuit(Efield=induced_field, components=["X"])
+    tl_passive.compute_eqv_pi_circuit(Efield=induced_field, components=["X"])
+
+    cable_active = Cable([tl_active], components=["X"])
+    cable_passive = Cable([tl_passive], components=["X"])
+
+    potentials_active, distances = cable_active._pot_along_cable_(timestamp=0)
+    potentials_passive, _ = cable_passive._pot_along_cable_(timestamp=0)
+
+    fig, ax = plt.subplots(figsize=(6, 3), dpi=300)
+    ax.plot(distances, potentials_active, label="Active terminations", color="tab:red")
+    ax.plot(distances, potentials_passive, label="Passive", color="tab:blue", linestyle="--")
+    ax.set_xlabel("Distance along cable (km)")
+    ax.set_ylabel("Potential (V)")
+    ax.set_ylim([-100, 100])
+    ax.set_xlim([0, length])
+    ax.legend(loc="upper right")
+    ax.set_title("Cable potential comparison")
+    plt.show()
     ```

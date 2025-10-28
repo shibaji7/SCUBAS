@@ -149,9 +149,8 @@ class CableSection:
             length_total = np.hypot(length_east, length_north)
         else:
             logger.warning(
-                "No cable edge information available for section '%s'; "
-                "defaulting lengths to zero.",
-                self.sec_id,
+                f"No cable edge information available for section {self.sec_id}; "
+                "defaulting lengths to zero."
             )
 
         self.length = length_total
@@ -186,7 +185,7 @@ class CableSection:
         if not hasattr(self, "end_pot"):
             raise RuntimeError("End potentials unavailable; run nodal analysis first.")
 
-        logger.info("Potential along cable section '%s' at index %s", self.sec_id, idx)
+        logger.info(f"Potential along cable section {self.sec_id} at index {idx}")
         Vi = Vi if Vi is not None else self.end_pot.Vi
         Vk = Vk if Vk is not None else self.end_pot.Vk
         if idx is not None:
@@ -383,7 +382,7 @@ class TransmissionLine(CableSection):
         if width is None or width <= 0:
             raise ValueError("Cable width must be positive.")
 
-        logger.info("Cable width %s: %s", self.sec_id, width)
+        logger.info(f"Cable width {self.sec_id}: {width}")
 
         try:
             if getattr(site, "name", "") == "Land":
@@ -531,7 +530,7 @@ class Cable:
         sections = self.cable_sections
         for nid in self.node_ids:
             self.nodes[nid] = {}
-            logger.info("Node: %s", nid)
+            logger.info(f"Node: {nid}")
             for component in self.components:
                 node = RecursiveNamespace()
                 Yii = np.zeros_like(self.node_ids, dtype=float)
@@ -587,14 +586,14 @@ class Cable:
         self.V: Dict[str, np.ndarray] = {}
         logger.info("Solving admittance matrix.")
         for component in self.components:
-            logger.info("Solving for component %s.", component)
+            logger.info(f"Solving for component {component}.")
             J, Y = [], []
             for nid in self.node_ids:
                 node = self.nodes[nid][component]
                 J.append(node.Ji)
                 Y.append(node.Yii)
             J_arr, Y_arr = np.array(J), np.array(Y)
-            logger.info("Shapes -> J: %s, Y: %s", J_arr.shape, Y_arr.shape)
+            logger.info(f"Shapes -> J: {J_arr.shape}, Y: {Y_arr.shape}")
             try:
                 iY = np.linalg.inv(Y_arr)
             except np.linalg.LinAlgError as exc:
@@ -683,12 +682,9 @@ class Cable:
         factor = 1.0 if unit == "V" else 1000.0
         U0 = np.round(self.V[comp][cable_section_id, :] * factor, 2)
         U1 = np.round(self.V[comp][cable_section_id + 1, :] * factor, 2)
-        logger.info(
-            "Max(V) at the end of Section-%s (Component-%s): %s %s",
-            cable_section_id,
-            comp,
-            np.max(U0),
-            np.max(U1),
+        logger.debug(
+            f"Section {cable_section_id} component {comp}: max endpoint potentials "
+            f"(U0={np.max(U0)}, U1={np.max(U1)})"
         )
         if timestamp is not None:
             U0, U1 = U0[timestamp], U1[timestamp]
@@ -720,11 +716,9 @@ class Cable:
         factor = 1.0 if unit == "V" else 1000.0
         U0 = np.round(self.V[comp][0, :] * factor, 2)
         U1 = np.round(self.V[comp][-1, :] * factor, 2)
-        logger.info(
-            "Max(V) at the cable ends (Component-%s): %s %s",
-            comp,
-            np.max(U0),
-            np.max(U1),
+        logger.debug(
+            f"Cable component {comp}: max end potentials (U0={np.max(U0)}, "
+            f"U1={np.max(U1)})"
         )
         if timestamp is not None:
             U0, U1 = U0[timestamp], U1[timestamp]

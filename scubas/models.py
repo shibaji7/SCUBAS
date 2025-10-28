@@ -61,7 +61,7 @@ class OceanModel:
         flim: Sequence[float] = (1e-6, 1e0),
     ) -> None:
         fmin, fmax = _validate_frequency_limits(flim)
-        logger.info("Compile Ocean-model: %s E- and B-Fields", site.name)
+        logger.info(f"Compile Ocean-model: {site.name} E- and B-Fields")
         self.site = site
         self.flim = (fmin, fmax)
         self.freqs = np.linspace(
@@ -195,7 +195,7 @@ class OceanModel:
         """
         data_frames: List[pd.DataFrame] = []
         for file in files:
-            logger.info("Read file: %s", file)
+            logger.info(f"Read file: {file}")
             file_suffix = Path(file).suffix.lower()
             if file_suffix == ".txt":
                 df = self.read_iaga(file, return_xyzf, return_header=False)

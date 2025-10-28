@@ -12,11 +12,14 @@ __version__ = "1.0."
 __maintainer__ = "Chakraborty, S."
 __email__ = "chakras4@erau.edu"
 __status__ = "Research"
+
+
 from dataclasses import dataclass
 from typing import Any, Mapping, Optional, Sequence
 
 import matplotlib.pyplot as plt
 import numpy as np
+from loguru import logger
 
 from scubas.utils import frexp102str
 
@@ -34,26 +37,36 @@ class PlotArtifacts:
 def update_rc_params(
     params: Optional[Mapping[str, Any]] = None,
     science: bool = False,
+    latex: bool = False,
 ) -> None:
     """
     Update matplotlib rcParams, optionally enabling the ``science`` style.
     """
     if science:
-        plt.style.use(["science", "ieee"])
-        plt.rcParams.update(
-            {
-                "figure.figsize": np.array([8, 6]),
-                "text.usetex": True,
-                "font.family": "sans-serif",
-                "font.sans-serif": [
-                    "Tahoma",
-                    "DejaVu Sans",
-                    "Lucida Grande",
-                    "Verdana",
-                ],
-                "font.size": 10,
-            }
-        )
+        try:
+            import scienceplots  # type: ignore  # noqa: F401
+
+            plt.style.use(["science", "ieee"])
+        except (ImportError, OSError) as exc:
+            logger.warning(
+                "SciencePlots styles unavailable; falling back to default Matplotlib styling (%s)",
+                exc,
+            )
+        finally:
+            plt.rcParams.update(
+                {
+                    "figure.figsize": np.array([8, 6]),
+                    "text.usetex": latex,
+                    "font.family": "sans-serif",
+                    "font.sans-serif": [
+                        "Tahoma",
+                        "DejaVu Sans",
+                        "Lucida Grande",
+                        "Verdana",
+                    ],
+                    "font.size": 10,
+                }
+            )
     if params:
         plt.rcParams.update(params)
 

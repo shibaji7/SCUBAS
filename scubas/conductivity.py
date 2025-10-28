@@ -115,14 +115,12 @@ class ConductivityProfile:
             try:
                 self._download_earth_model(uri, filename)
             except urllib.error.URLError as exc:
-                logger.error(
-                    "Unable to download Earth model '%s' from %s", filename, uri
-                )
+                logger.error(f"Unable to download Earth model '{filename}' from {uri}")
                 raise RuntimeError(
                     f"Failed to download Earth model from {uri}"
                 ) from exc
             except OSError as exc:
-                logger.error("Unable to write Earth model file '%s'", filename)
+                logger.error(f"Unable to write Earth model file '{filename}'")
                 raise RuntimeError(
                     f"Failed to persist downloaded Earth model at {filename}"
                 ) from exc
@@ -175,7 +173,7 @@ class ConductivityProfile:
                 water_bottom_depth = np.copy(f.variables["water_bottom_depth"][:])
                 water_top_depth = np.copy(f.variables["water_top_depth"][:])
         except (IOError, OSError) as exc:
-            logger.error("Unable to read Earth model netCDF file '%s'", filename)
+            logger.error(f"Unable to read Earth model netCDF file '{filename}'")
             raise RuntimeError(f"Failed to load Earth model from {filename}") from exc
         self.lithosphere_model = {
             "latitude": latitude,
