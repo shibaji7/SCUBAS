@@ -31,7 +31,9 @@ jobs:
 
       - name: Run tests with coverage
         run: |
-          pytest
+          python -m coverage run -m pytest
+          python -m coverage xml
+          python -m coverage report -m
         shell: bash
 
       - name: Upload coverage to Codecov
