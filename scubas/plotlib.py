@@ -3,6 +3,7 @@ Plotting helpers for transfer functions and cable potentials leveraged across SC
 """
 
 from __future__ import annotations
+
 __author__ = "Chakraborty, S."
 __copyright__ = ""
 __credits__ = []
@@ -12,7 +13,7 @@ __maintainer__ = "Chakraborty, S."
 __email__ = "chakras4@erau.edu"
 __status__ = "Research"
 from dataclasses import dataclass
-from typing import Any, Iterable, Mapping, Optional, Sequence
+from typing import Any, Mapping, Optional, Sequence
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -176,4 +177,3 @@ def cable_potential(
     ax.set_xlim(x[0], x[-1])
     ax.set_ylim(ylim)
     return PlotArtifacts(figure=fig, axes=ax)
-

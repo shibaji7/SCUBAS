@@ -163,7 +163,9 @@ class Site:
         omega = 2 * np.pi * freqs
 
         if return_Z:
-            Z_output, Z_all = self.calcZ(freqs=freqs, layer=layer, return_all_layers=True)
+            Z_output, Z_all = self.calcZ(
+                freqs=freqs, layer=layer, return_all_layers=True
+            )
         else:
             Z_output = self.calcZ(freqs=freqs, layer=layer, return_all_layers=False)
 

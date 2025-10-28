@@ -16,7 +16,7 @@ def clean():
         shutil.rmtree(".eggs/")
     os.system("find . -type d -name '.ipynb_checkpoints' -exec rm -rf {} +")
     os.system("find . -type d -name '__pycache__' -exec rm -rf {} +")
-    os.system("rm -f *coverage*")
+    os.system("rm -f *coverage* .pytest_cache .mypy_cache .tox")
     return
 
 

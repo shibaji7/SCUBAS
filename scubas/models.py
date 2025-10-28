@@ -16,7 +16,16 @@ __status__ = "Research"
 import datetime as dt
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable, List, Mapping, MutableMapping, Optional, Sequence, Tuple, Union
+from typing import (
+    Iterable,
+    List,
+    Mapping,
+    MutableMapping,
+    Optional,
+    Sequence,
+    Tuple,
+    Union,
+)
 
 import numpy as np
 import pandas as pd
@@ -140,9 +149,7 @@ class OceanModel:
         if not reported:
             raise ValueError("IAGA header missing 'reported' column descriptors.")
         if len(reported) % 4 != 0:
-            raise ValueError(
-                f"The header record does not contain 4 values: {reported}"
-            )
+            raise ValueError(f"The header record does not contain 4 values: {reported}")
         record_length = len(reported) // 4
         column_names = list(reported[record_length - 1 :: record_length])
         seen_count: MutableMapping[str, int] = {}
@@ -213,13 +220,17 @@ class OceanModel:
         """
         self.Bfield = Bfield if Bfield is not None else getattr(self, "Bfield", None)
         if self.Bfield is None:
-            raise RuntimeError("B-field data not available; load data before converting.")
+            raise RuntimeError(
+                "B-field data not available; load data before converting."
+            )
         self.components = list(components)
 
         self.Efield = pd.DataFrame({"Time": self.Bfield.index})
         first_time = self.Efield.Time.iloc[0]
         if isinstance(first_time, (dt.datetime, pd.Timestamp)):
-            dt_seconds = self.Efield.Time.apply(lambda x: (x - first_time).total_seconds())
+            dt_seconds = self.Efield.Time.apply(
+                lambda x: (x - first_time).total_seconds()
+            )
             self.Efield["dTime"] = dt_seconds
             self.Bfield["dTime"] = dt_seconds
         else:
@@ -247,7 +258,9 @@ class OceanModel:
             self.Efield[mapped_component] = Et
 
         self.Efield = self.Efield.set_index("Time")
-        self.components = [component_mappings("B2E", component) for component in self.components]
+        self.components = [
+            component_mappings("B2E", component) for component in self.components
+        ]
 
 
 @dataclass
@@ -275,7 +288,9 @@ class Preprocess:
         window = np.zeros_like(self.t, dtype=float)
         window[:P2] = 0.5 * (1 - np.cos(2 * np.pi * self.t[:P2] / P))
         window[P2 : T - P2] = 1.0
-        window[T - P2 :] = 0.5 * (1 - np.cos(2 * np.pi * (self.t[-1] - self.t[T - P2 :]) / P))
+        window[T - P2 :] = 0.5 * (
+            1 - np.cos(2 * np.pi * (self.t[-1] - self.t[T - P2 :]) / P)
+        )
         return window
 
     def detrend_magnetic_field(self, p: Optional[float] = None) -> np.ndarray:

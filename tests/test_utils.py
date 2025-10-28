@@ -47,7 +47,6 @@ def test_fft_ifft_roundtrip():
     assert np.isfinite(reconstructed).all()
 
 
-
 def test_component_mappings_and_signs():
     assert component_mappings("B2E", "X") == "Y"
     assert component_mappings("B2E", "Y") == "X"

@@ -94,7 +94,9 @@ def component_mappings(field: str = "B2E", comp: str = "X") -> str:
     try:
         return mappings[field][comp]
     except KeyError as exc:
-        raise KeyError(f"Unsupported component mapping for field '{field}' and component '{comp}'.") from exc
+        raise KeyError(
+            f"Unsupported component mapping for field '{field}' and component '{comp}'."
+        ) from exc
 
 
 def component_sign_mappings(fromto: str = "BxEy") -> float:
@@ -130,7 +132,9 @@ class GreatCircle:
             raise ValueError("Location objects must expose 'lat' and 'lon' attributes.")
         return math.radians(float(loc.lat)), math.radians(float(loc.lon))
 
-    def great_circle(self, initial: Optional[Any] = None, final: Optional[Any] = None) -> float:
+    def great_circle(
+        self, initial: Optional[Any] = None, final: Optional[Any] = None
+    ) -> float:
         """
         Great-circle distance assuming a spherical Earth.
         """
@@ -138,14 +142,15 @@ class GreatCircle:
         end = final if final is not None else self.final
         lat1, lon1 = self._to_radians(start)
         lat2, lon2 = self._to_radians(end)
-        cosine_argument = (
-            math.sin(lat1) * math.sin(lat2)
-            + math.cos(lat1) * math.cos(lat2) * math.cos(lon1 - lon2)
-        )
+        cosine_argument = math.sin(lat1) * math.sin(lat2) + math.cos(lat1) * math.cos(
+            lat2
+        ) * math.cos(lon1 - lon2)
         cosine_argument = max(-1.0, min(1.0, cosine_argument))
         return self.Re * math.acos(cosine_argument)
 
-    def haversine(self, initial: Optional[Any] = None, final: Optional[Any] = None) -> float:
+    def haversine(
+        self, initial: Optional[Any] = None, final: Optional[Any] = None
+    ) -> float:
         """
         Haversine distance offering improved numerical stability.
         """
@@ -155,6 +160,9 @@ class GreatCircle:
         lat2, lon2 = self._to_radians(end)
         dlon = lon2 - lon1
         dlat = lat2 - lat1
-        a = math.sin(dlat / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
+        a = (
+            math.sin(dlat / 2) ** 2
+            + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
+        )
         a = min(1.0, max(0.0, a))
         return 2 * self.Re * math.asin(math.sqrt(a))

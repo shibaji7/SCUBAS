@@ -38,7 +38,9 @@ def patch_load_earth_model(monkeypatch):
             "asthenospheric_mantle_top_depth": DummyInterpolator(12.0),
         }
 
-    monkeypatch.setattr(ConductivityProfile, "load_earth_model", _dummy_load, raising=False)
+    monkeypatch.setattr(
+        ConductivityProfile, "load_earth_model", _dummy_load, raising=False
+    )
 
 
 def test_get_interpolation_points():
@@ -54,7 +56,9 @@ def test_compile_profile_to_site():
     site = profile.compile_profile([10.2, -70.6])
     assert isinstance(site, Site)
     assert len(site.layers) == 7
-    assert pytest.approx(site.layers[0].conductivity, rel=1e-6) == pytest.approx(1.0 / profile.seawater_resistivity)
+    assert pytest.approx(site.layers[0].conductivity, rel=1e-6) == pytest.approx(
+        1.0 / profile.seawater_resistivity
+    )
 
 
 def test_compile_profile_dataframe():
