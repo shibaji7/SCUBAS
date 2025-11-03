@@ -38,6 +38,7 @@ def main() -> None:
             "font.sans-serif": ["Tahoma", "DejaVu Sans", "Lucida Grande", "Verdana"],
         },
         science=True,
+        latex=True,
     )
 
     # Instantiate the ocean model for the deep-ocean profile and visualise
@@ -108,7 +109,7 @@ def main() -> None:
     potentials_passive, _ = cable_passive._pot_along_cable_(timestamp=0)
 
     # Produce an overlaid plot comparing active vs passive configurations.
-    fig, ax = plt.subplots(figsize=(6, 3), dpi=300)
+    fig, ax = plt.subplots(figsize=(3, 3), dpi=180)
     ax.plot(distances, potentials_active, label="Active terminations", color="tab:red")
     ax.plot(
         distances, potentials_passive, label="Passive", color="tab:blue", linestyle="--"
