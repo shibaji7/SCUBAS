@@ -43,63 +43,76 @@ where $V_i=-V_k=V=\frac{E}{\gamma}$.
 
 !!! Example    
     ``` py
-    # Import all required libs
-    import matplotlib as mpl
-    import matplotlib.pyplot as plt
-    # Set matplotlib styles
-    plt.style.use(["science", "ieee"])
-    plt.rcParams["font.family"] = "sans-serif"
-    plt.rcParams["font.sans-serif"] = ["Tahoma", "DejaVu Sans",
-                                       "Lucida Grande", "Verdana"]
-    import pandas as pd
+    from pathlib import Path
 
-    # Import SCUBAS dependencies
+    import pandas as pd
+    
     from scubas.datasets import PROFILES
     from scubas.models import OceanModel
-    from scubas.plotlib import plot_transfer_function,\
-            potential_along_section, cable_potential, update_rc_params
-    from scubas.cables import TransmissionLine, Cable
-    from scubas.conductivity import ConductivityProfile as CP
+    from scubas.plotlib import cable_potential, plot_transfer_function, update_rc_params
+    from scubas.cables import Cable, TransmissionLine
 
-    # Ocean-Earth conductivity profile of a Deep Ocean
-    site = PROFILES.DO_3
-    # Rended ocean model
-    om = OceanModel(site)
-    # Generate transfer function
-    tf = om.get_TFs()
-    # Transfer function of a Deep Ocean.
-    # We are going to use this tranfer function to compute differen electrical cases
-    _ = plot_transfer_function(tf)
+    figures_dir = Path("docs/tutorial/figures")
+    figures_dir.mkdir(parents=True, exist_ok=True)
+
+    update_rc_params(
+        {
+            "font.family": "sans-serif",
+            "font.sans-serif": ["Tahoma", "DejaVu Sans", "Lucida Grande", "Verdana"],
+        },
+        science=True,
+    )
+
+    ocean_model = OceanModel(PROFILES.DO_3)
+    transfer_function = ocean_model.get_TFs()
+    tf_artifacts = plot_transfer_function(transfer_function)
+    tf_artifacts.figure.suptitle("Deep Ocean Transfer Function")
+    tf_artifacts.figure.savefig(
+        figures_dir / "electrically_cable_transfer_function.png",
+        dpi=300,
+        bbox_inches="tight",
+    )
 
     ####################################################################
     # Simulating the case: Induced electric field 0.3 V/km on a 
     # shallow continental shelf with depth 100 m, length 600 km
     ####################################################################
-    e_CS = pd.DataFrame()
-    e_CS["X"], e_CS["dTime"] = [300], [0]
-    length=600
-    tl = TransmissionLine(
-        sec_id="CS",
-        directed_length=dict(
-            length_north=length,
-        ),
-        elec_params=dict(
-            site=PROFILES.CS,
-            width=1.0,
-            flim=[1e-6, 1e0],
-        ),
-        active_termination=dict(
-            right=None,
-            left=None,
-        ),
+    induced_e_field = pd.DataFrame(
+        {"X": [300.0]},
+        index=pd.RangeIndex(1, name="Time"),
     )
-    tl.compute_eqv_pi_circuit(e_CS, ["X"])
-    cable = Cable([tl], ["X"])
-    Vc, Lc = cable._pot_along_cable_(0)
-    tag = cable_potential(Vc, Lc, ylim=[-200, 200])
-    _ = tag["axes"].text(0.05, 0.85, r"$L_{cs}$=%dkm"%length, ha="left",\
-                    va="center", transform=tag["axes"].transAxes)
+
+    length = 600.0
+    transmission_line = TransmissionLine(
+        sec_id="CS-long",
+        directed_length={"length_north": length},
+        elec_params={"site": PROFILES.CS, "width": 1.0, "flim": [1e-6, 1.0]},
+    )
+    transmission_line.compute_eqv_pi_circuit(
+        Efield=induced_e_field,
+        components=["X"],
+    )
+
+    cable = Cable([transmission_line], components=["X"])
+    potentials, distances = cable._pot_along_cable_(timestamp=0)
+    potential_plot = cable_potential(potentials, distances, ylim=(-200, 200))
+    potential_plot.axes.text(
+        0.05,
+        0.85,
+        rf"$L_{{cs}}$={length:.0f} km",
+        ha="left",
+        va="center",
+        transform=potential_plot.axes.transAxes,
+    )
+    potential_plot.figure.savefig(
+        figures_dir / "electrically_long_cable_potential.png",
+        dpi=300,
+        bbox_inches="tight",
+    )
     ```
+
+    ![Deep ocean transfer function](figures/electrically_cable_transfer_function.png "Transfer function for the deep-ocean profile used in both scenarios")
+    ![Electrically long cable potential](figures/electrically_long_cable_potential.png "Potential profile along a 600 km continental shelf cable")
 
 #### Electrically Short Cable
 For an electrically-short section, where the physical length is less than the adjustment distance, i.e., $L<\frac{1}{\gamma}$. When the transmission line length is considerably shorter than the adjustment distance it is referred to as 'electrically-short' and the equivalent-$\pi$ components reduce to (Boteler et a, 2013):
@@ -131,29 +144,75 @@ $$
 !!! Example
     ``` py
     ####################################################################
-    # Simulating the case: Induced electric field 0.3 V/km on a 
+    # Simulating the case: Induced electric field 0.3 V/km on a
     # shallow continental shelf with depth 100 m, length 4000 km
     ####################################################################
-    length=4000
-    tl = TransmissionLine(
-        sec_id="CS",
-        directed_length=dict(
-            length_north=length,
-        ),
-        elec_params=dict(
-            site=PROFILES.CS,
-            width=1.0,
-            flim=[1e-6, 1e0],
-        ),
-        active_termination=dict(
-            right=None,
-            left=None,
-        ),
+    from pathlib import Path
+
+    import pandas as pd
+
+    from scubas.cables import Cable, TransmissionLine
+    from scubas.datasets import PROFILES
+    from scubas.models import OceanModel
+    from scubas.plotlib import (
+        cable_potential,
+        plot_transfer_function,
+        update_rc_params,
     )
-    tl.compute_eqv_pi_circuit(e_CS, ["X"])
-    cable = Cable([tl], ["X"])
-    Vc, Lc = cable._pot_along_cable_(0)
-    tag = cable_potential(Vc, Lc, ylim=[-200, 200])
-    _ = tag["axes"].text(0.05, 0.85, r"$L_{cs}$=%dkm"%length, ha="left",\
-            va="center", transform=tag["axes"].transAxes)
+
+    figures_dir = Path("docs/tutorial/figures")
+    figures_dir.mkdir(parents=True, exist_ok=True)
+
+    update_rc_params(
+        {
+            "font.family": "sans-serif",
+            "font.sans-serif": ["Tahoma", "DejaVu Sans", "Lucida Grande", "Verdana"],
+        },
+        science=True,
+    )
+
+    ocean_model = OceanModel(PROFILES.DO_3)
+    transfer_function = ocean_model.get_TFs()
+    tf_artifacts = plot_transfer_function(transfer_function)
+    tf_artifacts.figure.suptitle("Deep Ocean Transfer Function")
+    tf_artifacts.figure.savefig(
+        figures_dir / "electrically_cable_transfer_function.png",
+        dpi=300,
+        bbox_inches="tight",
+    )
+
+    induced_e_field = pd.DataFrame(
+        {"X": [300.0]},
+        index=pd.RangeIndex(1, name="Time"),
+    )
+
+    length = 4000.0
+    transmission_line = TransmissionLine(
+        sec_id="CS-short",
+        directed_length={"length_north": length},
+        elec_params={"site": PROFILES.CS, "width": 1.0, "flim": [1e-6, 1.0]},
+    )
+    transmission_line.compute_eqv_pi_circuit(
+        Efield=induced_e_field,
+        components=["X"],
+    )
+
+    cable = Cable([transmission_line], components=["X"])
+    potentials, distances = cable._pot_along_cable_(timestamp=0)
+    potential_plot = cable_potential(potentials, distances, ylim=[-200, 200])
+    potential_plot.axes.text(
+        0.05,
+        0.85,
+        rf"$L_{{cs}}$={length:.0f} km",
+        ha="left",
+        va="center",
+        transform=potential_plot.axes.transAxes,
+    )
+    potential_plot.figure.savefig(
+        figures_dir / "electrically_short_cable_potential.png",
+        dpi=300,
+        bbox_inches="tight",
+    )
     ```
+
+    ![Electrically short cable potential](figures/electrically_short_cable_potential.png "Potential profile along a 4000 km continental shelf cable")
