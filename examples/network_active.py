@@ -13,6 +13,16 @@ demonstrates how the refactored API pieces come together:
 # NOTE: Matplotlib is used for plotting the transfer function and the cable
 # potentials.  ``mpl`` is unused directly but kept for clarity if additional
 # configuration is desired.
+import os
+from pathlib import Path
+
+os.environ["MPLBACKEND"] = "Agg"
+os.environ["OMP_NUM_THREADS"] = "1"
+os.environ["OPENBLAS_NUM_THREADS"] = "1"
+os.environ["MKL_NUM_THREADS"] = "1"
+os.environ["NUMEXPR_NUM_THREADS"] = "1"
+os.environ["VECLIB_MAXIMUM_THREADS"] = "1"
+
 import matplotlib as mpl  # noqa: F401  (kept for parity with docs)
 import matplotlib.pyplot as plt
 import numpy as np
@@ -32,13 +42,18 @@ def main() -> None:
     # Configure Matplotlib so the output mirrors the documentation styling.
     # Passing ``science=False`` keeps the default theme while still applying
     # the sans-serif fonts to make the plot consistent across environments.
+    figures_dir = (
+        Path(__file__).resolve().parent.parent / "docs" / "tutorial" / "figures"
+    )
+    figures_dir.mkdir(parents=True, exist_ok=True)
+
     update_rc_params(
         {
             "font.family": "sans-serif",
             "font.sans-serif": ["Tahoma", "DejaVu Sans", "Lucida Grande", "Verdana"],
         },
         science=True,
-        latex=True,
+        latex=False,
     )
 
     # Instantiate the ocean model for the deep-ocean profile and visualise
@@ -49,6 +64,12 @@ def main() -> None:
     transfer_function = ocean_model.get_TFs()
     tf_artifacts = plot_transfer_function(transfer_function)
     tf_artifacts.figure.suptitle("Deep Ocean Transfer Function")
+    tf_artifacts.figure.savefig(
+        figures_dir / "active_transfer_function.png",
+        dpi=300,
+        bbox_inches="tight",
+    )
+    plt.close(tf_artifacts.figure)
 
     ####################################################################
     # Simulated case:
@@ -121,7 +142,12 @@ def main() -> None:
     ax.legend(loc="upper right")
     ax.set_title("Cable potential comparison")
 
-    plt.show()
+    fig.savefig(
+        figures_dir / "active_cable_potential_comparison.png",
+        dpi=300,
+        bbox_inches="tight",
+    )
+    plt.close(fig)
 
 
 if __name__ == "__main__":

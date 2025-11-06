@@ -42,7 +42,8 @@ $$
 
 !!! Example
     ``` py
-    # Core scientific stack
+    from pathlib import Path
+
     import matplotlib.pyplot as plt
     import numpy as np
     import pandas as pd
@@ -54,6 +55,9 @@ $$
     from scubas.plotlib import plot_transfer_function, update_rc_params
 
     # Configure Matplotlib using the helper (gracefully falls back if SciencePlots is missing)
+    figures_dir = Path("docs/tutorial/figures")
+    figures_dir.mkdir(parents=True, exist_ok=True)
+
     update_rc_params(
         {
             "font.family": "sans-serif",
@@ -67,6 +71,12 @@ $$
     ocean_model = OceanModel(ocean_site)
     tf_artifacts = plot_transfer_function(ocean_model.get_TFs())
     tf_artifacts.figure.suptitle("Deep Ocean Transfer Function")
+    tf_artifacts.figure.savefig(
+        figures_dir / "active_transfer_function.png",
+        dpi=300,
+        bbox_inches="tight",
+    )
+    plt.close(tf_artifacts.figure)
 
     ####################################################################
     # Simulating the case: Induced electric field 0.3 V/km on a
@@ -106,5 +116,13 @@ $$
     ax.set_xlim([0, length])
     ax.legend(loc="upper right")
     ax.set_title("Cable potential comparison")
-    plt.show()
+    fig.savefig(
+        figures_dir / "active_cable_potential_comparison.png",
+        dpi=300,
+        bbox_inches="tight",
+    )
+    plt.close(fig)
     ```
+
+    ![Active transfer function](figures/active_transfer_function.png "Deep ocean transfer function used for active termination comparison")
+    ![Active vs passive cable potentials](figures/active_cable_potential_comparison.png "Comparison of potentials along a continental shelf cable with and without active terminations")
