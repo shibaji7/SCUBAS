@@ -26,11 +26,7 @@ import pandas as pd
 from scubas.cables import Cable, TransmissionLine
 from scubas.datasets import PROFILES
 from scubas.models import OceanModel
-from scubas.plotlib import (
-    cable_potential,
-    plot_transfer_function,
-    update_rc_params,
-)
+from scubas.plotlib import cable_potential, plot_transfer_function, update_rc_params
 
 
 def save_transfer_function(figures_dir: Path) -> None:
@@ -95,7 +91,9 @@ def main() -> None:
     """Generate plots for electrically long and short cable cases."""
 
     # Match the documentation styling so the generated figures are consistent.
-    figures_dir = Path(__file__).resolve().parent.parent / "docs" / "tutorial" / "figures"
+    figures_dir = (
+        Path(__file__).resolve().parent.parent / "docs" / "tutorial" / "figures"
+    )
     figures_dir.mkdir(parents=True, exist_ok=True)
 
     update_rc_params(

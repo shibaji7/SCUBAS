@@ -231,14 +231,13 @@ class OceanModel:
             dt_seconds = self.Efield.Time.apply(
                 lambda x: (x - first_time).total_seconds()
             )
-            self.Efield["dTime"] = dt_seconds
-            self.Bfield["dTime"] = dt_seconds
+            self.Efield["dTime"] = dt_seconds.tolist()
+            self.Bfield["dTime"] = dt_seconds.tolist()
         else:
             dt_value = np.asarray(self.Efield.Time, dtype=float)
             delta = dt_value[1] - dt_value[0] if len(dt_value) > 1 else 0.0
             self.Efield["dTime"] = delta
             self.Bfield["dTime"] = delta
-
         for component in self.components:
             Bt = np.asarray(self.Bfield[component])
             proc = Preprocess(np.asarray(self.Bfield.dTime), np.asarray(Bt))

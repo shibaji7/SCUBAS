@@ -17,6 +17,11 @@ def clean():
     os.system("find . -type d -name '.ipynb_checkpoints' -exec rm -rf {} +")
     os.system("find . -type d -name '__pycache__' -exec rm -rf {} +")
     os.system("rm -rf *coverage* .pytest_cache .mypy_cache .tox")
+    os.system("isort -rc -sl .")
+    os.system("autoflake --in-place .")
+    os.system("isort -rc -m 3 .")
+    os.system("black .")
+    os.system("pip install -e .[dev]")
     return
 
 
