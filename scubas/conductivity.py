@@ -742,6 +742,7 @@ class ConductivityProfile:
         end = np.asarray(bined_latlon[1], dtype=float)
         ipts = cp.get_interpolation_points(start, end)
         profile = cp._compile_profile_(ipts)
+        profile.thickness = profile.thickness * 1e3
         logger.info(f"Compiled Profile \n {profile}")
         if to_site:
             profile = Site.init(
