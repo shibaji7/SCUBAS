@@ -15,7 +15,7 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
-from typing import Any, Dict, List, Mapping, Optional, Sequence
+from typing import Any, List, Mapping, Sequence
 
 os.environ["MPLBACKEND"] = "Agg"
 os.environ["OMP_NUM_THREADS"] = "1"

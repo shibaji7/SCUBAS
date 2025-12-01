@@ -1,15 +1,46 @@
 [build-system]
-requires = ["setuptools>=61.0", "setuptools-scm[toml]>=8", "wheel"]
+requires = ["setuptools>=61.0", "setuptools_scm", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "scubas"
-dynamic = ["version"]
+version = "0.1.8"
 description = "Precision ionospheric radio sounding tools"
 readme = "README.md"
 requires-python = ">=3.11"
-authors = [{name = "Shibaji Chakraborty"}]
+authors = [{name = "Shibaji Chakraborty", email = "chakras4@erau.edu"}]
+maintainers = [{name = "Shibaji Chakraborty", email = "chakras4@erau.edu"}]
+keywords = [
+  "Python>=3.6",
+  "submarine cable",
+  "electrical surge",
+  "geomagnetic induction",
+  "geomagnetic disturbance",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Education",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.6",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Operating System :: OS Independent",
+]
+dependencies = [
+  "pandas",
+  "matplotlib>=3.3.4",
+  "pyproj",
+  "loguru",
+  "scipy",
+  "SciencePlots",
+]
 license = {text = "MIT"}
+
+[project.urls]
+Homepage = "https://github.com/shibaji7/SCUBAS"
+Documentation = "https://scubas.readthedocs.io/en/latest/"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
@@ -42,3 +73,9 @@ dev = [
   "SciencePlots",
   "scipy",
 ]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["scubas*"]
