@@ -197,7 +197,7 @@ class OceanModel:
         for file in files:
             logger.info(f"Read file: {file}")
             file_suffix = Path(file).suffix.lower()
-            if file_suffix == ".txt":
+            if file_suffix in [".txt", ".min"]:
                 df = self.read_iaga(file, return_xyzf, return_header=False)
             elif file_suffix == ".csv":
                 df = pd.read_csv(file, parse_dates=[csv_file_date_name])
