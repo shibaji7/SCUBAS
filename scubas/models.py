@@ -189,6 +189,7 @@ class OceanModel:
         files: Sequence[Union[str, Path]],
         return_xyzf: bool = True,
         csv_file_date_name: str = "Date",
+        check_for_gaps: bool = True,
     ) -> pd.DataFrame:
         """
         Aggregate B-field data from IAGA or CSV files.
@@ -207,6 +208,17 @@ class OceanModel:
                 raise ValueError(f"Unsupported B-field file extension '{file_suffix}'.")
             data_frames.append(df)
         self.Bfield = pd.concat(data_frames, axis=0).sort_index()
+        if check_for_gaps:            
+            for component in ["X", "Y", "Z", "F"]:
+                if component not in self.Bfield.columns:
+                    raise ValueError(f"B-field component '{component}' missing in data.")
+                else:
+                    all_gaps = self.Bfield[component].isnull().sum()
+                    logger.info(f"B-field[{component}] has {all_gaps} data gaps.")
+                    if all_gaps > 0:
+                        self.Bfield[component] = self.Bfield[component].interpolate(method="spline", order=2)
+        logger.info(f"Compiled B-field data with {len(self.Bfield)} records.")
+        
         return self.Bfield
 
     def to_Efields(

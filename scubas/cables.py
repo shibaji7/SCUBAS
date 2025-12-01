@@ -574,7 +574,6 @@ class Cable:
                             -sections[nid].Ye[component],
                         ]
                     )
-
                 node.Ji = Ji
                 node.Yii = Yii
                 self.nodes[nid][component] = node
