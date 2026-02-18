@@ -304,6 +304,11 @@ class TransmissionLine(CableSection):
             self.elec_params.site,
             flim=self.elec_params.flim,
         )
+        (self.bfield_data_files, self.csv_file_date_name, self.p) = (
+            bfield_data_files,
+            csv_file_date_name,
+            p,
+        )
         if bfield_data_files:
             try:
                 self.model.read_Bfield_data(
@@ -324,28 +329,50 @@ class TransmissionLine(CableSection):
                 "E-field values are unavailable; run 'compute_eqv_pi_circuit' first."
             )
 
-        terminators = [
-            self.active_termination.right,
-            self.active_termination.left,
-        ]
-        for terminator in terminators:
-            if terminator:
+        terminators, names = (
+            [
+                self.active_termination.right,
+                self.active_termination.left,
+            ],
+            ["right", "left"],
+        )
+        width, flim = (self.elec_params.width, self.elec_params.flim)
+        self.has_active_term = False
+        from types import SimpleNamespace
+
+        self.term_params = dict(left=None, right=None)
+        for site, tname in zip(terminators, names):
+            if site:
+                self.term_params[tname] = SimpleNamespace()
+                self.has_active_term = True
                 C, R, Z, Y, gma, Z0 = self.calc_trasmission_line_parameters(
-                    site=getattr(terminator, "site", None),
-                    width=getattr(terminator, "width", None),
+                    site=site,
+                    width=width,
                 )
+                model = OceanModel(
+                    site,
+                    flim=self.elec_params.flim,
+                )
+                if self.bfield_data_files:
+                    model.read_Bfield_data(
+                        self.bfield_data_files,
+                        csv_file_date_name=self.csv_file_date_name,
+                    )
+                    logger.info(f"B files, for AT {tname}: {self.bfield_data_files}")
+                model.to_Efields(p=self.p)
                 Jn: Dict[str, np.ndarray] = {}
                 for component in self.components:
-                    E = np.asarray(self.Efield[component]) * 1.0e-6
+                    E = np.asarray(model.Efield[component]) * 1.0e-6
                     Jn[component] = E / Z
-                terminator.Yn = 1.0 / Z0
-                terminator.Jn = Jn
-                terminator.Z0 = Z0
-                terminator.R = R
-                terminator.C = C
-                terminator.Z = Z
-                terminator.Y = Y
-                terminator.gma = gma
+                setattr(self.term_params[tname], "Yn", 1.0 / Z0)
+                setattr(self.term_params[tname], "Jn", Jn)
+                setattr(self.term_params[tname], "Z0", Z0)
+                setattr(self.term_params[tname], "R", R)
+                setattr(self.term_params[tname], "C", C)
+                setattr(self.term_params[tname], "Z", Z)
+                setattr(self.term_params[tname], "Y", Y)
+                setattr(self.term_params[tname], "gma", gma)
+                setattr(self.term_params[tname], "Efield", model.Efield.copy())
 
     def calc_trasmission_line_parameters(
         self,
@@ -512,6 +539,12 @@ class Cable:
                 self.tot_params[f"E.{component}"] += np.asarray(
                     section.Efield[component]
                 )
+                if section.has_active_term:
+                    term_params = section.term_params
+                    for tname in ["left", "right"]:
+                        if term_params[tname]:
+                            E = term_params[tname].Efield[component]
+                            self.tot_params[column + f".{tname}"] = np.asarray(E)
 
         for idx, section in enumerate(self.cable_sections):
             column = f"V(v).{idx:02d}"
@@ -543,11 +576,11 @@ class Cable:
                             -sections[nid].Ye[component],
                         ]
                     )
-                    if sections[nid].active_termination.left:
+                    if sections[nid].has_active_term:
                         logger.info("Adding active termination: left")
-                        Yii[nid] += sections[nid].active_termination.left.Yn
+                        Yii[nid] += sections[nid].term_params["left"].Yn
                         Ji = (
-                            sections[nid].active_termination.left.Jn[component]
+                            sections[nid].term_params["left"].Jn[component]
                             - sections[nid].Ie[component]
                         )
                 elif nid == self.right_edge:
@@ -558,10 +591,10 @@ class Cable:
                             sections[-1].Yp2[component] + sections[-1].Ye[component],
                         ]
                     )
-                    if sections[-1].active_termination.right:
+                    if sections[-1].has_active_term:
                         logger.info("Adding active termination: right")
-                        Yii[nid] += sections[-1].active_termination.right.Yn
-                        Ji = Ji - sections[-1].active_termination.right.Jn[component]
+                        Yii[nid] += sections[-1].term_params["right"].Yn
+                        Ji = Ji - sections[-1].term_params["right"].Jn[component]
                 else:
                     Ji = sections[nid - 1].Ie[component] - sections[nid].Ie[component]
                     Yii[nid - 1 : nid + 2] = np.array(
