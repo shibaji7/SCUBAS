@@ -51,7 +51,7 @@ If you have any questions or concerns please submit an **Issue** on the [SCUBAS 
   <div class="doc-card">
     <strong>Tutorials</strong>
     Theory, storm-event studies, and uncertainty workflows.<br>
-    <a href="tutorial/">Open Tutorials</a>
+    <a href="tutorial/theory/">Open Tutorials</a>
   </div>
   <div class="doc-card">
     <strong>API Reference</strong>
