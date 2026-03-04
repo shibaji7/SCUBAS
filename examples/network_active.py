@@ -82,9 +82,7 @@ def main() -> None:
     # ``compute_eqv_pi_circuit``: component columns plus an index representing
     # time samples.
     length_km = 600.0
-    bfield_dataset = (
-        Path(__file__).resolve().parent / "datasets" / "1989" / "FRD.csv"
-    )
+    bfield_dataset = Path(__file__).resolve().parent / "datasets" / "1989" / "FRD.csv"
     time_index = pd.read_csv(
         bfield_dataset,
         parse_dates=["Date"],
@@ -119,8 +117,12 @@ def main() -> None:
 
     # Convert the synthetic electric field into π-circuit parameters (Ye, Yp2,
     # Ie).  These feed directly into the nodal analysis executed by ``Cable``.
-    transmission_line_active.compute_eqv_pi_circuit(Efield=induced_e_field, components=["X"])
-    transmission_line_passive.compute_eqv_pi_circuit(Efield=induced_e_field, components=["X"])
+    transmission_line_active.compute_eqv_pi_circuit(
+        Efield=induced_e_field, components=["X"]
+    )
+    transmission_line_passive.compute_eqv_pi_circuit(
+        Efield=induced_e_field, components=["X"]
+    )
 
     # Assemble a single-section cable; the constructor triggers ``compile()``
     # and therefore runs the nodal analysis immediately.

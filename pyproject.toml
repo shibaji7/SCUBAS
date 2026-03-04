@@ -1,10 +1,10 @@
 [build-system]
-requires = ["setuptools>=61.0", "setuptools_scm", "wheel"]
+requires = ["setuptools>=61.0,<77", "setuptools_scm", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "scubas"
-version = "0.1.8"
+version = "0.1.9"
 description = "Precision ionospheric radio sounding tools"
 readme = "README.md"
 requires-python = ">=3.11"
