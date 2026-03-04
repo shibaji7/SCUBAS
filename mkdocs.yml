@@ -82,4 +82,5 @@ nav:
             - Datasets: dev/datasets.md
             - Ocean/Earth Model: dev/models.md
             - Plotting Library: dev/plotlib.md
+            - Current Sources: dev/sources.md
             - Utility Module: dev/utils.md

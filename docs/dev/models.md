@@ -15,6 +15,11 @@ and conditions of MIT General Public License.
 <span class="api-badge api-package">Package</span>
 <span class="api-badge api-module">Module</span> `scubas.models`
 <span class="api-badge api-class">Class</span> `OceanModel`, `Preprocess`
+<span class="api-badge api-method">Method / Function</span> `_validate_frequency_limits`
+
+!!! important "Frequency limits are validated"
+    `OceanModel` requires valid `flim=(f_min, f_max)` values with
+    positive, ordered frequencies.
 
 The `scubas.models` module orchestrates the conversion between magnetic and
 electric fields using the modernised `OceanModel` class.  The refactor

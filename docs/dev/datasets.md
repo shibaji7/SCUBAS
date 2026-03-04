@@ -16,6 +16,10 @@ and conditions of MIT General Public License.
 <span class="api-badge api-module">Module</span> `scubas.datasets`
 <span class="api-badge api-class">Class</span> `Layer`, `Site`, `PROFILES`
 
+!!! info "Why this module matters"
+    Most SCUBAS workflows pass `Site` objects into conductivity, model, and
+    cable utilities. Defining these correctly improves downstream stability.
+
 `scubas.datasets` now exposes lightweight data classes powered by `dataclass`
 and offers convenience helpers for synthesising layered conductivity profiles.
 The modernised layout makes it easier to construct and inspect a `Site`, while

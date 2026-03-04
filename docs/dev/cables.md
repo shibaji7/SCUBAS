@@ -15,6 +15,12 @@ and conditions of MIT General Public License.
 <span class="api-badge api-package">Package</span>
 <span class="api-badge api-module">Module</span> `scubas.cables`
 <span class="api-badge api-class">Class</span> `CableSection`, `TransmissionLine`, `Cable`
+<span class="api-badge api-method">Method / Function</span> `_update_recursive_namespace`
+
+!!! important "Execution order"
+    Typical workflow is: define `TransmissionLine` sections -> call
+    `compile_oml()` and `compute_eqv_pi_circuit()` per section -> build `Cable`
+    -> run nodal analysis.
 
 The refactored cable module provides a clear separation between geometry
 (`CableSection`), electrical properties (`TransmissionLine`), and the nodal
