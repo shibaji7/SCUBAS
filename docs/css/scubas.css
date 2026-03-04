@@ -1,58 +1,135 @@
+:root {
+  --scubas-primary: hsl(217, 71%, 53%);
+  --scubas-accent: hsl(171, 100%, 41%);
+  --scubas-success: hsl(141, 71%, 48%);
+  --scubas-warning: hsl(48, 100%, 67%);
+  --scubas-danger: hsl(348, 100%, 61%);
+  --scubas-muted: hsl(0, 3%, 50%);
+}
+
 table th {
-    background-color: hsl(348, 100%, 65%);
-    color: white;
-    align: left;
-    font-weight: bold;
+  background-color: hsl(348, 100%, 65%);
+  color: #fff;
+  text-align: left;
+  font-weight: 700;
 }
 
 table td {
-    background-color: hsl(217, 71%, 90%);
-    align: left;
+  background-color: hsl(217, 71%, 92%);
+  text-align: left;
 }
 
-turquoise = hsl(171, 100%, 41%)
-blue=hsl(217, 71%, 53%)
-green=hsl(141, 71%, 48%)
-yellow=hsl(48, 100%, 67%)
-red=hsl(348, 100%, 61%)
-grey=hsl(0, 3%, 50%)
-
+tr:nth-child(even) {
+  background-color: #b2b2b2 !important;
+  color: #f4f4f4 !important;
+}
 
 blockquote {
-    border-left: 5px solid turquoise;
-    background: hsl(171, 100%, 90%);
-    padding: 10px 30px 10px
+  border-left: 5px solid var(--scubas-accent);
+  background: hsl(171, 100%, 93%);
+  padding: 10px 30px;
 }
 
 .is-parameter {
-    border-left: 5px solid grey;
-    background: hsl(0, 3%, 90%);
-    padding: 10px 50px 10px 
+  border-left: 5px solid var(--scubas-muted);
+  background: hsl(0, 3%, 90%);
+  padding: 10px 50px;
 }
 
 .is-primary {
-    border-left: 5px solid turquoise;
-    background: hsl(171, 100%, 90%);
-    padding: 10px 30px 10px 
+  border-left: 5px solid var(--scubas-accent);
+  background: hsl(171, 100%, 90%);
+  padding: 10px 30px;
 }
 
 .is-info {
-    border-left: 5px solid blue;
-    background: hsl(217, 71%, 90%);
-    padding: 10px 30px 10px 
+  border-left: 5px solid var(--scubas-primary);
+  background: hsl(217, 71%, 90%);
+  padding: 10px 30px;
 }
 
 .is-feature {
-    border-color: green;
-    background: hsl(141, 71%, 90%)
+  border-left: 5px solid var(--scubas-success);
+  background: hsl(141, 71%, 90%);
 }
 
 .is-note {
-    border-color: yellow;
-    background: hsl(48, 100%, 90%)
+  border-left: 5px solid var(--scubas-warning);
+  background: hsl(48, 100%, 90%);
 }
 
 .is-warning {
-    border-color: blue;
-    background: hsl(348, 100%, 90%)
+  border-left: 5px solid var(--scubas-danger);
+  background: hsl(348, 100%, 92%);
+}
+
+.api-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin-right: 6px;
+  margin-bottom: 4px;
+}
+
+.api-package {
+  background: #e9f2ff;
+  color: #114a9f;
+  border: 1px solid #8bb6f2;
+}
+
+.api-module {
+  background: #efeaff;
+  color: #5a35a8;
+  border: 1px solid #bea9ef;
+}
+
+.api-class {
+  background: #e8fff5;
+  color: #0f7a4f;
+  border: 1px solid #8fdcb7;
+}
+
+.api-method {
+  background: #fff1e8;
+  color: #a14a10;
+  border: 1px solid #efb38f;
+}
+
+.hero {
+  padding: 1.25rem 1.35rem;
+  border-radius: 14px;
+  border: 1px solid #d7e9ff;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(32, 122, 255, 0.12), transparent 38%),
+    radial-gradient(circle at 90% 0%, rgba(2, 201, 122, 0.1), transparent 45%),
+    #f8fbff;
+  margin-bottom: 1rem;
+}
+
+.hero h1,
+.hero h2,
+.hero h3 {
+  margin-top: 0;
+}
+
+.doc-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin: 0.4rem 0 1.2rem;
+}
+
+.doc-card {
+  border: 1px solid #e4ecf7;
+  border-radius: 12px;
+  background: #fff;
+  padding: 0.9rem 1rem;
+  box-shadow: 0 3px 12px rgba(20, 52, 100, 0.05);
+}
+
+.doc-card strong {
+  display: block;
+  margin-bottom: 4px;
 }

@@ -12,6 +12,11 @@ and conditions of MIT General Public License.
 
 # Utility helpers
 
+<span class="api-badge api-package">Package</span>
+<span class="api-badge api-module">Module</span> `scubas.utils`
+<span class="api-badge api-class">Class</span> `RecursiveNamespace`, `GreatCircle`
+<span class="api-badge api-method">Method / Function</span> `fft`, `ifft`, `frexp102str`, `component_mappings`, `component_sign_mappings`
+
 `scubas.utils` provides the small supporting functions and classes used across
 the codebase.  The refactor introduced dataclass-friendly namespaces, more
 robust FFT scaling, and guards against invalid input values.

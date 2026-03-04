@@ -10,6 +10,15 @@ This version of the MIT Public License incorporates the terms
 and conditions of MIT General Public License.
 -->
 # INTERMAGNET International Real-time Magnetic Observatory Network
+
+<div class="hero">
+  <h2>INTERMAGNET Data Access</h2>
+  <p>
+    Access global geomagnetic observatory data streams used to drive SCUBAS
+    cable-voltage simulations.
+  </p>
+</div>
+
 INTERMAGNET - the global network of observatories, monitoring the Earth's magnetic field. At this site you can find data and information from geomagnetic observatories around the world. The INTERMAGNET programme exists to establish a global network of cooperating digital magnetic observatories, adopting modern standard specifications for measuring and recording equipment, in order to facilitate data exchanges and the production of geomagnetic products in close to real time.
 
 ## Accessing the data by HAPI interface

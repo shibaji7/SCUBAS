@@ -58,6 +58,9 @@ extra_javascript:
     - https://polyfill.io/v3/polyfill.min.js?features=es6
     - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
+extra_css:
+    - css/scubas.css
+
 nav:
     - Home: index.md
     - Installation: user/install.md  
@@ -72,7 +75,8 @@ nav:
             - Event Study (1989 Strom): tutorial/1989.md
             - Extreme Value Analysis: tutorial/eva.md
             - Uncertainity Quantification: tutorial/uq.md
-    - Code Documentation:
+    - API:
+            - Overview: dev/index.md
             - Cables: dev/cables.md
             - Ocean/Earth Conductivity: dev/conductivity.md
             - Datasets: dev/datasets.md

@@ -12,6 +12,10 @@ and conditions of MIT General Public License.
 
 # Ocean and electric field modelling
 
+<span class="api-badge api-package">Package</span>
+<span class="api-badge api-module">Module</span> `scubas.models`
+<span class="api-badge api-class">Class</span> `OceanModel`, `Preprocess`
+
 The `scubas.models` module orchestrates the conversion between magnetic and
 electric fields using the modernised `OceanModel` class.  The refactor
 introduced tighter validation (e.g. positive frequency limits), better error

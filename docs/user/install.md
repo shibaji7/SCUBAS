@@ -13,6 +13,14 @@ and conditions of MIT General Public License.
 # Installing SCUBAS 
 ---
 
+<div class="hero">
+  <h2>Install and Configure SCUBAS</h2>
+  <p>
+    Setup guidance for Python environments, dependencies, and optional
+    geospatial tooling used in submarine cable modeling workflows.
+  </p>
+</div>
+
 [![License: MIT](https://img.shields.io/badge/License%3A-MIT-green)](https://choosealicense.com/licenses/mit/) 
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/release/python-3110/) 
 ![GitHub Stable Release (latest by date)](https://img.shields.io/github/v/release/shibaji7/SCUBAS)

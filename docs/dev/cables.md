@@ -12,6 +12,10 @@ and conditions of MIT General Public License.
 
 # Cable Modelling Utilities
 
+<span class="api-badge api-package">Package</span>
+<span class="api-badge api-module">Module</span> `scubas.cables`
+<span class="api-badge api-class">Class</span> `CableSection`, `TransmissionLine`, `Cable`
+
 The refactored cable module provides a clear separation between geometry
 (`CableSection`), electrical properties (`TransmissionLine`), and the nodal
 solution (`Cable`).  Nested configuration dictionaries are normalised using

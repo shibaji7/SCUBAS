@@ -12,6 +12,10 @@ and conditions of MIT General Public License.
 
 # Conductivity profiles
 
+<span class="api-badge api-package">Package</span>
+<span class="api-badge api-module">Module</span> `scubas.conductivity`
+<span class="api-badge api-class">Class</span> `ConductivityProfile`
+
 The conductivity utilities were modernised to provide type-safe configuration,
 download-on-demand handling of the LITHO1.0 model, and a consistent interface
 that can emit either raw `pandas.DataFrame` outputs or ready-to-use

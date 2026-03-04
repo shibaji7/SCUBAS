@@ -12,6 +12,10 @@ and conditions of MIT General Public License.
 
 # Datasets module
 
+<span class="api-badge api-package">Package</span>
+<span class="api-badge api-module">Module</span> `scubas.datasets`
+<span class="api-badge api-class">Class</span> `Layer`, `Site`, `PROFILES`
+
 `scubas.datasets` now exposes lightweight data classes powered by `dataclass`
 and offers convenience helpers for synthesising layered conductivity profiles.
 The modernised layout makes it easier to construct and inspect a `Site`, while

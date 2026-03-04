@@ -12,6 +12,10 @@ and conditions of MIT General Public License.
 
 # Plotting helpers
 
+<span class="api-badge api-package">Package</span>
+<span class="api-badge api-module">Module</span> `scubas.plotlib`
+<span class="api-badge api-method">Method / Function</span> `update_rc_params`, `plot_transfer_function`, `potential_along_section`, `cable_potential`
+
 `scubas.plotlib` now offers lightweight plotting utilities that return a
 typed `PlotArtifacts` dataclass containing the `Figure` and `Axes` objects.
 The helpers respect optional “science” styling, accept numpy arrays directly,
