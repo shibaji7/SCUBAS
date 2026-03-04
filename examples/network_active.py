@@ -82,9 +82,16 @@ def main() -> None:
     # ``compute_eqv_pi_circuit``: component columns plus an index representing
     # time samples.
     length_km = 600.0
+    bfield_dataset = (
+        Path(__file__).resolve().parent / "datasets" / "1989" / "FRD.csv"
+    )
+    time_index = pd.read_csv(
+        bfield_dataset,
+        parse_dates=["Date"],
+    )["Date"]
     induced_e_field = pd.DataFrame(
-        {"X": np.array([300.0])},
-        index=pd.RangeIndex(1, name="Time"),
+        {"X": np.full(len(time_index), 300.0)},
+        index=pd.DatetimeIndex(time_index, name="Time"),
     )
 
     # Configure the transmission line, pointing both terminations to the land
@@ -95,10 +102,13 @@ def main() -> None:
         directed_length={"length_north": length_km},
         elec_params={"site": PROFILES.CS, "width": 1.0, "flim": [1e-6, 1.0]},
         active_termination={
-            "right": {"site": PROFILES.LD, "width": 1.0},
-            "left": {"site": PROFILES.LD, "width": 1.0},
+            "right": PROFILES.LD,
+            "left": PROFILES.LD,
         },
     )
+    transmission_line_active.bfield_data_files = [bfield_dataset]
+    transmission_line_active.csv_file_date_name = "Date"
+    transmission_line_active.p = None
 
     # For comparison, repeat the configuration without any active terminations.
     transmission_line_passive = TransmissionLine(
@@ -109,12 +119,8 @@ def main() -> None:
 
     # Convert the synthetic electric field into π-circuit parameters (Ye, Yp2,
     # Ie).  These feed directly into the nodal analysis executed by ``Cable``.
-    transmission_line_active.compute_eqv_pi_circuit(
-        Efield=induced_e_field, components=["X"]
-    )
-    transmission_line_passive.compute_eqv_pi_circuit(
-        Efield=induced_e_field, components=["X"]
-    )
+    transmission_line_active.compute_eqv_pi_circuit(Efield=induced_e_field, components=["X"])
+    transmission_line_passive.compute_eqv_pi_circuit(Efield=induced_e_field, components=["X"])
 
     # Assemble a single-section cable; the constructor triggers ``compile()``
     # and therefore runs the nodal analysis immediately.

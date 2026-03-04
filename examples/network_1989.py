@@ -47,7 +47,7 @@ SECTION_DEFINITIONS: Sequence[Mapping[str, Any]] = [
         "profile": PROFILES.CS_W,
         "station": "FRD",
         "dataset": DATASET_DIR / "FRD.csv",
-        "terminations": {"left": {"site": PROFILES.LD, "width": 1.0}},
+        "terminations": {"left": PROFILES.LD},
         "edge_locations": {
             "initial": {"lat": 39.60, "lon": -74.33},
             "final": {"lat": 38.79, "lon": -72.62},
@@ -128,7 +128,7 @@ SECTION_DEFINITIONS: Sequence[Mapping[str, Any]] = [
         "profile": PROFILES.CS_E,
         "station": "HAD",
         "dataset": DATASET_DIR / "HAD.csv",
-        "terminations": {"right": {"site": PROFILES.LD, "width": 1.0}},
+        "terminations": {"right": PROFILES.LD},
         "edge_locations": {
             "initial": {"lat": 47.85, "lon": -9.05},
             "final": {"lat": 50.79, "lon": -4.55},

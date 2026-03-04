@@ -32,11 +32,13 @@ from scubas.datasets import PROFILES
 from scubas.plotlib import cable_potential, update_rc_params
 
 
-def create_induced_field(millivolts_per_km: float) -> pd.DataFrame:
-    """Return a single-sample electric-field dataframe (X component only)."""
+def create_induced_field(
+    millivolts_per_km: float, time_index: pd.DatetimeIndex
+) -> pd.DataFrame:
+    """Return a constant electric-field dataframe (X component only)."""
     return pd.DataFrame(
-        {"X": [millivolts_per_km]},
-        index=pd.RangeIndex(1, name="Time"),
+        {"X": [millivolts_per_km] * len(time_index)},
+        index=time_index,
     )
 
 
@@ -46,7 +48,8 @@ def build_transmission_line(
     length_km: float,
     profile: Any,
     efield: pd.DataFrame,
-    terminations: Optional[Mapping[str, Mapping[str, Any]]] = None,
+    terminations: Optional[Mapping[str, Any]] = None,
+    bfield_data_file: Optional[Path] = None,
 ) -> TransmissionLine:
     """Instantiate and parameterise a transmission-line section."""
     transmission_line = TransmissionLine(
@@ -55,6 +58,10 @@ def build_transmission_line(
         elec_params={"site": profile, "width": 1.0, "flim": [1e-6, 1.0]},
         active_termination=terminations,
     )
+    if bfield_data_file is not None:
+        transmission_line.bfield_data_files = [bfield_data_file]
+        transmission_line.csv_file_date_name = "Date"
+        transmission_line.p = None
     transmission_line.compute_eqv_pi_circuit(Efield=efield, components=["X"])
     return transmission_line
 
@@ -66,6 +73,7 @@ def simulate_case(
     sections: Sequence[Mapping[str, Any]],
     figures_dir: Path,
     ylim: Sequence[float],
+    bfield_data_file: Optional[Path] = None,
 ) -> None:
     """Solve the cable potentials for a multi-section configuration."""
     transmission_lines = [
@@ -75,6 +83,7 @@ def simulate_case(
             profile=section["profile"],
             efield=section["efield"],
             terminations=section.get("terminations"),
+            bfield_data_file=bfield_data_file,
         )
         for section in sections
     ]
@@ -116,9 +125,14 @@ def main() -> None:
         latex=False,
     )
 
+    bfield_data_file = Path(__file__).resolve().parent / "datasets" / "1989" / "FRD.csv"
+    base_time_index = pd.DatetimeIndex(
+        pd.read_csv(bfield_data_file, parse_dates=["Date"])["Date"], name="Time"
+    )
+
     # Shared electric-field definitions (values in mV/km).
-    efield_cs = create_induced_field(300.0)  # 0.3 V/km
-    efield_ocean = create_induced_field(100.0)  # 0.1 V/km
+    efield_cs = create_induced_field(300.0, base_time_index)  # 0.3 V/km
+    efield_ocean = create_induced_field(100.0, base_time_index)  # 0.1 V/km
 
     simulate_case(
         title="Case 1 – Continental Shelf",
@@ -133,6 +147,7 @@ def main() -> None:
         ],
         figures_dir=figures_dir,
         ylim=(-200.0, 200.0),
+        bfield_data_file=bfield_data_file,
     )
 
     simulate_case(
@@ -144,7 +159,7 @@ def main() -> None:
                 "length_km": 100.0,
                 "profile": PROFILES.CS,
                 "efield": efield_cs,
-                "terminations": {"left": {"site": PROFILES.LD, "width": 1.0}},
+                "terminations": {"left": PROFILES.LD},
             },
             {
                 "sec_id": "SO",
@@ -157,11 +172,12 @@ def main() -> None:
                 "length_km": 100.0,
                 "profile": PROFILES.CS,
                 "efield": efield_cs,
-                "terminations": {"right": {"site": PROFILES.LD, "width": 1.0}},
+                "terminations": {"right": PROFILES.LD},
             },
         ],
         figures_dir=figures_dir,
         ylim=(-60.0, 60.0),
+        bfield_data_file=bfield_data_file,
     )
 
     simulate_case(
@@ -173,7 +189,7 @@ def main() -> None:
                 "length_km": 100.0,
                 "profile": PROFILES.CS,
                 "efield": efield_cs,
-                "terminations": {"left": {"site": PROFILES.LD, "width": 1.0}},
+                "terminations": {"left": PROFILES.LD},
             },
             {
                 "sec_id": "DO",
@@ -186,11 +202,12 @@ def main() -> None:
                 "length_km": 100.0,
                 "profile": PROFILES.CS,
                 "efield": efield_cs,
-                "terminations": {"right": {"site": PROFILES.LD, "width": 1.0}},
+                "terminations": {"right": PROFILES.LD},
             },
         ],
         figures_dir=figures_dir,
         ylim=(-120.0, 120.0),
+        bfield_data_file=bfield_data_file,
     )
 
 
