@@ -85,7 +85,7 @@ jobs:
         # one leg uploads. A switch: setting the repository variable CODECOV_UPLOAD to "false" turns it off (unset keeps the upload on,
         # as it was before). A missing token (a pull request from a fork) must not fail the tests.
         if: success() && matrix.python-version == '3.12' && matrix.pandas-spec == 'pandas>=3' && vars.CODECOV_UPLOAD != 'false'
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         with:
           files: coverage.xml
           token: ${{ secrets.CODECOV_TOKEN }}
