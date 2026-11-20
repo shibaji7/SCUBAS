@@ -1,35 +1,36 @@
 [build-system]
-requires = ["setuptools>=61.0,<77", "setuptools_scm", "wheel"]
+requires = ["setuptools>=77", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "scubas"
-version = "0.1.9"
-description = "Precision ionospheric radio sounding tools"
+dynamic = ["version"]
+description = "SCUBAS: Submarine Cables Upset by Auroral Streams. The voltage induced on submarine cables by geomagnetic disturbances, from a transmission-line model of layered Ocean/Earth conductivity."
 readme = "README.md"
 requires-python = ">=3.11"
 authors = [{name = "Shibaji Chakraborty", email = "chakras4@erau.edu"}]
 maintainers = [{name = "Shibaji Chakraborty", email = "chakras4@erau.edu"}]
 keywords = [
-  "Python>=3.6",
   "submarine cable",
-  "electrical surge",
-  "geomagnetic induction",
   "geomagnetic disturbance",
+  "geomagnetic induction",
+  "geomagnetically induced voltage",
+  "space weather",
+  "transmission line",
+  "magnetotelluric",
 ]
 classifiers = [
   "Development Status :: 3 - Alpha",
-  "Intended Audience :: Education",
-  "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.6",
-  "Programming Language :: Python :: 3.7",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
-  "Programming Language :: Python :: 3.10",
-  "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
+  "Intended Audience :: Science/Research",
   "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering :: Physics",
 ]
 dependencies = [
+  "numpy",
   "pandas",
   "matplotlib>=3.3.4",
   "pyproj",
@@ -37,11 +38,15 @@ dependencies = [
   "scipy",
   "SciencePlots",
 ]
-license = {text = "LGPL-3.0-or-later"}
+license = "LGPL-3.0-or-later"
+license-files = ["LICENSE", "COPYING", "NOTICE.md"]
 
 [project.urls]
 Homepage = "https://github.com/shibaji7/SCUBAS"
 Documentation = "https://scubas.readthedocs.io/en/latest/"
+Source = "https://github.com/shibaji7/SCUBAS"
+Issues = "https://github.com/shibaji7/SCUBAS/issues"
+Changelog = "https://github.com/shibaji7/SCUBAS/blob/main/CHANGELOG.md"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
@@ -64,22 +69,11 @@ skip_covered = true
 output = "coverage.xml"
 
 [project.optional-dependencies]
-dev = [
-  "pytest>=8",
-  "pytest-cov>=4",
-  "pyproj>=3",
-  "matplotlib>=3.5",
-  "numpy",
-  "pandas",
-  "loguru",
-  "requests",
-  "tqdm",
-  "toml",
-  "SciencePlots",
-  "scipy",
-  "ruff",
-  "pre-commit",
-]
+# plots and data repeat runtime dependencies on purpose (the names BOLTS uses): `pip install scubas[plots]` keeps working if they are ever made optional (not before 1.0, see ADR 0003)
+plots = ["matplotlib>=3.3.4", "SciencePlots"]
+data = ["pandas"]
+dev = ["pytest>=8", "pytest-cov>=4", "ruff", "pre-commit", "build", "twine"]
+docs = ["sphinx>=9.0,<9.1", "sphinx-rtd-theme>=3.0", "sphinx-autodoc-typehints>=3.6,<3.7", "sphinx-copybutton>=0.5", "myst-parser>=5.0"]
 
 [tool.scubas.coverage-floors]
 # line coverage per module, checked by scripts/check_coverage_floors.py after a coverage run; a floor may only go up.
@@ -95,6 +89,9 @@ default = 90
 
 [tool.setuptools]
 include-package-data = true
+
+[tool.setuptools.dynamic]
+version = {attr = "scubas._version.__version__"}
 
 [tool.setuptools.packages.find]
 include = ["scubas*"]

@@ -3,7 +3,6 @@
 """The README stays true: its quick start runs, and the facts it states agree with the repository."""
 
 import re
-import tomllib
 from pathlib import Path
 
 import pytest
@@ -31,7 +30,8 @@ def test_the_quick_start_runs_and_gives_antisymmetric_end_potentials():
 
 
 def test_the_status_line_names_the_current_version():
-    version = tomllib.loads((ROOT / "pyproject.toml").read_text())["project"]["version"]
+    from scubas._version import __version__ as version
+
     assert f"Status: **{version} (alpha)**" in README
 
 

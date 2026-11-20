@@ -1,0 +1,14 @@
+# conda environment for SCUBAS: small. Everything is installed by `pip install -e ".[dev]"` (make dev). env.yml, a full freeze of an old environment, is kept for compatibility.
+name: scubas
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - numpy
+  - scipy
+  - pandas
+  - matplotlib
+  - pyproj
+  - loguru
+  - scienceplots
+  - pip

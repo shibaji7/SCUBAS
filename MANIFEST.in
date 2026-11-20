@@ -1,1 +1,10 @@
-recursive-include pynasonde *.toml
+# What goes into the source distribution (the wheel is only the package): enough to read the docs, run the examples and run the tests offline.
+include LICENSE COPYING NOTICE.md README.md CHANGELOG.md ROADMAP.md CONTRIBUTING.md CODE_OF_CONDUCT.md SECURITY.md CITATION.cff
+include ruff.toml codecov.yml Makefile env.yml environment.yml .readthedocs.yaml setup.py configure.py
+recursive-include scubas *.py
+recursive-include docs *.md *.py *.txt *.svg *.png *.css
+recursive-include examples *.py *.csv *.md
+recursive-include scripts *.py
+recursive-include tests *.py *.json *.npz *.csv *.min
+prune docs/_build
+global-exclude __pycache__ *.py[cod] .DS_Store

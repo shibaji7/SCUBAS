@@ -9,7 +9,6 @@ from __future__ import annotations
 
 import re
 import sys
-import tomllib
 from pathlib import Path
 
 _ROOT = Path(__file__).parent.parent
@@ -19,8 +18,8 @@ project = "SCUBAS"
 author = "Shibaji Chakraborty"
 copyright = "2023-2026, Shibaji Chakraborty"  # noqa: A001
 
-# The version comes from pyproject.toml, so the docs always match the release. No fallback: a missing version must fail the build.
-release = tomllib.loads((_ROOT / "pyproject.toml").read_text())["project"]["version"]
+# The version comes from the package, so the docs always match the release. No fallback: a failed import must fail the build.
+from scubas._version import __version__ as release  # noqa: E402
 version = ".".join(release.split(".")[:2])
 
 extensions = [

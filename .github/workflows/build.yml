@@ -33,6 +33,9 @@ jobs:
           python -m build
           python -m twine check dist/*
 
+      - name: Check what is inside the distributions
+        run: python scripts/check_dist.py
+
       - name: Install the wheel in a clean environment
         run: |
           python -m venv /tmp/clean

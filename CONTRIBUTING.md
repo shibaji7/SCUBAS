@@ -8,8 +8,8 @@ those tests stay unchanged and green (see [docs/dev/testing.md](docs/dev/testing
 
 ```bash
 git clone https://github.com/shibaji7/SCUBAS && cd SCUBAS
-conda create -n scubas python=3.11 && conda activate scubas   # or any Python >= 3.11
-make dev                                                       # editable install with pytest, coverage, ruff, pre-commit, build, twine
+make env && conda activate scubas   # conda environment from environment.yml (or any Python >= 3.11)
+make dev                            # editable install with pytest, coverage, ruff, pre-commit, build, twine, build, twine
 make pre-commit-install                                        # the cheap gates on every commit
 make qa                                                        # everything that must pass before a commit
 ```
