@@ -1,0 +1,95 @@
+name: release
+
+# Push a tag such as v0.2.0. The tag must match scubas/_version.py and have a CHANGELOG section ("## [0.2.0] - date").
+# TestPyPI is published first; PyPI waits for a manual approval of the "pypi" environment, then a GitHub Release is made from the changelog section.
+# Publishing uses PyPI trusted publishing (OIDC): no API token is stored anywhere.
+# Publishing is a switch: the jobs after "build" run only when the repository variable PUBLISH_ENABLED is "true" (make publish-on / publish-off;
+# unset or false: the tag is only checked and built). A tag pushed while it was off can be published later, by version, with
+# make publish-tag TAG=vX.Y.Z (this workflow started by hand on that tag). Nothing here runs until the owner has set the variable and created
+# the environments and the trusted publishers: see docs/dev/release.md.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Check the tag against the version and the changelog
+        run: |
+          python scripts/check_release.py --tag "${GITHUB_REF_NAME}"
+          VERSION=$(python -c "import re;print(re.search(r'__version__ = \"(.+?)\"', open('scubas/_version.py').read()).group(1))")
+          awk -v v="$VERSION" '$0 ~ "^## \\["v"\\]"{f=1;next} /^## \[/{f=0} f' CHANGELOG.md > release_notes.md
+          test -s release_notes.md || { echo "the CHANGELOG section for $VERSION is empty"; exit 1; }
+
+      - name: Build
+        run: |
+          python -m pip install --upgrade pip build twine
+          python -m build
+          python -m twine check dist/*
+
+      - name: Check what is inside the distributions
+        run: python scripts/check_dist.py
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: dist
+          path: |
+            dist/
+            release_notes.md
+
+  testpypi:
+    needs: build
+    if: success() && vars.PUBLISH_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    environment: testpypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: dist
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+          skip-existing: true
+
+  pypi:
+    needs: testpypi
+    if: success() && vars.PUBLISH_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    environment: pypi          # add required reviewers to this environment: that is the manual approval
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: dist
+      - uses: pypa/gh-action-pypi-publish@release/v1
+
+  github-release:
+    needs: pypi
+    if: success() && vars.PUBLISH_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: dist
+      - uses: softprops/action-gh-release@v3
+        with:
+          body_path: release_notes.md
+          files: dist/*

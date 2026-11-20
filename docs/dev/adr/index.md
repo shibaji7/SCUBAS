@@ -13,6 +13,7 @@ superseded) and the alternatives that were rejected.
 | [0006](0006-license-lgpl.md) | Relicense from MIT to LGPL-3.0-or-later | accepted |
 | [0007](0007-documentation-on-sphinx.md) | The documentation moves to Sphinx and MyST, built as `dirhtml` | accepted |
 | [0008](0008-planned-capabilities-are-stubs.md) | A planned capability is a stub that says so | accepted |
+| [0009](0009-release-by-tag-with-trusted-publishing.md) | A release is a tag, published with trusted publishing behind a switch | accepted |
 
 ```{toctree}
 :hidden:
@@ -26,4 +27,5 @@ superseded) and the alternatives that were rejected.
 0006-license-lgpl
 0007-documentation-on-sphinx
 0008-planned-capabilities-are-stubs
+0009-release-by-tag-with-trusted-publishing
 ```
