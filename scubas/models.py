@@ -160,18 +160,20 @@ class OceanModel:
             else:
                 seen_count[column] = 1
 
+        # Written for both pandas 2 and 3: ``delim_whitespace``,
+        # ``infer_datetime_format`` and nested ``parse_dates`` were removed in pandas 3,
+        # so whitespace is the separator and the date and time columns are joined and
+        # parsed explicitly.
         df = pd.read_csv(
             file,
             header=header_records["header_length"],
-            delim_whitespace=True,
-            parse_dates=[[0, 1]],
-            infer_datetime_format=True,
-            index_col=0,
+            sep=r"\s+",
             usecols=[0, 1, 3, 4, 5, 6],
             na_values=[99999.90, 99999.0, 88888.80, 88888.00],
             names=["Date", "Time"] + column_names,
         )
-        df.index.name = "Time"
+        stamps = pd.to_datetime(df.pop("Date") + " " + df.pop("Time"))
+        df.index = pd.DatetimeIndex(stamps, name="Time")
 
         if return_xyzf and "X" not in column_names and "Y" not in column_names:
             if "H" not in column_names or "D" not in column_names:

@@ -18,7 +18,7 @@ def simple_site():
 
 
 def build_bfield_dataframe():
-    times = pd.date_range("2020-01-01", periods=16, freq="S")
+    times = pd.date_range("2020-01-01", periods=16, freq="s")
     data = {
         "X": np.sin(np.linspace(0, 2 * np.pi, len(times))),
         "Y": np.cos(np.linspace(0, 2 * np.pi, len(times))),
