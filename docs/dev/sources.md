@@ -1,15 +1,17 @@
 # Current source modelling
 
-<span class="api-badge api-package">Package</span>
-<span class="api-badge api-module">Module</span> `scubas.sources.current_sources`
-<span class="api-badge api-class">Class</span> `Direction`, `Current`
+- **Module:** `scubas.sources.current_sources`
+- **Class:** `Direction`, `Current`
 
 This module models ionospheric line-current sources and computes associated
 magnetic and electric perturbations.
 
-!!! important "Unit conventions"
-    Default inputs use `km` for length and `MA` for current. Internally these
-    values are converted to SI units (`m`, `A`) before field calculations.
+:::{admonition} Unit conventions
+:class: important
+
+Default inputs use `km` for length and `MA` for current. Internally these
+values are converted to SI units (`m`, `A`) before field calculations.
+:::
 
 ## Quick start
 
@@ -31,18 +33,12 @@ print(source.E_fields[0]["direction"], source.E_field_units)
 
 ## API reference
 
-::: scubas.sources.current_sources.Direction
-    handler: python
-    options:
-      members:
-        - enumerate_key
-      show_root_heading: true
-      show_source: true
+```{eval-rst}
+.. autoclass:: scubas.sources.current_sources.Direction
+   :members: enumerate_key
+```
 
-::: scubas.sources.current_sources.Current
-    handler: python
-    options:
-      members:
-        - compute_B_field
-      show_root_heading: true
-      show_source: true
+```{eval-rst}
+.. autoclass:: scubas.sources.current_sources.Current
+   :members: compute_B_field
+```

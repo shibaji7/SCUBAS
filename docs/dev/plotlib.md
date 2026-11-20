@@ -12,14 +12,16 @@ and conditions of MIT General Public License.
 
 # Plotting helpers
 
-<span class="api-badge api-package">Package</span>
-<span class="api-badge api-module">Module</span> `scubas.plotlib`
-<span class="api-badge api-class">Class</span> `PlotArtifacts`
-<span class="api-badge api-method">Method / Function</span> `update_rc_params`, `plot_transfer_function`, `potential_along_section`, `cable_potential`
+- **Module:** `scubas.plotlib`
+- **Class:** `PlotArtifacts`
+- **Method / Function:** `update_rc_params`, `plot_transfer_function`, `potential_along_section`, `cable_potential`
 
-!!! info "Return type"
-    Plot helpers return a `PlotArtifacts` object to make figure/axes reuse and
-    custom post-processing easier.
+:::{admonition} Return type
+:class: note
+
+Plot helpers return a `PlotArtifacts` object to make figure/axes reuse and
+custom post-processing easier.
+:::
 
 `scubas.plotlib` now offers lightweight plotting utilities that return a
 typed `PlotArtifacts` dataclass containing the `Figure` and `Axes` objects.
@@ -47,27 +49,23 @@ Cable potentials.
 
 ## API reference
 
-::: scubas.plotlib.PlotArtifacts
-    options:
-      show_root_heading: true
-      show_source: true
+```{eval-rst}
+.. autoclass:: scubas.plotlib.PlotArtifacts
+   :members:
+```
 
-::: scubas.plotlib.update_rc_params
-    options:
-      show_root_heading: true
-      show_source: true
+```{eval-rst}
+.. autofunction:: scubas.plotlib.update_rc_params
+```
 
-::: scubas.plotlib.plot_transfer_function
-    options:
-      show_root_heading: true
-      show_source: true
+```{eval-rst}
+.. autofunction:: scubas.plotlib.plot_transfer_function
+```
 
-::: scubas.plotlib.potential_along_section
-    options:
-      show_root_heading: true
-      show_source: true
+```{eval-rst}
+.. autofunction:: scubas.plotlib.potential_along_section
+```
 
-::: scubas.plotlib.cable_potential
-    options:
-      show_root_heading: true
-      show_source: true
+```{eval-rst}
+.. autofunction:: scubas.plotlib.cable_potential
+```

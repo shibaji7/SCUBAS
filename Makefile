@@ -21,7 +21,7 @@ ifeq ($(NO_COLOR),)
 endif
 
 .DEFAULT_GOAL := help
-.PHONY: help install dev test cov cov-xml cov-floors lint lint-ratchet fmt format fmt-check spdx release-check changelog-check compat-baseline pre-commit-install pre-commit qa docs docs-serve clean
+.PHONY: rtd-on rtd-off rtd-status help install dev test cov cov-xml cov-floors lint lint-ratchet fmt format fmt-check spdx release-check changelog-check compat-baseline pre-commit-install pre-commit qa docs docs-serve clean
 
 help: ## Show this list
 	@printf "$(CB)SCUBAS$(C0)  $(CD)Submarine Cables Upset by Auroral Streams$(C0)\n\n"
@@ -84,15 +84,26 @@ pre-commit-install: ## Install the git hooks (pre-commit and pre-push)
 pre-commit: ## Run every pre-commit hook on all tracked and staged files
 	$(PY) -m pre_commit run --all-files
 
-docs: ## Build the documentation (mkdocs, warnings are errors)
-	$(PY) -m mkdocs build --strict
+docs: ## Build the documentation (Sphinx, dirhtml, warnings are errors)
+	$(PY) -m sphinx -W --keep-going -b dirhtml docs docs/_build/dirhtml
 
-docs-serve: ## Serve the documentation on http://localhost:8000
-	$(PY) -m mkdocs serve -a localhost:8000
+rtd-off: ## Stop Read the Docs from publishing: creates .rtd-skip (builds are cancelled after the next push)
+	@touch .rtd-skip
+	@printf "$(CC)Read the Docs builds off$(C0): .rtd-skip created, commit and push it\n"
+
+rtd-on: ## Let Read the Docs publish again: removes .rtd-skip (takes effect with the next push)
+	@rm -f .rtd-skip
+	@printf "$(CG)Read the Docs builds on$(C0): .rtd-skip removed, commit and push\n"
+
+rtd-status: ## Show whether Read the Docs builds are switched off (.rtd-skip present)
+	@if [ -f .rtd-skip ]; then echo "Read the Docs builds are OFF (.rtd-skip exists)"; else echo "Read the Docs builds are ON"; fi
+
+docs-serve: docs ## Build the documentation and serve it on http://localhost:8000
+	$(PY) -m http.server 8000 --directory docs/_build/dirhtml
 
 qa: lint lint-ratchet fmt-check spdx release-check cov-xml docs ## Everything that should pass before a commit
 	@printf "$(CG)$(CB)qa passed$(C0)\n"
 
 clean: ## Remove caches and build output
-	rm -rf build dist .pytest_cache .ruff_cache .coverage coverage.xml htmlcov site scubas.egg-info
+	rm -rf build dist .pytest_cache .ruff_cache .coverage coverage.xml htmlcov site docs/_build scubas.egg-info
 	find . -name __pycache__ -type d -prune -exec rm -rf {} +

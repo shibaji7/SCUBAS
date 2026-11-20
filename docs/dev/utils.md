@@ -12,14 +12,16 @@ and conditions of MIT General Public License.
 
 # Utility helpers
 
-<span class="api-badge api-package">Package</span>
-<span class="api-badge api-module">Module</span> `scubas.utils`
-<span class="api-badge api-class">Class</span> `RecursiveNamespace`, `GreatCircle`
-<span class="api-badge api-method">Method / Function</span> `fft`, `ifft`, `frexp102str`, `component_mappings`, `component_sign_mappings`
+- **Module:** `scubas.utils`
+- **Class:** `RecursiveNamespace`, `GreatCircle`
+- **Method / Function:** `fft`, `ifft`, `frexp102str`, `component_mappings`, `component_sign_mappings`
 
-!!! important "Core dependency module"
-    Utilities here are reused across cable, conductivity, and model workflows.
-    Changes in this module can impact multiple parts of SCUBAS.
+:::{admonition} Core dependency module
+:class: important
+
+Utilities here are reused across cable, conductivity, and model workflows.
+Changes in this module can impact multiple parts of SCUBAS.
+:::
 
 `scubas.utils` provides the small supporting functions and classes used across
 the codebase.  The refactor introduced dataclass-friendly namespaces, more
@@ -58,42 +60,32 @@ print(gc.haversine())
 
 ## API reference
 
-::: scubas.utils.RecursiveNamespace
-    handler: python
-    options:
-      show_root_heading: true
-      show_source: true
+```{eval-rst}
+.. autoclass:: scubas.utils.RecursiveNamespace
+   :members:
+```
 
-::: scubas.utils.frexp102str
-    options:
-      show_root_heading: true
-      show_source: true
+```{eval-rst}
+.. autofunction:: scubas.utils.frexp102str
+```
 
-::: scubas.utils.fft
-    options:
-      show_root_heading: true
-      show_source: true
+```{eval-rst}
+.. autofunction:: scubas.utils.fft
+```
 
-::: scubas.utils.ifft
-    options:
-      show_root_heading: true
-      show_source: true
+```{eval-rst}
+.. autofunction:: scubas.utils.ifft
+```
 
-::: scubas.utils.component_mappings
-    options:
-      show_root_heading: true
-      show_source: true
+```{eval-rst}
+.. autofunction:: scubas.utils.component_mappings
+```
 
-::: scubas.utils.component_sign_mappings
-    options:
-      show_root_heading: true
-      show_source: true
+```{eval-rst}
+.. autofunction:: scubas.utils.component_sign_mappings
+```
 
-::: scubas.utils.GreatCircle
-    handler: python
-    options:
-      members:
-        - great_circle
-        - haversine
-      show_root_heading: true
-      show_source: true
+```{eval-rst}
+.. autoclass:: scubas.utils.GreatCircle
+   :members: great_circle, haversine
+```

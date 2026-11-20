@@ -12,15 +12,17 @@ and conditions of MIT General Public License.
 
 # Cable Modelling Utilities
 
-<span class="api-badge api-package">Package</span>
-<span class="api-badge api-module">Module</span> `scubas.cables`
-<span class="api-badge api-class">Class</span> `CableSection`, `TransmissionLine`, `Cable`
-<span class="api-badge api-method">Method / Function</span> `_update_recursive_namespace`
+- **Module:** `scubas.cables`
+- **Class:** `CableSection`, `TransmissionLine`, `Cable`
+- **Method / Function:** `_update_recursive_namespace`
 
-!!! important "Execution order"
-    Typical workflow is: define `TransmissionLine` sections -> call
-    `compile_oml()` and `compute_eqv_pi_circuit()` per section -> build `Cable`
-    -> run nodal analysis.
+:::{admonition} Execution order
+:class: important
+
+Typical workflow is: define `TransmissionLine` sections -> call
+`compile_oml()` and `compute_eqv_pi_circuit()` per section -> build `Cable`
+-> run nodal analysis.
+:::
 
 The refactored cable module provides a clear separation between geometry
 (`CableSection`), electrical properties (`TransmissionLine`), and the nodal
@@ -61,45 +63,21 @@ statistics in `tot_params` and `result`.
 
 ### CableSection
 
-::: scubas.cables.CableSection
-    handler: python
-    options:
-      members:
-        - check_location
-        - compute_lengths
-        - _pot_alongCS_
-      show_root_heading: true
-      show_source: true
+```{eval-rst}
+.. autoclass:: scubas.cables.CableSection
+   :members: check_location, compute_lengths, _pot_alongCS_
+```
 
 ### TransmissionLine
 
-::: scubas.cables.TransmissionLine
-    handler: python
-    options:
-      members:
-        - to_str
-        - compile_oml
-        - add_active_termination
-        - calc_trasmission_line_parameters
-        - compute_eqv_pi_circuit
-        - compute_Vj
-      show_root_heading: true
+```{eval-rst}
+.. autoclass:: scubas.cables.TransmissionLine
+   :members: to_str, compile_oml, add_active_termination, calc_trasmission_line_parameters, compute_eqv_pi_circuit, compute_Vj
+```
 
 ### Cable
 
-::: scubas.cables.Cable
-    handler: python
-    options:
-      members:
-        - compile
-        - run_nodal_analysis
-        - solve_admitance_matrix
-        - consolidate_final_result
-        - save
-        - _pot_endCS_byComp_
-        - _pot_endCS_
-        - _pot_end_cable_byComp_
-        - _pot_end_cable_
-        - _pot_along_cable_
-      show_root_heading: true
-      show_source: true
+```{eval-rst}
+.. autoclass:: scubas.cables.Cable
+   :members: compile, run_nodal_analysis, solve_admitance_matrix, consolidate_final_result, save, _pot_endCS_byComp_, _pot_endCS_, _pot_end_cable_byComp_, _pot_end_cable_, _pot_along_cable_
+```

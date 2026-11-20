@@ -12,14 +12,16 @@ and conditions of MIT General Public License.
 
 # Ocean and electric field modelling
 
-<span class="api-badge api-package">Package</span>
-<span class="api-badge api-module">Module</span> `scubas.models`
-<span class="api-badge api-class">Class</span> `OceanModel`, `Preprocess`
-<span class="api-badge api-method">Method / Function</span> `_validate_frequency_limits`
+- **Module:** `scubas.models`
+- **Class:** `OceanModel`, `Preprocess`
+- **Method / Function:** `_validate_frequency_limits`
 
-!!! important "Frequency limits are validated"
-    `OceanModel` requires valid `flim=(f_min, f_max)` values with
-    positive, ordered frequencies.
+:::{admonition} Frequency limits are validated
+:class: important
+
+`OceanModel` requires valid `flim=(f_min, f_max)` values with
+positive, ordered frequencies.
+:::
 
 The `scubas.models` module orchestrates the conversion between magnetic and
 electric fields using the modernised `OceanModel` class.  The refactor
@@ -66,24 +68,12 @@ print(model.Efield.head())
 
 ## API reference
 
-::: scubas.models.OceanModel
-    handler: python
-    options:
-      members:
-        - calcZ
-        - calcTF
-        - get_TFs
-        - read_iaga
-        - read_Bfield_data
-        - to_Efields
-      show_root_heading: true
-      show_source: true
+```{eval-rst}
+.. autoclass:: scubas.models.OceanModel
+   :members: calcZ, calcTF, get_TFs, read_iaga, read_Bfield_data, to_Efields
+```
 
-::: scubas.models.Preprocess
-    handler: python
-    options:
-      members:
-        - get_tapering_function
-        - detrend_magnetic_field
-      show_root_heading: true
-      show_source: true
+```{eval-rst}
+.. autoclass:: scubas.models.Preprocess
+   :members: get_tapering_function, detrend_magnetic_field
+```

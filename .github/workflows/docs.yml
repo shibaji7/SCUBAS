@@ -1,6 +1,6 @@
 name: docs
 
-# Read the Docs publishes the site; this job makes sure it builds without warnings (mkdocs --strict) and keeps the HTML for a week.
+# Read the Docs publishes the site; this job makes sure it builds without warnings (Sphinx with warnings as errors) and keeps the HTML for a week.
 on:
   push:
     branches: [main]
@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  mkdocs:
+  sphinx:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -26,16 +26,18 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
-          cache-dependency-path: ci/docs-requirements.txt
+          cache-dependency-path: docs/requirements.txt
 
-      - name: Install the documentation tools
-        run: python -m pip install -r ci/docs-requirements.txt
+      - name: Install the documentation tools and the package (autodoc imports it)
+        run: |
+          python -m pip install -r docs/requirements.txt
+          python -m pip install .
 
       - name: Build the docs (warnings are errors)
-        run: python -m mkdocs build --strict --site-dir site
+        run: python -m sphinx -W --keep-going -b dirhtml docs docs/_build/dirhtml
 
       - uses: actions/upload-artifact@v4
         with:
           name: html
-          path: site/
+          path: docs/_build/dirhtml/
           retention-days: 7

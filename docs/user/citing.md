@@ -12,13 +12,7 @@ and conditions of MIT General Public License.
 
 # How to cite SCUBAS
 
-<div class="hero">
-  <h2>Citation and Attribution</h2>
-  <p>
-    Use these references when SCUBAS or INTERMAGNET data contributes to your
-    published analysis.
-  </p>
-</div>
+Use these references when SCUBAS or INTERMAGNET data contributes to your published analysis.
 
 If SCUBAS contributes to a project that leads to a scientific publication, please acknowledge this fact by citing the papers listed below and intermagnet (if used).  
 
@@ -31,7 +25,6 @@ If SCUBAS contributes to a project that leads to a scientific publication, pleas
 - Boteler, D. H., Chakraborty, S., Shi, X., Hartinger, M. D., & Wang, X. (2024). An examination of geomagnetic induction in submarine cables. Space Weather, 22, e2023SW003687. [doi:10.1029/2023SW003687](https://doi.org/10.1029/2023SW003687)
 
 - Boteler, D. , Chakraborty, S. , Shi, X. , Hartinger, M. and Wang, X. (2023) Transmission Line Modelling of Geomagnetic Induction in the Ocean/Earth Conductivity Structure. International Journal of Geosciences, 14, 767-791. [doi: 10.4236/ijg.2023.148041](https://www.scirp.org/journal/paperinformation?paperid=127339).
-
 
 # How to cite INTERMAGNET
 

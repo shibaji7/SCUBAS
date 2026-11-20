@@ -10,7 +10,6 @@ This version of the MIT Public License incorporates the terms
 and conditions of MIT General Public License.
 -->
 #### Transmission Line Modeling (TLM)
----
 
 In the study of geomagnetic induction, the Earth's conductivity structure plays a crucial role. This structure comprises surface conducting layers, including seawater and sediments, overlaying more resistive layers such as the crust and mantle lithosphere. To simplify the representation of this complex structure, researchers have developed a concept of a thin double layer. This model considers a conductive layer on top followed by a resistive layer underneath.
 
@@ -35,7 +34,6 @@ $$
 where, $\gamma=\sqrt{ZY}$ $Z_0=\sqrt{\frac{Z}{Y}}$. Also, $L$, and $x$ are the length of cable and any random point on the cable.
 
 #### Equivalent-Pi Circuit
----
 To combine multiple transmission line sections, it is useful to convert each section into  equivalent-$\pi$ circuits (Boteler, 2013) as shown in following figure. ![Alt text](../figures/Circuit-Equivalent.png)
 
 The equivalent-$\pi$ circuit can be represented with a voltage source, $E'$, and series impedance, $Z'$,  admittances, $Y'/2$, to ground at each end as shown in the figure (Boteler, 2013) with circuit components given by
@@ -65,4 +63,3 @@ $$
 $$
 I_E=\frac{E}{Z}
 $$
-
