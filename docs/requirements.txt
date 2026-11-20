@@ -1,8 +1,8 @@
 # What Read the Docs and the docs CI job install to build the site with Sphinx (the package itself is installed by .readthedocs.yaml,
 # because autodoc imports it). Short on purpose: only the Sphinx stack of BOLTS, pinned to the versions the build was checked with on
 # 2026-11-20. This replaces an old freeze of about eighty packages (Flask, cryptography, mkdocs, ...) that the docs did not use.
-sphinx==9.0.4
+sphinx==9.2.0
 sphinx-rtd-theme==3.1.0
-sphinx-autodoc-typehints==3.6.1
+sphinx-autodoc-typehints==3.17.5
 sphinx-copybutton==0.5.2
 myst-parser==5.2.0
