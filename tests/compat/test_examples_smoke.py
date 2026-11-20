@@ -1,11 +1,12 @@
-# SPDX-License-Identifier: MIT
-# Copyright (c) 2023 Shibaji Chakraborty
+# SPDX-License-Identifier: LGPL-3.0-or-later
+# Copyright (C) 2023-2026 Shibaji Chakraborty
 """The example scripts that regenerate the tutorial figures still run from start to finish.
 
 They write into ``<repo>/docs/tutorial/figures`` relative to their own location, so they are run from a temporary copy of
 ``examples/`` and the repository is not touched.
 """
 
+import ast
 import os
 import runpy
 import shutil
@@ -15,7 +16,11 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[2]
 SCRIPTS = sorted(
-    p.name for p in (ROOT / "examples").glob("network_*.py") if p.stat().st_size > 0
+    p.name
+    for p in (ROOT / "examples").glob("network_*.py")
+    if ast.parse(
+        p.read_text()
+    ).body  # network_ls.py is an empty placeholder (a header only)
 )
 
 

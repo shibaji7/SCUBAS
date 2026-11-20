@@ -1,5 +1,5 @@
-# SPDX-License-Identifier: MIT
-# Copyright (c) 2023 Shibaji Chakraborty
+# SPDX-License-Identifier: LGPL-3.0-or-later
+# Copyright (C) 2023-2026 Shibaji Chakraborty
 """Every import path that users, the tutorials and the examples rely on keeps working and keeps its side-effect profile.
 
 If a module ever moves, its old path must stay importable (a shim that re-exports the same object and warns); the identity

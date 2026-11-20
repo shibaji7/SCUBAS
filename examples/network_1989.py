@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: LGPL-3.0-or-later
+# Copyright (C) 2023-2026 Shibaji Chakraborty
 """Reproduce the March 1989 event study using the refreshed SCUBAS API.
 
 The tutorial walkthrough in ``docs/tutorial/1989.md`` highlights the TAT-8

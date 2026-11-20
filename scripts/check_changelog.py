@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-# SPDX-License-Identifier: MIT
-# Copyright (c) 2023 Shibaji Chakraborty
+# SPDX-License-Identifier: LGPL-3.0-or-later
+# Copyright (C) 2023-2026 Shibaji Chakraborty
 """Pre-commit hook: a commit that changes the package (``scubas/``) must also change CHANGELOG.md, and CHANGELOG.md must keep an "Unreleased" section.
 
 Bypass for a commit with no user-visible change: ``SKIP=changelog git commit ...``.

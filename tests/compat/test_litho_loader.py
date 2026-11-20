@@ -1,5 +1,5 @@
-# SPDX-License-Identifier: MIT
-# Copyright (c) 2023 Shibaji Chakraborty
+# SPDX-License-Identifier: LGPL-3.0-or-later
+# Copyright (C) 2023-2026 Shibaji Chakraborty
 """The LITHO1.0 loader without the network: a synthetic netCDF stands in for the real model and ``urlopen`` is mocked.
 
 ``@pytest.mark.litho`` tests need a real ``LITHO1.0.nc`` (set ``SCUBAS_LITHO1_PATH``) and are skipped otherwise.

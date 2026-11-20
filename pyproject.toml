@@ -26,6 +26,7 @@ classifiers = [
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
+  "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
   "Operating System :: OS Independent",
 ]
 dependencies = [
@@ -36,7 +37,7 @@ dependencies = [
   "scipy",
   "SciencePlots",
 ]
-license = {text = "MIT"}
+license = {text = "LGPL-3.0-or-later"}
 
 [project.urls]
 Homepage = "https://github.com/shibaji7/SCUBAS"

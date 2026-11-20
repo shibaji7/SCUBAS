@@ -1,5 +1,5 @@
-# SPDX-License-Identifier: MIT
-# Copyright (c) 2023 Shibaji Chakraborty
+# SPDX-License-Identifier: LGPL-3.0-or-later
+# Copyright (C) 2023-2026 Shibaji Chakraborty
 """Collect the public (and documented-private) surface of the ``scubas`` modules as plain JSON-able data.
 
 The snapshot written from the 0.1.9 code is ``baseline/api_surface.json``. ``test_api_surface.py`` fails when a

@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: LGPL-3.0-or-later
+# Copyright (C) 2023-2026 Shibaji Chakraborty
 """
 Plotting helpers for transfer functions and cable potentials leveraged across SCUBAS.
 """
@@ -7,7 +9,7 @@ from __future__ import annotations
 __author__ = "Chakraborty, S."
 __copyright__ = ""
 __credits__ = []
-__license__ = "MIT"
+__license__ = "LGPL-3.0-or-later"
 __version__ = "1.0."
 __maintainer__ = "Chakraborty, S."
 __email__ = "chakras4@erau.edu"

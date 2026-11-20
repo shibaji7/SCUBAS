@@ -1,5 +1,5 @@
-# SPDX-License-Identifier: MIT
-# Copyright (c) 2023 Shibaji Chakraborty
+# SPDX-License-Identifier: LGPL-3.0-or-later
+# Copyright (C) 2023-2026 Shibaji Chakraborty
 """Deterministic characterization cases: they run the legacy public API and return plain arrays and JSON-able metadata.
 
 ``scripts/gen_compat_baseline.py`` runs :func:`build_cases` against the unchanged 0.1.9 code and writes

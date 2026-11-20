@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: LGPL-3.0-or-later
+# Copyright (C) 2023-2026 Shibaji Chakraborty
 """
 Shared utility helpers covering recursive namespaces, spectral transforms,
 component mappings, and great-circle distance calculations.
@@ -8,7 +10,7 @@ from __future__ import annotations
 __author__ = "Chakraborty, S."
 __copyright__ = ""
 __credits__ = []
-__license__ = "MIT"
+__license__ = "LGPL-3.0-or-later"
 __version__ = "1.0."
 __maintainer__ = "Chakraborty, S."
 __email__ = "chakras4@erau.edu"

@@ -1,5 +1,5 @@
-# SPDX-License-Identifier: MIT
-# Copyright (c) 2023 Shibaji Chakraborty
+# SPDX-License-Identifier: LGPL-3.0-or-later
+# Copyright (C) 2023-2026 Shibaji Chakraborty
 """The public surface of SCUBAS 0.1.9 is pinned: no name disappears and nothing recorded about a name changes.
 
 Adding a name is compatible and allowed. To change the baseline on purpose (an approved API change) regenerate it with

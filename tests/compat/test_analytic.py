@@ -1,5 +1,5 @@
-# SPDX-License-Identifier: MIT
-# Copyright (c) 2023 Shibaji Chakraborty
+# SPDX-License-Identifier: LGPL-3.0-or-later
+# Copyright (C) 2023-2026 Shibaji Chakraborty
 r"""Closed-form expectations from ``docs/tutorial/theory.md`` and ``elsc.md``, checked against the legacy code as it is.
 
 These agree with the code today to the tolerances below; they are pins, so a refactor that moves them has changed the physics.

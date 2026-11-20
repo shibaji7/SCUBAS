@@ -1,5 +1,5 @@
-# SPDX-License-Identifier: MIT
-# Copyright (c) 2023 Shibaji Chakraborty
+# SPDX-License-Identifier: LGPL-3.0-or-later
+# Copyright (C) 2023-2026 Shibaji Chakraborty
 """Sphinx configuration for the SCUBAS documentation (the BOLTS stack: autodoc, napoleon, viewcode, intersphinx, MyST Markdown, Read the Docs theme).
 
 Built with the ``dirhtml`` builder, so every page keeps the address it had under mkdocs (``tutorial/theory/``, ``dev/cables/``, ...).

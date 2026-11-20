@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-# SPDX-License-Identifier: MIT
-# Copyright (c) 2023 Shibaji Chakraborty
+# SPDX-License-Identifier: LGPL-3.0-or-later
+# Copyright (C) 2023-2026 Shibaji Chakraborty
 """Every Python file under scubas/, tests/, examples/, scripts/ (and the root ``setup.py`` / ``configure.py``) starts with the SPDX header.
 
 The header is the license line and the copyright line, in that order, after an optional shebang. SCUBAS 0.1.9 has none, so the
@@ -16,9 +16,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-LICENSE_ID = "MIT"
+LICENSE_ID = "LGPL-3.0-or-later"
 SPDX = f"# SPDX-License-Identifier: {LICENSE_ID}"
-COPYRIGHT = "# Copyright (c) 2023 Shibaji Chakraborty"
+COPYRIGHT = "# Copyright (C) 2023-2026 Shibaji Chakraborty"
 LEGACY = ROOT / "scripts" / "spdx_legacy.txt"
 DIRS = ("scubas", "tests", "examples", "scripts")
 ROOT_FILES = ("setup.py", "configure.py")

@@ -1,5 +1,5 @@
-# SPDX-License-Identifier: MIT
-# Copyright (c) 2023 Shibaji Chakraborty
+# SPDX-License-Identifier: LGPL-3.0-or-later
+# Copyright (C) 2023-2026 Shibaji Chakraborty
 """The pieces of ``docs/conf.py`` that are code: the development-status banner and the colour classes of the roadmap statuses."""
 
 import importlib.util

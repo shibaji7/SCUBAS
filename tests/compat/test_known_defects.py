@@ -1,5 +1,5 @@
-# SPDX-License-Identifier: MIT
-# Copyright (c) 2023 Shibaji Chakraborty
+# SPDX-License-Identifier: LGPL-3.0-or-later
+# Copyright (C) 2023-2026 Shibaji Chakraborty
 """Known defects of SCUBAS 0.1.9, pinned as they are.
 
 Each test documents behaviour that looks wrong but that users and published results may depend on. They are NOT a request to
