@@ -18,10 +18,11 @@ ifeq ($(NO_COLOR),)
   CG := \033[38;5;78m
   CC := \033[38;5;45m
   CD := \033[2m
+  CO := \033[38;5;214m
 endif
 
 .DEFAULT_GOAL := help
-.PHONY: env build check logo rtd-on rtd-off rtd-status help install dev test cov cov-xml cov-floors lint lint-ratchet fmt format fmt-check spdx release-check changelog-check compat-baseline pre-commit-install pre-commit qa docs docs-serve clean
+.PHONY: env build check logo codecov-on codecov-off codecov-status publish-on publish-off publish-status publish-tag rtd-on rtd-off rtd-status help install dev test cov cov-xml cov-floors lint lint-ratchet fmt format fmt-check spdx release-check changelog-check compat-baseline pre-commit-install pre-commit qa docs docs-serve clean
 
 help: ## Show this list
 	@printf "$(CB)SCUBAS$(C0)  $(CD)Submarine Cables Upset by Auroral Streams$(C0)\n\n"
@@ -97,6 +98,41 @@ check: build ## Check the built distributions (twine, and that they hold what th
 
 docs: ## Build the documentation (Sphinx, dirhtml, warnings are errors)
 	$(PY) -m sphinx -W --keep-going -b dirhtml docs docs/_build/dirhtml
+
+REPO     ?= shibaji7/SCUBAS
+VARAPI   = repos/$(REPO)/actions/variables
+
+# setvar NAME VALUE: create or update a GitHub Actions repository variable (needs gh and admin rights; these targets change the repository's settings, so run them on purpose)
+setvar = gh api -X PATCH $(VARAPI)/$(1) -f value=$(2) >/dev/null 2>&1 || gh api -X POST $(VARAPI) -f name=$(1) -f value=$(2) >/dev/null
+# getvar NAME: the variable's value, or "not set"
+getvar = $$(gh api $(VARAPI)/$(1) --jq .value 2>/dev/null || echo "not set")
+
+codecov-off: ## Turn the Codecov upload in CI off (variable CODECOV_UPLOAD=false)
+	@$(call setvar,CODECOV_UPLOAD,false)
+	@printf "$(CO)CODECOV_UPLOAD=false$(C0) on $(REPO)\n"
+
+codecov-on: ## Turn the Codecov upload in CI on again (variable CODECOV_UPLOAD=true; unset also means on)
+	@$(call setvar,CODECOV_UPLOAD,true)
+	@printf "$(CG)CODECOV_UPLOAD=true$(C0) on $(REPO)\n"
+
+codecov-status: ## Show whether the Codecov upload is on (unset or anything but false: on)
+	@echo "CODECOV_UPLOAD=$(call getvar,CODECOV_UPLOAD)  (unset or anything but false: the upload runs)"
+
+publish-on: ## Let the release workflow publish tags to TestPyPI, PyPI and GitHub Releases (variable PUBLISH_ENABLED=true)
+	@$(call setvar,PUBLISH_ENABLED,true)
+	@printf "$(CG)PUBLISH_ENABLED=true$(C0) on $(REPO): a pushed tag vX.Y.Z now publishes\n"
+
+publish-off: ## Stop the release workflow from publishing (tags are still checked and built, nothing is uploaded)
+	@$(call setvar,PUBLISH_ENABLED,false)
+	@printf "$(CO)PUBLISH_ENABLED=false$(C0) on $(REPO)\n"
+
+publish-status: ## Show whether publishing is on (the variable PUBLISH_ENABLED)
+	@echo "PUBLISH_ENABLED=$(call getvar,PUBLISH_ENABLED)  (unset or false: nothing is published)"
+
+publish-tag: ## Publish one existing tag that was held back: make publish-tag TAG=v0.2.0 (run publish-on first)
+	@test -n "$(TAG)" || { echo "usage: make publish-tag TAG=vX.Y.Z"; exit 1; }
+	@git rev-parse -q --verify refs/tags/$(TAG) >/dev/null || { echo "no local tag $(TAG)"; exit 1; }
+	gh workflow run release.yml --ref $(TAG) -R $(REPO)
 
 logo: ## Regenerate the logo SVGs in docs/_static/ (needs fonttools and matplotlib)
 	$(PY) scripts/make_logo.py
