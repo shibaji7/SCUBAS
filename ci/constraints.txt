@@ -1,0 +1,6 @@
+# Version limits applied in CI only (pip install -c ci/constraints.txt); they are NOT package requirements.
+#
+# pandas 3 removed read_csv(delim_whitespace=...) and the "S" frequency alias, which SCUBAS 0.1.9 still uses (scubas/models.py read_iaga,
+# tests/test_models.py). Until the code is made compatible in its own, approved change, CI tests the pandas 2 series that 0.1.9 supports.
+# Remove this line in the pull request that fixes it. Tracked in CHANGELOG.md ("Known issues").
+pandas<3

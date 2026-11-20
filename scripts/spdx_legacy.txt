@@ -1,0 +1,23 @@
+# Python files that predate the SPDX header (SCUBAS 0.1.9). Only shrinks: scripts/check_spdx.py --update.
+configure.py
+examples/network_1989.py
+examples/network_active.py
+examples/network_cases.py
+examples/network_ls.py
+examples/network_model.py
+scubas/__init__.py
+scubas/cables.py
+scubas/conductivity.py
+scubas/datasets.py
+scubas/models.py
+scubas/plotlib.py
+scubas/sources/__init__.py
+scubas/sources/current_sources.py
+scubas/utils.py
+setup.py
+tests/test_cables.py
+tests/test_conductivity.py
+tests/test_datasets.py
+tests/test_models.py
+tests/test_plotlib.py
+tests/test_utils.py

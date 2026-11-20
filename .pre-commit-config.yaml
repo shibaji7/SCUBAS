@@ -1,0 +1,60 @@
+# pre-commit configuration: `make pre-commit-install` once, then every commit runs these.
+# Run everything by hand with `make pre-commit`.
+minimum_pre_commit_version: "3.5.0"
+default_stages: [pre-commit]
+exclude: '^(site/|dist/|build/|docs/figures/|docs/tutorial/figures/|tests/compat/baseline/|LICENSE$)'
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: '^(scubas/|docs/|examples/|README.md)'   # legacy files keep their whitespace until they are edited for another reason
+      - id: end-of-file-fixer
+        exclude: '^(scubas/|docs/|examples/|README.md)'
+      - id: mixed-line-ending
+      - id: check-yaml
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: check-added-large-files
+        args: ["--maxkb=800"]
+      - id: debug-statements
+
+  - repo: local
+    hooks:
+      - id: ruff-check
+        name: ruff check (legacy debt allowed, new violations not)
+        entry: python -m ruff check
+        language: system
+        types: [python]
+      - id: ruff-format
+        name: ruff format --check
+        entry: python -m ruff format --check
+        language: system
+        types: [python]
+      - id: ruff-ratchet
+        name: legacy lint debt may only shrink
+        entry: python scripts/ruff_ratchet.py --check
+        language: system
+        pass_filenames: false
+        always_run: true
+      - id: spdx-header
+        name: SPDX license header on every new Python file
+        entry: python scripts/check_spdx.py
+        language: system
+        pass_filenames: false
+        always_run: true
+      - id: changelog
+        name: CHANGELOG.md updated when scubas/ changes
+        entry: python scripts/check_changelog.py
+        language: system
+        pass_filenames: false
+        always_run: true
+      - id: pytest-fast
+        name: pytest (pre-push)
+        entry: python -m pytest -q -x
+        language: system
+        pass_filenames: false
+        always_run: true
+        stages: [pre-push]

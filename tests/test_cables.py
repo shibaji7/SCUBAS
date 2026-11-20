@@ -1,3 +1,4 @@
+from pathlib import Path
 from types import SimpleNamespace
 
 import numpy as np
@@ -60,12 +61,19 @@ def make_transmission_line(
     sec_id: str, with_termination: bool = False
 ) -> TransmissionLine:
     tl = TransmissionLine(sec_id, directed_length={"length": 1.0})
+    n = 3
     if with_termination:
-        tl.active_termination.left = SimpleNamespace(site=PROFILES.CS, width=1.0)
+        # an active termination is a Site (the earth beyond the landing); its fields come from the B-field files,
+        # which compile_oml (or the caller, as in examples/network_active.py) attaches to the section
+        tl.active_termination.left = PROFILES.LD
         tl.active_termination.right = None
+        tl.bfield_data_files = [Path(__file__).parent / "compat" / "data" / "gap.csv"]
+        tl.csv_file_date_name = "Date"
+        tl.p = None
+        n = 24  # one E-field value per B-field record
     efield = pd.DataFrame(
-        {"X": np.array([1.0, 0.5, 0.25])},
-        index=pd.RangeIndex(3, name="Time"),
+        {"X": np.linspace(1.0, 0.25, n)},
+        index=pd.RangeIndex(n, name="Time"),
     )
     tl.compute_eqv_pi_circuit(Efield=efield, components=["X"])
     return tl
@@ -81,10 +89,15 @@ def test_transmission_line_compute_eqv_pi_circuit_populates_fields():
 
 def test_transmission_line_active_termination_populated():
     tl = make_transmission_line("TL2", with_termination=True)
-    left = tl.active_termination.left
+    assert tl.has_active_term
+    left = tl.term_params[
+        "left"
+    ]  # the derived admittance and current source land in term_params
+    assert tl.term_params["right"] is None
     assert hasattr(left, "Yn")
     assert "X" in left.Jn
     assert left.Z0 > 0
+    assert left.Yn == pytest.approx(1.0 / left.Z0)
 
 
 def test_cable_nodal_solution_generates_totals(monkeypatch):

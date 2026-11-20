@@ -46,6 +46,10 @@ Documentation = "https://scubas.readthedocs.io/en/latest/"
 minversion = "6.0"
 addopts = "-ra"
 testpaths = ["tests"]
+pythonpath = ["."]
+markers = [
+  "litho: needs a real LITHO1.0.nc (set SCUBAS_LITHO1_PATH and run with -m litho)",
+]
 
 [tool.coverage.run]
 branch = true
@@ -72,7 +76,21 @@ dev = [
   "toml",
   "SciencePlots",
   "scipy",
+  "ruff",
+  "pre-commit",
 ]
+
+[tool.scubas.coverage-floors]
+# line coverage per module, checked by scripts/check_coverage_floors.py after a coverage run; a floor may only go up.
+# Set on 2026-11-20 from the measured values (compat suite included) minus two points.
+default = 90
+"scubas/cables.py" = 93
+"scubas/conductivity.py" = 94
+"scubas/datasets.py" = 93
+"scubas/models.py" = 90
+"scubas/plotlib.py" = 95
+"scubas/sources/current_sources.py" = 92
+"scubas/utils.py" = 93
 
 [tool.setuptools]
 include-package-data = true
