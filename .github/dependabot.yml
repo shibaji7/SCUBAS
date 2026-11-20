@@ -15,3 +15,11 @@ updates:
     groups:
       docs-tools:
         patterns: ["*"]
+    ignore:
+      # Read the Docs builds with Python 3.11 (.readthedocs.yaml). Sphinx 9.1 needs Python >= 3.12 and 9.2 needs >= 3.13, and sphinx-autodoc-typehints
+      # 3.10 and later need >= 3.12, so their minor and major updates cannot be installed there (pull request #18 failed on exactly that). Patch updates
+      # are still proposed. Remove these rules when .readthedocs.yaml and the docs CI job move to a newer Python.
+      - dependency-name: "sphinx"
+        update-types: ["version-update:semver-minor", "version-update:semver-major"]
+      - dependency-name: "sphinx-autodoc-typehints"
+        update-types: ["version-update:semver-minor", "version-update:semver-major"]
