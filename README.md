@@ -54,11 +54,11 @@ network modelling, and the March 1989 TAT-8 event as a case study.
 pip install scubas
 ```
 
-Python >= 3.11 (pandas 2 or 3). From a clone, for development:
+Python >= 3.11 (pandas 2 or 3). The extras `scubas[plots]`, `scubas[data]`, `scubas[docs]` and `scubas[dev]` exist; `plots` and `data` repeat dependencies that are already required, and `scubas.__version__` gives the version. From a clone, for development:
 
 ```bash
 git clone https://github.com/shibaji7/SCUBAS && cd SCUBAS
-conda create -n scubas python=3.11 && conda activate scubas
+make env && conda activate scubas   # conda environment from environment.yml (or any Python >= 3.11)
 make dev            # editable install with pytest, coverage, ruff, pre-commit, build, twine
 make qa             # everything that must pass before a commit
 ```

@@ -40,6 +40,10 @@ You can check your python version using
 If you have already installed `scubas` you can use `pip3 install --upgrade scubas`
 :::
 
+## Extras and the version
+
+`pip install scubas` installs everything the package needs. The extras `scubas[plots]` (matplotlib, SciencePlots), `scubas[data]` (pandas), `scubas[docs]` (the Sphinx stack) and `scubas[dev]` (pytest, coverage, ruff, pre-commit, build, twine) exist; `plots` and `data` repeat dependencies that are already required, so the commands keep working if they are ever made optional (not before 1.0). `scubas.__version__` gives the installed version. From a clone, `make env` creates a small conda environment from `environment.yml` and `make dev` installs the package in it.
+
 ## Dependencies
 
 scubas's setup will download the following dependencies: 

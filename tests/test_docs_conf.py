@@ -28,7 +28,10 @@ def app():
     return SimpleNamespace(env=SimpleNamespace(note_dependency=seen.append), seen=seen)
 
 
-def test_the_version_comes_from_pyproject(conf):
+def test_the_version_comes_from_the_package(conf):
+    from scubas._version import __version__
+
+    assert conf.release == __version__
     assert re.fullmatch(r"\d+\.\d+\.\d+", conf.release)
     assert conf.version == ".".join(conf.release.split(".")[:2])
 

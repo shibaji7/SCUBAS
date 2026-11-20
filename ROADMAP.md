@@ -2,7 +2,7 @@
 
 Status key: **done** = merged and tested, **planned** = agreed, not started, **proposed** = waiting for a decision.
 
-**Progress: 8 of 11 steps done**, 0 proposed, 3 planned.
+**Progress: 9 of 11 steps done**, 0 proposed, 2 planned.
 
 SCUBAS 0.1.9 (on PyPI) is the baseline. The work below brings the project to the engineering standard of its sibling BOLTS
 (tests, gates, documentation, release control) **without changing the API, the file formats or the numbers of 0.1.9**; they are
@@ -19,7 +19,7 @@ pinned by the compatibility suite (`tests/compat/`).
 | License | relicensed from MIT to LGPL-3.0-or-later; earlier releases stay MIT (`NOTICE.md`) | **done** |
 | Governance files | `CITATION.cff`, `CONTRIBUTING.md` (with the git workflow), `SECURITY.md`, `CODE_OF_CONDUCT.md`, `codecov.yml`, a README in the BOLTS layout, a generated text logo (a placeholder: replace `docs/_static/logo*.svg`) | **done** |
 | Planned capabilities | the `scubas.future` package and `NotImplementedYetError` (stubs that say what is not built, with tests); the package is empty until a capability is named | **done** (the pattern; no capability is committed) |
-| Packaging hygiene | correct the package metadata (description, classifiers, keywords), declare numpy, add the `plots`, `data`, `dev` and `docs` extras next to the unchanged runtime dependencies, fix `MANIFEST.in`, a small `environment.yml` (`env.yml` stays), `scubas.__version__` | **planned** |
+| Packaging hygiene | the package metadata corrected (description, classifiers, keywords, URLs, SPDX license expression with setuptools 77), numpy declared, the `plots`, `data`, `dev` and `docs` extras next to the unchanged runtime dependencies, an explicit `MANIFEST.in`, a small `environment.yml` (`env.yml` stays), `scubas.__version__`, `scripts/check_dist.py` | **done** |
 | Release control | a tag-driven release workflow (TestPyPI, then PyPI after a manual approval, trusted publishing) behind an on/off repository variable; `scripts/check_dist.py` | **planned**, needs the owner to create the environments, the variable and the PyPI trusted publisher |
 | Provenance for new code | `Param(value, unit, status, source)` and a clear error for unknown values, used by new code only; a read-only list of the constants of the existing code with a test that they match | **planned** |
 | Per-change discipline | pull request checklist, changelog guard, lint debt and coverage floors that only ratchet in one direction | **done** (ongoing) |

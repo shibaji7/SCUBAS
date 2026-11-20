@@ -21,13 +21,17 @@ ifeq ($(NO_COLOR),)
 endif
 
 .DEFAULT_GOAL := help
-.PHONY: logo rtd-on rtd-off rtd-status help install dev test cov cov-xml cov-floors lint lint-ratchet fmt format fmt-check spdx release-check changelog-check compat-baseline pre-commit-install pre-commit qa docs docs-serve clean
+.PHONY: env build check logo rtd-on rtd-off rtd-status help install dev test cov cov-xml cov-floors lint lint-ratchet fmt format fmt-check spdx release-check changelog-check compat-baseline pre-commit-install pre-commit qa docs docs-serve clean
 
 help: ## Show this list
 	@printf "$(CB)SCUBAS$(C0)  $(CD)Submarine Cables Upset by Auroral Streams$(C0)\n\n"
 	@printf "$(CB)Usage:$(C0) make $(CC)<target>$(C0)\n\n"
 	@awk 'BEGIN {FS = ":.*##"} /^[a-zA-Z0-9_-]+:.*##/ {printf "  \033[38;5;45m%-16s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 	@printf "\n$(CD)python: $(PY)$(C0)\n"
+
+env: ## Create the conda environment "scubas" (environment.yml; then `make dev`)
+	@printf "$(CG)creating conda env '$(ENV)'$(C0)\n"
+	$(CONDA) env create -f environment.yml -y
 
 install: ## Install the package (runtime dependencies only)
 	$(PY) -m pip install .
@@ -83,6 +87,13 @@ pre-commit-install: ## Install the git hooks (pre-commit and pre-push)
 
 pre-commit: ## Run every pre-commit hook on all tracked and staged files
 	$(PY) -m pre_commit run --all-files
+
+build: ## Build the sdist and the wheel into dist/
+	$(PY) -m build
+
+check: build ## Check the built distributions (twine, and that they hold what they should)
+	$(PY) -m twine check dist/*
+	$(PY) scripts/check_dist.py
 
 docs: ## Build the documentation (Sphinx, dirhtml, warnings are errors)
 	$(PY) -m sphinx -W --keep-going -b dirhtml docs docs/_build/dirhtml
