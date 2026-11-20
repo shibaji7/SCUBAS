@@ -36,7 +36,7 @@ jobs:
       - name: Build the docs (warnings are errors)
         run: python -m sphinx -W --keep-going -b dirhtml docs docs/_build/dirhtml
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: html
           path: docs/_build/dirhtml/
