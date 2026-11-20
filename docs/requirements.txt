@@ -85,7 +85,7 @@ tomli==2.0.1
 twine==4.0.2
 urllib3==1.26.14
 watchdog==3.0.0
-webencodings==0.5.1
+webencodings==0.6.1
 Werkzeug==2.2.3
 zipp==3.13.0
 mkdocs-glightbox==0.3.4
