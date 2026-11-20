@@ -882,7 +882,9 @@ class ConductivityProfile:
                     * 1e3
                 )
                 if (i == 0) or (i == len(profiles) - 2):
-                    profile.thickness[0] = np.random.uniform(
+                    # set the seawater layer in the frame itself (a chained
+                    # ``profile.thickness[0] = ...`` is a no-op under pandas 3)
+                    profile.loc[profile.index[0], "thickness"] = np.random.uniform(
                         thickness_range[0],
                         thickness_range[1],
                     )

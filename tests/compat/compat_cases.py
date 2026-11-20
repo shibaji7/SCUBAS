@@ -57,7 +57,8 @@ def put_frame(arrays: dict[str, np.ndarray], prefix: str, frame: pd.DataFrame) -
     """Store every numeric column of a DataFrame and its index."""
     idx = frame.index
     if isinstance(idx, pd.DatetimeIndex):
-        arrays[f"{prefix}{SEP}__index_ns__"] = idx.asi8
+        # pandas 3 parses to microseconds where pandas 2 gave nanoseconds: compare the instants, not the unit
+        arrays[f"{prefix}{SEP}__index_ns__"] = idx.as_unit("ns").asi8
     else:
         arrays[f"{prefix}{SEP}__index__"] = np.asarray(idx, dtype=float)
     for col in frame.columns:
