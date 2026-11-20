@@ -1,17 +1,12 @@
 version: 2
 updates:
-  # the workflow actions (checkout, setup-python, codecov, ...)
+  # The workflow actions (checkout, setup-python, codecov, ...): each bump is a pull request whose CI run shows whether it works.
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
-  # pyproject.toml only. docs/requirements.txt is deliberately not listed: it is an old freeze that Read the Docs installs, and a pull request
-  # per pinned package would be noise until the documentation phase replaces it.
-  - package-ecosystem: pip
-    directory: /
-    schedule:
-      interval: weekly
-    open-pull-requests-limit: 5
-    groups:
-      dev-tools:
-        patterns: ["pytest*", "ruff", "pre-commit", "build", "twine"]
+
+  # No "pip" entry on purpose. pyproject.toml lists unpinned dependencies, so there is nothing for Dependabot to bump there, and it
+  # finds docs/requirements.txt (an old freeze that Read the Docs installs, pinned to an old mkdocs) and opens a pull request per
+  # pinned package. The documentation phase replaces that file with a short list and the pinned tools of ci/docs-requirements.txt are
+  # reviewed by hand; add a pip entry then, with the path it should watch.
