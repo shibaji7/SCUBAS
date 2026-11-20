@@ -14,6 +14,7 @@ superseded) and the alternatives that were rejected.
 | [0007](0007-documentation-on-sphinx.md) | The documentation moves to Sphinx and MyST, built as `dirhtml` | accepted |
 | [0008](0008-planned-capabilities-are-stubs.md) | A planned capability is a stub that says so | accepted |
 | [0009](0009-release-by-tag-with-trusted-publishing.md) | A release is a tag, published with trusted publishing behind a switch | accepted |
+| [0010](0010-parameters-with-provenance-for-new-code.md) | Parameters carry provenance, for new code only | accepted |
 
 ```{toctree}
 :hidden:
@@ -28,4 +29,5 @@ superseded) and the alternatives that were rejected.
 0007-documentation-on-sphinx
 0008-planned-capabilities-are-stubs
 0009-release-by-tag-with-trusted-publishing
+0010-parameters-with-provenance-for-new-code
 ```

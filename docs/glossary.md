@@ -68,6 +68,10 @@ The text format of geomagnetic observatory records (`.txt` and `.min` files). `O
 ### INTERMAGNET
 The global network of geomagnetic observatories whose records drive SCUBAS; see [INTERMAGNET data access](user/intermagnet.md).
 
+### Provenance
+The unit, status (`sourced`, `assumed`, `unknown`, `override`) and source that a parameter carries, so that a number is never separated from where it came from. The pattern is `scubas.provenance`
+for new code; the constants of the existing code are listed with their provenance in `legacy_constants.toml`. See [parameters and provenance](dev/parameters.md).
+
 ### Future slot
 A planned capability kept as a stub in `scubas.future` that raises `NotImplementedYetError` naming its roadmap item. The package is empty until a capability
 is named. See [planned capabilities](dev/future.md).

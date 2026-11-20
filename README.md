@@ -111,7 +111,8 @@ docs, tests) apply to new and touched code without rewriting working science cod
 | `scubas/cables.py` | `CableSection`, `TransmissionLine`, `Cable`: geometry, line parameters, equivalent-pi circuit, nodal analysis |
 | `scubas/models.py`, `scubas/datasets.py`, `scubas/conductivity.py` | transfer functions and B-field readers, layered Earth profiles, LITHO1.0 profiles |
 | `scubas/sources/`, `scubas/plotlib.py`, `scubas/utils.py` | line-current source, figures, FFT and distance helpers |
-| `scubas/future/`, `scubas/errors.py` | planned capabilities as stubs (empty until one is named) and their error type |
+| `scubas/provenance.py`, `scubas/defaults/` | parameters with unit, status and source for new code, and the read-only list of the legacy constants |
+| `scubas/future/`, `scubas/errors.py` | planned capabilities as stubs (empty until one is named) and the error types |
 | `tests/` | the compatibility suite (`tests/compat/`) and the unit tests |
 | `docs/` | the documentation (Sphinx and MyST, Read the Docs) |
 | `examples/` | the scripts that make the tutorial figures, and the 1989 data |

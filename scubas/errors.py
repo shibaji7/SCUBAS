@@ -12,6 +12,14 @@ class ScubasError(Exception):
     """Base class of the errors raised by the newer parts of SCUBAS."""
 
 
+class ConfigError(ScubasError):
+    """A parameter file or an override is malformed or names no existing parameter."""
+
+
+class MissingParameterError(ScubasError, KeyError):
+    """A parameter is still ``TBD``: the code refuses to guess its value."""
+
+
 class NotImplementedYetError(ScubasError, NotImplementedError):
     """A planned capability that exists only as a documented slot.
 
@@ -22,4 +30,9 @@ class NotImplementedYetError(ScubasError, NotImplementedError):
         super().__init__(f"{what} is not implemented yet ({roadmap}).")
 
 
-__all__ = ["NotImplementedYetError", "ScubasError"]
+__all__ = [
+    "ConfigError",
+    "MissingParameterError",
+    "NotImplementedYetError",
+    "ScubasError",
+]

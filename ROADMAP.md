@@ -2,7 +2,7 @@
 
 Status key: **done** = merged and tested, **planned** = agreed, not started, **proposed** = waiting for a decision.
 
-**Progress: 10 of 11 steps done**, 0 proposed, 1 planned.
+**Progress: 11 of 11 steps done**, 0 proposed, 0 planned.
 
 SCUBAS 0.1.9 (on PyPI) is the baseline. The work below brings the project to the engineering standard of its sibling BOLTS
 (tests, gates, documentation, release control) **without changing the API, the file formats or the numbers of 0.1.9**; they are
@@ -21,7 +21,7 @@ pinned by the compatibility suite (`tests/compat/`).
 | Planned capabilities | the `scubas.future` package and `NotImplementedYetError` (stubs that say what is not built, with tests); the package is empty until a capability is named | **done** (the pattern; no capability is committed) |
 | Packaging hygiene | the package metadata corrected (description, classifiers, keywords, URLs, SPDX license expression with setuptools 77), numpy declared, the `plots`, `data`, `dev` and `docs` extras next to the unchanged runtime dependencies, an explicit `MANIFEST.in`, a small `environment.yml` (`env.yml` stays), `scubas.__version__`, `scripts/check_dist.py` | **done** |
 | Release control | a tag-driven release workflow (TestPyPI, then PyPI after a manual approval, trusted publishing) behind an on/off repository variable, `make publish-*` switches, and a release guide with the owner's checklist | **done** (built, and inert until the owner creates the environments, the variable and the trusted publishers) |
-| Provenance for new code | `Param(value, unit, status, source)` and a clear error for unknown values, used by new code only; a read-only list of the constants of the existing code with a test that they match | **planned** |
+| Provenance for new code | `Param(value, unit, status, source)` and a clear error for unknown values, used by new code only; a read-only list of the 35 constants of the existing code with a test that they match the code | **done** |
 | Per-change discipline | pull request checklist, changelog guard, lint debt and coverage floors that only ratchet in one direction | **done** (ongoing) |
 
 Not planned for now: a `src/` layout, splitting the modules, replacing loguru, making matplotlib or pyproj optional. Each would change

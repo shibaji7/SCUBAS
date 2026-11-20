@@ -95,3 +95,6 @@ version = {attr = "scubas._version.__version__"}
 
 [tool.setuptools.packages.find]
 include = ["scubas*"]
+
+[tool.setuptools.package-data]
+scubas = ["defaults/*.toml"]
