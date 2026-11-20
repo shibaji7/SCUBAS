@@ -3,6 +3,6 @@
 # 2026-11-20. This replaces an old freeze of about eighty packages (Flask, cryptography, mkdocs, ...) that the docs did not use.
 sphinx==9.0.4
 sphinx-rtd-theme==3.1.0
-sphinx-autodoc-typehints==3.6.1
+sphinx-autodoc-typehints==3.6.3
 sphinx-copybutton==0.5.2
 myst-parser==5.2.0
