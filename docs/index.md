@@ -17,45 +17,87 @@ and conditions of MIT General Public License.
 [![codecov](https://codecov.io/gh/shibaji7/SCUBAS/branch/main/graph/badge.svg)](https://codecov.io/gh/shibaji7/SCUBAS)
 
 # SCUBAS
-SUCBAS: **S**ubmarine **C**ables **U**pset **b**y **A**uroral **S**treams.
 
-<div class="hero">
-  <h2>Submarine Cable Geomagnetic Disturbance Modeling</h2>
-  <p>
-    SCUBAS provides a physics-based workflow for estimating voltage induced on
-    submarine cables during geomagnetic storm conditions.
-  </p>
-</div>
+SCUBAS: **S**ubmarine **C**ables **U**pset **b**y **A**uroral **S**treams.
+
+**Submarine cable geomagnetic disturbance modeling.** SCUBAS provides a physics-based workflow for estimating the voltage induced on submarine cables during geomagnetic storm conditions.
 
 SCUBAS is an open source Python-based computational model of geomagnetic induction on submarine cables. The model is used to estimate the induced voltage in the submarine cables in response to geomagnetic disturbances. It utilizes newly acquired knowledge from magnetotelluric studies and associated investigations of geomagnetically induced currents in power systems.
 
-## Source Code 
+## Source Code
 
-The library source code can be found on the [SCUBAS GitHub](https://github.com/shibaji7/SCUBAS) repository. 
+The library source code can be found on the [SCUBAS GitHub](https://github.com/shibaji7/SCUBAS) repository.
 
-If you have any questions or concerns please submit an **Issue** on the [SCUBAS GitHub](https://github.com/shibaji7/SCUBAS) repository. 
+If you have any questions or concerns please submit an **Issue** on the [SCUBAS GitHub](https://github.com/shibaji7/SCUBAS) repository.
 
-## Documentation Links
+## Documentation
 
-<div class="doc-card-grid">
-  <div class="doc-card">
-    <strong>Installation</strong>
-    Environment setup, dependencies, and package installation.<br>
-    <a href="user/install/">Open Installation</a>
-  </div>
-  <div class="doc-card">
-    <strong>Data & Citation</strong>
-    INTERMAGNET access and citation guidance.<br>
-    <a href="user/intermagnet/">INTERMAGNET</a> | <a href="user/citing/">Citing</a>
-  </div>
-  <div class="doc-card">
-    <strong>Tutorials</strong>
-    Theory, storm-event studies, and uncertainty workflows.<br>
-    <a href="tutorial/theory/">Open Tutorials</a>
-  </div>
-  <div class="doc-card">
-    <strong>API Reference</strong>
-    Cables, conductivity, models, utilities, and plotting modules.<br>
-    <a href="dev/">Open API</a>
-  </div>
-</div>
+| Section | What it covers |
+|---|---|
+| [Installation](user/install.md) | environment setup, dependencies, and package installation |
+| [INTERMAGNET data access](user/intermagnet.md), [Citing](user/citing.md) | where the magnetic field records come from, and citation guidance |
+| [Tutorials](tutorial/theory.md) | theory, long and short cables, active terminations, network modeling, case studies, the 1989 event, extreme value analysis, uncertainty |
+| [API reference](dev/index.md) | cables, conductivity, datasets, models, plotting, current sources and utilities |
+| [Project](roadmap.md) | the roadmap, the changelog and the glossary |
+| [Developer guide](dev/conventions.md) | conventions, testing and the compatibility suite, release, decision records |
+
+```{toctree}
+:hidden:
+:maxdepth: 2
+:caption: Start here
+
+user/install
+user/intermagnet
+user/citing
+```
+
+```{toctree}
+:hidden:
+:maxdepth: 1
+:caption: Tutorials
+
+tutorial/theory
+tutorial/elsc
+tutorial/active
+tutorial/netmodel
+tutorial/conduct
+tutorial/1989
+tutorial/eva
+tutorial/uq
+```
+
+```{toctree}
+:hidden:
+:maxdepth: 1
+:caption: API
+
+dev/index
+dev/cables
+dev/conductivity
+dev/datasets
+dev/models
+dev/plotlib
+dev/sources
+dev/utils
+```
+
+```{toctree}
+:hidden:
+:maxdepth: 1
+:caption: Project
+
+roadmap
+changelog
+glossary
+```
+
+```{toctree}
+:hidden:
+:maxdepth: 1
+:caption: Developer guide
+
+dev/conventions
+dev/testing
+dev/release
+dev/adr/index
+```

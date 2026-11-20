@@ -10,7 +10,6 @@ This version of the MIT Public License incorporates the terms
 and conditions of MIT General Public License.
 -->
 #### Example Modelling Example Codes
----
 To illustrate the application of the modelling technique and to examine the voltages produced in typical Ocean/Earth conductivity structures we present results for three models representing 1) a shallow sea/continental shelf, 2) a shallow ocean, and 3) a deep ocean.
 
 1. Shallow Sea/Continental Shelf
@@ -38,137 +37,138 @@ For each model the layer thicknesses and resistivities from table in [network mo
 | Deep Ocean  | 4000       | $7.14\times 10^{-1}$ | $1.0\times 10^{-5}$ | $8.45\times 10^{-4}$ | $8.45\times 10^{1}$ | 1183.2 |
 | Land  | 0       | 3.0 | $5.0\times 10^{-6}$ | $3.873\times 10^{-3}$ | $7.746\times 10^{2}$ | 258.2 |
 
+:::{admonition} Example
+:class: note
 
-!!! Example
-    ``` py
-    from pathlib import Path
+``` py
+from pathlib import Path
 
-    import pandas as pd
+import pandas as pd
 
-    from scubas.datasets import PROFILES
-    from scubas.cables import Cable, TransmissionLine
-    from scubas.plotlib import cable_potential, update_rc_params
+from scubas.datasets import PROFILES
+from scubas.cables import Cable, TransmissionLine
+from scubas.plotlib import cable_potential, update_rc_params
 
-    figures_dir = Path("docs/tutorial/figures")
-    figures_dir.mkdir(parents=True, exist_ok=True)
+figures_dir = Path("docs/tutorial/figures")
+figures_dir.mkdir(parents=True, exist_ok=True)
 
-    update_rc_params(
+update_rc_params(
+    {
+        "font.family": "sans-serif",
+        "font.sans-serif": ["Tahoma", "DejaVu Sans", "Lucida Grande", "Verdana"],
+    },
+    science=True,
+)
+
+def create_induced_field(millivolts_per_km: float) -> pd.DataFrame:
+    return pd.DataFrame({"X": [millivolts_per_km]}, index=pd.RangeIndex(1, name="Time"))
+
+def build_transmission_line(
+    sec_id: str,
+    length_km: float,
+    profile,
+    efield: pd.DataFrame,
+    terminations=None,
+) -> TransmissionLine:
+    tl = TransmissionLine(
+        sec_id=sec_id,
+        directed_length={"length_north": length_km},
+        elec_params={"site": profile, "width": 1.0, "flim": [1e-6, 1.0]},
+        active_termination=terminations,
+    )
+    tl.compute_eqv_pi_circuit(Efield=efield, components=["X"])
+    return tl
+
+def simulate_case(title: str, slug: str, sections, ylim):
+    tlines = [build_transmission_line(**section) for section in sections]
+    cable = Cable(tlines, components=["X"])
+    potentials, distances = cable._pot_along_cable_(timestamp=0)
+
+    plot = cable_potential(potentials, distances, ylim=ylim)
+    plot.axes.set_title(title)
+    plot.axes.text(
+        0.05,
+        0.85,
+        rf"$L_{\mathrm{total}}$ = {sum(section['length_km'] for section in sections):.0f} km",
+        ha="left",
+        va="center",
+        transform=plot.axes.transAxes,
+    )
+    plot.figure.savefig(
+        figures_dir / f"{slug}.png",
+        dpi=300,
+        bbox_inches="tight",
+    )
+    plot.figure.clf()
+
+efield_cs = create_induced_field(300.0)
+efield_ocean = create_induced_field(100.0)
+
+simulate_case(
+    title="Case 1 – Continental Shelf",
+    slug="conduct_case1_continental_shelf",
+    sections=[
+        {"sec_id": "CS", "length_km": 600.0, "profile": PROFILES.CS, "efield": efield_cs},
+    ],
+    ylim=(-200.0, 200.0),
+)
+
+simulate_case(
+    title="Case 2 – Shallow Ocean",
+    slug="conduct_case2_shallow_ocean",
+    sections=[
         {
-            "font.family": "sans-serif",
-            "font.sans-serif": ["Tahoma", "DejaVu Sans", "Lucida Grande", "Verdana"],
+            "sec_id": "CS-west",
+            "length_km": 100.0,
+            "profile": PROFILES.CS,
+            "efield": efield_cs,
+            "terminations": {"left": {"site": PROFILES.LD, "width": 1.0}},
         },
-        science=True,
-    )
+        {
+            "sec_id": "SO",
+            "length_km": 1800.0,
+            "profile": PROFILES.SO,
+            "efield": efield_ocean,
+        },
+        {
+            "sec_id": "CS-east",
+            "length_km": 100.0,
+            "profile": PROFILES.CS,
+            "efield": efield_cs,
+            "terminations": {"right": {"site": PROFILES.LD, "width": 1.0}},
+        },
+    ],
+    ylim=(-60.0, 60.0),
+)
 
-    def create_induced_field(millivolts_per_km: float) -> pd.DataFrame:
-        return pd.DataFrame({"X": [millivolts_per_km]}, index=pd.RangeIndex(1, name="Time"))
-
-    def build_transmission_line(
-        sec_id: str,
-        length_km: float,
-        profile,
-        efield: pd.DataFrame,
-        terminations=None,
-    ) -> TransmissionLine:
-        tl = TransmissionLine(
-            sec_id=sec_id,
-            directed_length={"length_north": length_km},
-            elec_params={"site": profile, "width": 1.0, "flim": [1e-6, 1.0]},
-            active_termination=terminations,
-        )
-        tl.compute_eqv_pi_circuit(Efield=efield, components=["X"])
-        return tl
-
-    def simulate_case(title: str, slug: str, sections, ylim):
-        tlines = [build_transmission_line(**section) for section in sections]
-        cable = Cable(tlines, components=["X"])
-        potentials, distances = cable._pot_along_cable_(timestamp=0)
-
-        plot = cable_potential(potentials, distances, ylim=ylim)
-        plot.axes.set_title(title)
-        plot.axes.text(
-            0.05,
-            0.85,
-            rf"$L_{\mathrm{total}}$ = {sum(section['length_km'] for section in sections):.0f} km",
-            ha="left",
-            va="center",
-            transform=plot.axes.transAxes,
-        )
-        plot.figure.savefig(
-            figures_dir / f"{slug}.png",
-            dpi=300,
-            bbox_inches="tight",
-        )
-        plot.figure.clf()
-
-    efield_cs = create_induced_field(300.0)
-    efield_ocean = create_induced_field(100.0)
-
-    simulate_case(
-        title="Case 1 – Continental Shelf",
-        slug="conduct_case1_continental_shelf",
-        sections=[
-            {"sec_id": "CS", "length_km": 600.0, "profile": PROFILES.CS, "efield": efield_cs},
-        ],
-        ylim=(-200.0, 200.0),
-    )
-
-    simulate_case(
-        title="Case 2 – Shallow Ocean",
-        slug="conduct_case2_shallow_ocean",
-        sections=[
-            {
-                "sec_id": "CS-west",
-                "length_km": 100.0,
-                "profile": PROFILES.CS,
-                "efield": efield_cs,
-                "terminations": {"left": {"site": PROFILES.LD, "width": 1.0}},
-            },
-            {
-                "sec_id": "SO",
-                "length_km": 1800.0,
-                "profile": PROFILES.SO,
-                "efield": efield_ocean,
-            },
-            {
-                "sec_id": "CS-east",
-                "length_km": 100.0,
-                "profile": PROFILES.CS,
-                "efield": efield_cs,
-                "terminations": {"right": {"site": PROFILES.LD, "width": 1.0}},
-            },
-        ],
-        ylim=(-60.0, 60.0),
-    )
-
-    simulate_case(
-        title="Case 3 – Deep Ocean",
-        slug="conduct_case3_deep_ocean",
-        sections=[
-            {
-                "sec_id": "CS-west",
-                "length_km": 100.0,
-                "profile": PROFILES.CS,
-                "efield": efield_cs,
-                "terminations": {"left": {"site": PROFILES.LD, "width": 1.0}},
-            },
-            {
-                "sec_id": "DO",
-                "length_km": 7800.0,
-                "profile": PROFILES.DO,
-                "efield": efield_ocean,
-            },
-            {
-                "sec_id": "CS-east",
-                "length_km": 100.0,
-                "profile": PROFILES.CS,
-                "efield": efield_cs,
-                "terminations": {"right": {"site": PROFILES.LD, "width": 1.0}},
-            },
-        ],
-        ylim=(-120.0, 120.0),
-    )
-    ```
+simulate_case(
+    title="Case 3 – Deep Ocean",
+    slug="conduct_case3_deep_ocean",
+    sections=[
+        {
+            "sec_id": "CS-west",
+            "length_km": 100.0,
+            "profile": PROFILES.CS,
+            "efield": efield_cs,
+            "terminations": {"left": {"site": PROFILES.LD, "width": 1.0}},
+        },
+        {
+            "sec_id": "DO",
+            "length_km": 7800.0,
+            "profile": PROFILES.DO,
+            "efield": efield_ocean,
+        },
+        {
+            "sec_id": "CS-east",
+            "length_km": 100.0,
+            "profile": PROFILES.CS,
+            "efield": efield_cs,
+            "terminations": {"right": {"site": PROFILES.LD, "width": 1.0}},
+        },
+    ],
+    ylim=(-120.0, 120.0),
+)
+```
+:::
 
 #### Boundary Conditions: Calculating Potentials
----

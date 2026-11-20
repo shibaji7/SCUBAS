@@ -1,0 +1,4 @@
+/* status words of the roadmap: done is green, proposed is blue, planned is amber */
+.status-done { color: #1a7f37; font-weight: 700; }
+.status-proposed { color: #0969da; font-weight: 700; }
+.status-planned { color: #9a6700; font-weight: 700; }

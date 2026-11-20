@@ -12,13 +12,15 @@ and conditions of MIT General Public License.
 
 # Datasets module
 
-<span class="api-badge api-package">Package</span>
-<span class="api-badge api-module">Module</span> `scubas.datasets`
-<span class="api-badge api-class">Class</span> `Layer`, `Site`, `PROFILES`
+- **Module:** `scubas.datasets`
+- **Class:** `Layer`, `Site`, `PROFILES`
 
-!!! info "Why this module matters"
-    Most SCUBAS workflows pass `Site` objects into conductivity, model, and
-    cable utilities. Defining these correctly improves downstream stability.
+:::{admonition} Why this module matters
+:class: note
+
+Most SCUBAS workflows pass `Site` objects into conductivity, model, and
+cable utilities. Defining these correctly improves downstream stability.
+:::
 
 `scubas.datasets` now exposes lightweight data classes powered by `dataclass`
 and offers convenience helpers for synthesising layered conductivity profiles.
@@ -64,29 +66,18 @@ print(PROFILES.CS.get_names())
 
 ## API reference
 
-::: scubas.datasets.Layer
-    handler: python
-    options:
-      show_root_heading: true
-      show_source: true
+```{eval-rst}
+.. autoclass:: scubas.datasets.Layer
+   :members:
+```
 
-::: scubas.datasets.Site
-    handler: python
-    options:
-      members:
-        - get_thicknesses
-        - get_conductivities
-        - get_resistivities
-        - get_names
-        - get
-        - set_thicknesses
-        - calcZ
-        - calcP
-        - init
-      show_root_heading: true
-      show_source: true
+```{eval-rst}
+.. autoclass:: scubas.datasets.Site
+   :members: get_thicknesses, get_conductivities, get_resistivities, get_names, get, set_thicknesses, calcZ, calcP, init
+```
 
-::: scubas.datasets.PROFILES
-    options:
-      show_root_heading: true
-      show_source: true
+```{py:data} scubas.datasets.PROFILES
+:type: types.SimpleNamespace
+
+Ready-made `Site` objects, one attribute per profile (`PROFILES.CS`, `PROFILES.DO`, `PROFILES.LD`, ...). The keys and what each profile is are listed in the [glossary](../glossary.md#profile-and-site).
+```

@@ -6,7 +6,12 @@ updates:
     schedule:
       interval: weekly
 
-  # No "pip" entry on purpose. pyproject.toml lists unpinned dependencies, so there is nothing for Dependabot to bump there, and it
-  # finds docs/requirements.txt (an old freeze that Read the Docs installs, pinned to an old mkdocs) and opens a pull request per
-  # pinned package. The documentation phase replaces that file with a short list and the pinned tools of ci/docs-requirements.txt are
-  # reviewed by hand; add a pip entry then, with the path it should watch.
+  # The documentation tools (docs/requirements.txt, a short pinned list). Grouped, so one pull request per week; its docs CI run (a Sphinx build with
+  # warnings as errors) shows whether the new versions work. pyproject.toml is not listed: its dependencies are unpinned, so there is nothing to bump.
+  - package-ecosystem: pip
+    directory: /docs
+    schedule:
+      interval: weekly
+    groups:
+      docs-tools:
+        patterns: ["*"]

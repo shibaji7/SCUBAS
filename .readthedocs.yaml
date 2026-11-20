@@ -10,9 +10,20 @@ build:
   os: ubuntu-22.04
   tools:
     python: "3.11"
+  jobs:
+    post_checkout:
+      # a switch: while the file .rtd-skip exists (make rtd-off / rtd-on) every build is cancelled and the published site stays as it is;
+      # exit code 183 cancels the build
+      - |
+        if [ -f .rtd-skip ]; then
+          exit 183
+        fi
 
-mkdocs:
-  configuration: mkdocs.yml
+# Sphinx with the dirhtml builder: every page keeps the address it had under mkdocs (tutorial/theory/, dev/cables/, ...)
+sphinx:
+  builder: dirhtml
+  configuration: docs/conf.py
+  fail_on_warning: true
 
 # Optionally declare the Python requirements required to build your docs
 python:

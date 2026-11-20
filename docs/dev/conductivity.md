@@ -12,13 +12,15 @@ and conditions of MIT General Public License.
 
 # Conductivity profiles
 
-<span class="api-badge api-package">Package</span>
-<span class="api-badge api-module">Module</span> `scubas.conductivity`
-<span class="api-badge api-class">Class</span> `ConductivityProfile`
+- **Module:** `scubas.conductivity`
+- **Class:** `ConductivityProfile`
 
-!!! important "Data dependency"
-    `ConductivityProfile` uses the LITHO1.0 model data and caches it under
-    `.scubas_config/`. Ensure network/download access is available on first run.
+:::{admonition} Data dependency
+:class: important
+
+`ConductivityProfile` uses the LITHO1.0 model data and caches it under
+`.scubas_config/`. Ensure network/download access is available on first run.
+:::
 
 The conductivity utilities were modernised to provide type-safe configuration,
 download-on-demand handling of the LITHO1.0 model, and a consistent interface
@@ -61,24 +63,7 @@ site_bins = profile.compile_bined_profiles(bined, to_site=True)
 
 ## API reference
 
-::: scubas.conductivity.ConductivityProfile
-    handler: python
-    options:
-      members:
-        - load_earth_model
-        - get_interpolation_points
-        - get_water_layer
-        - get_sediment_layer
-        - get_crust_layer
-        - get_lithosphere_layer
-        - get_upper_mantle_layer
-        - get_transition_zone_layer
-        - get_lower_mantle_layer
-        - _compile_profile_
-        - compile_profile
-        - compile_profiles
-        - compile_bined_profile
-        - compile_bined_profiles
-        - compile_mcmc_bined_profiles
-      show_root_heading: true
-      show_source: true
+```{eval-rst}
+.. autoclass:: scubas.conductivity.ConductivityProfile
+   :members: load_earth_model, get_interpolation_points, get_water_layer, get_sediment_layer, get_crust_layer, get_lithosphere_layer, get_upper_mantle_layer, get_transition_zone_layer, get_lower_mantle_layer, _compile_profile_, compile_profile, compile_profiles, compile_bined_profile, compile_bined_profiles, compile_mcmc_bined_profiles
+```

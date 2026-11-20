@@ -33,7 +33,6 @@ The primary goal is to employ advanced techniques, including Monte Carlo simulat
 > * Run SCUBAS for all these $\mathcal{N}\times\mathcal{V}$ combinations, and from these solutions quantify uncertainty in the output use MC-simulation.
 > * For now we have no-way to estimate error in input magnetic field dataset. If given we can generate another set of magnetic field input and then run MC-simulation to propagate the errors in the output.
 
-
 ### Statistical Representation of System Response:
 > Monte Carlo simulations generate numerous possible outcomes, offering a statistical representation of the system's response under varying conditions. Uncertainties in the Ocean-Earth thickness structure will be addressed by repeatedly sampling ocean water levels from each cable section along the route.
 
