@@ -1,6 +1,7 @@
-# Run unit tests and publish coverage to Codecov
 name: tests
 
+# Lint, formatting, headers and release consistency run once; the test suite runs on every supported Python and on both pandas series.
+# The legacy lint debt is allowed (ruff.toml), new violations are not. Coverage gates: 90% overall and a floor per module (pyproject.toml).
 on:
   push:
     branches: [main]
@@ -10,34 +11,81 @@ on:
 permissions:
   contents: read
 
-jobs:
-  pytest:
-    runs-on: ubuntu-latest
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
 
+env:
+  # keep in step with .pre-commit-config.yaml (ruff is called from the system there); the legacy debt list in ruff.toml was written with this
+  # version, so bump it together with `python scripts/ruff_ratchet.py --update`
+  RUFF_VERSION: "0.17.4"
+
+jobs:
+  checks:
+    name: lint and consistency
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
+
+      - name: Install ruff
+        run: python -m pip install "ruff==${RUFF_VERSION}"
+
+      - name: Lint (ruff; the legacy debt in ruff.toml is allowed)
+        run: python -m ruff check scubas tests scripts examples
+
+      - name: Legacy lint debt may only shrink
+        run: python scripts/ruff_ratchet.py --check
+
+      - name: Format check (ruff format)
+        run: python -m ruff format --check scubas tests scripts examples
+
+      - name: SPDX headers
+        run: python scripts/check_spdx.py
+
+      - name: Release consistency (version, CHANGELOG.md, CITATION.cff)
+        run: python scripts/check_release.py
+
+  pytest:
+    name: pytest (python ${{ matrix.python-version }}, ${{ matrix.pandas-spec }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+        pandas-spec: ["pandas<3", "pandas>=3"]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install ".[dev]"
-        shell: bash
+          python -m pip install ".[dev]" "${{ matrix.pandas-spec }}"
+          python -m pip list | grep -i -E "^(pandas|numpy|scipy|matplotlib|pyproj|loguru) "
 
-      - name: Run tests with coverage
-        run: |
-          python -m coverage run -m pytest
-          python -m coverage xml
-          python -m coverage report -m
-        shell: bash
+      - name: Tests with coverage (overall gate)
+        run: python -m pytest --cov=scubas --cov-report=term-missing --cov-report=xml --cov-fail-under=90
+
+      - name: Per-module coverage floors
+        run: python scripts/check_coverage_floors.py
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        # one leg uploads. A switch: setting the repository variable CODECOV_UPLOAD to "false" turns it off (unset keeps the upload on,
+        # as it was before). A missing token (a pull request from a fork) must not fail the tests.
+        if: success() && matrix.python-version == '3.12' && matrix.pandas-spec == 'pandas>=3' && vars.CODECOV_UPLOAD != 'false'
+        uses: codecov/codecov-action@v5
         with:
           files: coverage.xml
           token: ${{ secrets.CODECOV_TOKEN }}

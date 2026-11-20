@@ -1,0 +1,17 @@
+version: 2
+updates:
+  # the workflow actions (checkout, setup-python, codecov, ...)
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+  # pyproject.toml only. docs/requirements.txt is deliberately not listed: it is an old freeze that Read the Docs installs, and a pull request
+  # per pinned package would be noise until the documentation phase replaces it.
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      dev-tools:
+        patterns: ["pytest*", "ruff", "pre-commit", "build", "twine"]

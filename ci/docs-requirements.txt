@@ -1,0 +1,11 @@
+# The tools the docs CI job installs: the mkdocs stack that builds the current site with `mkdocs build --strict`.
+# These match the versions used to check the build on 2026-11-20. This is NOT what Read the Docs installs (docs/requirements.txt, an old
+# freeze of everything); the documentation phase replaces that file with a short list and this one can then be deleted.
+mkdocs==1.6.1
+mkdocs-material==9.6.21
+mkdocs-material-extensions==1.3.1
+mkdocstrings==0.30.1
+mkdocstrings-python==1.18.2
+mkdocs-glightbox==0.5.1
+mkdocs-awesome-pages-plugin==2.10.1
+pymdown-extensions==10.16.1
