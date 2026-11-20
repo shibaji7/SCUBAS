@@ -68,6 +68,10 @@ The text format of geomagnetic observatory records (`.txt` and `.min` files). `O
 ### INTERMAGNET
 The global network of geomagnetic observatories whose records drive SCUBAS; see [INTERMAGNET data access](user/intermagnet.md).
 
+### Future slot
+A planned capability kept as a stub in `scubas.future` that raises `NotImplementedYetError` naming its roadmap item. The package is empty until a capability
+is named. See [planned capabilities](dev/future.md).
+
 ### Known defect
 Behaviour of 0.1.9 that looks wrong but that users or published results may depend on. It is pinned by a test as it is and
 reported; a fix is a separate, approved change. See [testing](dev/testing.md#known-defects).

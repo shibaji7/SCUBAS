@@ -21,7 +21,7 @@ ifeq ($(NO_COLOR),)
 endif
 
 .DEFAULT_GOAL := help
-.PHONY: rtd-on rtd-off rtd-status help install dev test cov cov-xml cov-floors lint lint-ratchet fmt format fmt-check spdx release-check changelog-check compat-baseline pre-commit-install pre-commit qa docs docs-serve clean
+.PHONY: logo rtd-on rtd-off rtd-status help install dev test cov cov-xml cov-floors lint lint-ratchet fmt format fmt-check spdx release-check changelog-check compat-baseline pre-commit-install pre-commit qa docs docs-serve clean
 
 help: ## Show this list
 	@printf "$(CB)SCUBAS$(C0)  $(CD)Submarine Cables Upset by Auroral Streams$(C0)\n\n"
@@ -86,6 +86,9 @@ pre-commit: ## Run every pre-commit hook on all tracked and staged files
 
 docs: ## Build the documentation (Sphinx, dirhtml, warnings are errors)
 	$(PY) -m sphinx -W --keep-going -b dirhtml docs docs/_build/dirhtml
+
+logo: ## Regenerate the logo SVGs in docs/_static/ (needs fonttools and matplotlib)
+	$(PY) scripts/make_logo.py
 
 rtd-off: ## Stop Read the Docs from publishing: creates .rtd-skip (builds are cancelled after the next push)
 	@touch .rtd-skip

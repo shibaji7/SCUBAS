@@ -12,6 +12,7 @@ superseded) and the alternatives that were rejected.
 | [0005](0005-known-defects-are-pinned.md) | Known defects are pinned and reported, never fixed silently | accepted |
 | [0006](0006-license-lgpl.md) | Relicense from MIT to LGPL-3.0-or-later | accepted |
 | [0007](0007-documentation-on-sphinx.md) | The documentation moves to Sphinx and MyST, built as `dirhtml` | accepted |
+| [0008](0008-planned-capabilities-are-stubs.md) | A planned capability is a stub that says so | accepted |
 
 ```{toctree}
 :hidden:
@@ -24,4 +25,5 @@ superseded) and the alternatives that were rejected.
 0005-known-defects-are-pinned
 0006-license-lgpl
 0007-documentation-on-sphinx
+0008-planned-capabilities-are-stubs
 ```

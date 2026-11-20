@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use SCUBAS, please cite it with the paper below."
+title: "SCUBAS: Submarine Cables Upset by Auroral Streams"
+abstract: "A physics-based workflow for estimating the voltage induced on submarine cables during geomagnetic disturbances, using transmission-line modelling of layered Ocean/Earth conductivity structures."
+type: software
+version: 0.1.9
+date-released: 2026-03-04
+license: LGPL-3.0-or-later  # the repository from the first release after 0.1.9; releases up to 0.1.9 were published under the MIT license (see NOTICE.md)
+authors:
+  - family-names: Chakraborty
+    given-names: Shibaji
+repository-code: "https://github.com/shibaji7/SCUBAS"
+url: "https://scubas.readthedocs.io/"
+keywords: [submarine cable, geomagnetic disturbance, geomagnetically induced voltage, transmission line, space weather, magnetotelluric]
+preferred-citation:
+  type: article
+  title: "Modeling geomagnetic induction in submarine cables"
+  authors:
+    - {family-names: Chakraborty, given-names: Shibaji}
+    - {family-names: Boteler, given-names: D. H.}
+    - {family-names: Shi, given-names: Xueling}
+    - {family-names: Murphy, given-names: B. S.}
+    - {family-names: Hartinger, given-names: M. D.}
+    - {family-names: Wang, given-names: X.}
+    - {family-names: Lucas, given-names: G.}
+    - {family-names: Baker, given-names: J. B. H.}
+  journal: "Frontiers in Physics"
+  volume: 10
+  pages: "1022475"
+  year: 2022
+  doi: "10.3389/fphy.2022.1022475"

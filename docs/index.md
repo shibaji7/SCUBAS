@@ -36,7 +36,7 @@ If you have any questions or concerns please submit an **Issue** on the [SCUBAS 
 | [Tutorials](tutorial/theory.md) | theory, long and short cables, active terminations, network modeling, case studies, the 1989 event, extreme value analysis, uncertainty |
 | [API reference](dev/index.md) | cables, conductivity, datasets, models, plotting, current sources and utilities |
 | [Project](roadmap.md) | the roadmap, the changelog and the glossary |
-| [Developer guide](dev/conventions.md) | conventions, testing and the compatibility suite, release, decision records |
+| [Developer guide](dev/conventions.md) | conventions, testing and the compatibility suite, planned capabilities, release, decision records |
 
 ```{toctree}
 :hidden:
@@ -95,6 +95,7 @@ glossary
 
 dev/conventions
 dev/testing
+dev/future
 dev/release
 dev/adr/index
 ```

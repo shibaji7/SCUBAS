@@ -2,7 +2,7 @@
 
 Status key: **done** = merged and tested, **planned** = agreed, not started, **proposed** = waiting for a decision.
 
-**Progress: 6 of 10 steps done**, 0 proposed, 4 planned.
+**Progress: 8 of 11 steps done**, 0 proposed, 3 planned.
 
 SCUBAS 0.1.9 (on PyPI) is the baseline. The work below brings the project to the engineering standard of its sibling BOLTS
 (tests, gates, documentation, release control) **without changing the API, the file formats or the numbers of 0.1.9**; they are
@@ -17,7 +17,8 @@ pinned by the compatibility suite (`tests/compat/`).
 | CI gates | tests on Python 3.11 to 3.13 with pandas 2 and 3, build and wheel test, strict docs build, weekly `pip-audit`, Dependabot for the Actions, templates | **done** |
 | Documentation | development-status banner on every page, glossary, decision records, testing, conventions and release guides, roadmap and changelog pages, strict build on CI and Read the Docs, the `.rtd-skip` switch | **done** (Sphinx and MyST, like BOLTS) |
 | License | relicensed from MIT to LGPL-3.0-or-later; earlier releases stay MIT (`NOTICE.md`) | **done** |
-| Governance files | `CITATION.cff`, `CONTRIBUTING.md`, `SECURITY.md`, `CODE_OF_CONDUCT.md`, README corrections | **planned** (after the license decision, so the wording is right) |
+| Governance files | `CITATION.cff`, `CONTRIBUTING.md` (with the git workflow), `SECURITY.md`, `CODE_OF_CONDUCT.md`, `codecov.yml`, a README in the BOLTS layout, a generated text logo (a placeholder: replace `docs/_static/logo*.svg`) | **done** |
+| Planned capabilities | the `scubas.future` package and `NotImplementedYetError` (stubs that say what is not built, with tests); the package is empty until a capability is named | **done** (the pattern; no capability is committed) |
 | Packaging hygiene | correct the package metadata (description, classifiers, keywords), declare numpy, add the `plots`, `data`, `dev` and `docs` extras next to the unchanged runtime dependencies, fix `MANIFEST.in`, a small `environment.yml` (`env.yml` stays), `scubas.__version__` | **planned** |
 | Release control | a tag-driven release workflow (TestPyPI, then PyPI after a manual approval, trusted publishing) behind an on/off repository variable; `scripts/check_dist.py` | **planned**, needs the owner to create the environments, the variable and the PyPI trusted publisher |
 | Provenance for new code | `Param(value, unit, status, source)` and a clear error for unknown values, used by new code only; a read-only list of the constants of the existing code with a test that they match | **planned** |
@@ -26,6 +27,10 @@ pinned by the compatibility suite (`tests/compat/`).
 Not planned for now: a `src/` layout, splitting the modules, replacing loguru, making matplotlib or pyproj optional. Each would change
 how users import or install the package; the reasons are in the decision records (`docs/dev/adr/`). If something ever moves, its old
 import path stays through a shim that warns, with the version that removes it (not before 1.0.0).
+
+## Planned capabilities
+
+None is committed. A capability the maintainers decide to build is first added here and as a stub in `scubas.future` (see `docs/dev/future.md`), in the same pull request.
 
 ## Known defects of 0.1.9
 

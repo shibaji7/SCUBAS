@@ -1,0 +1,19 @@
+# Codecov configuration (https://docs.codecov.com/docs/codecov-yaml). The coverage itself is measured by pytest-cov (coverage.xml);
+# the floors that fail CI are in pyproject.toml and the workflow, these settings only control what Codecov reports.
+coverage:
+  status:
+    project:
+      default:
+        target: auto        # compare with the base commit
+        threshold: 1%       # allow a drop of up to one percentage point
+    patch:
+      default:
+        informational: true  # report the coverage of the changed lines without failing a pull request
+comment:
+  layout: "condensed_header, diff, files"
+  behavior: default
+ignore:
+  - "tests/"
+  - "scripts/"
+  - "examples/"
+  - "docs/"
