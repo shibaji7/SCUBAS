@@ -1,5 +1,5 @@
-# SPDX-License-Identifier: MIT
-# Copyright (c) 2023 Shibaji Chakraborty
+# SPDX-License-Identifier: LGPL-3.0-or-later
+# Copyright (C) 2023-2026 Shibaji Chakraborty
 """Characterization: the numbers SCUBAS 0.1.9 produces (tutorial cables, the 1989 event, readers, sources, utilities).
 
 The baseline is ``baseline/behaviour.npz`` written by ``scripts/gen_compat_baseline.py`` from the unchanged legacy code.

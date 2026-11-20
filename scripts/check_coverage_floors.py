@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-# SPDX-License-Identifier: MIT
-# Copyright (c) 2023 Shibaji Chakraborty
+# SPDX-License-Identifier: LGPL-3.0-or-later
+# Copyright (C) 2023-2026 Shibaji Chakraborty
 """Fail if any module's line coverage is below its floor (``make cov-floors``, after a coverage run that wrote ``coverage.xml``).
 
 The overall gate (``--cov-fail-under``) lets a well-tested module hide a badly tested one; the floors in ``[tool.scubas.coverage-floors]``

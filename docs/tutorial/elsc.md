@@ -1,13 +1,10 @@
-<!-- 
+<!--
 Author(s): Shibaji Chakraborty, Xueling Shi
 
 Disclaimer:
-SCUBAS is under the MIT license found in the root directory LICENSE.md 
-Everyone is permitted to copy and distribute verbatim copies of this license 
-document.
-
-This version of the MIT Public License incorporates the terms
-and conditions of MIT General Public License.
+SCUBAS is licensed under the GNU Lesser General Public License v3.0 or later
+(LGPL-3.0-or-later); see LICENSE and COPYING in the root directory. Versions up to
+and including 0.1.9 were released under the MIT license (see NOTICE.md).
 -->
 #### Electrically Long Cable
 Consider an Ocean-Earth section with physical length, $L$, and propagation constant, $\gamma$. The section has an adjustment distance $\frac{1}{\gamma}$. For an electrically-long transmission line, where $L>\frac{4}{\gamma}$ (i.e. length is greater than four times of adjustment distance) we have the following scenario,

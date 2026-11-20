@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-# SPDX-License-Identifier: MIT
-# Copyright (c) 2023 Shibaji Chakraborty
+# SPDX-License-Identifier: LGPL-3.0-or-later
+# Copyright (C) 2023-2026 Shibaji Chakraborty
 """Write the compatibility baselines in ``tests/compat/baseline/`` from the code that is installed right now (``make compat-baseline``).
 
 The baselines describe what SCUBAS 0.1.9 does. Regenerate them only on the unchanged legacy code, or when a change of a

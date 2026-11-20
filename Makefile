@@ -1,5 +1,5 @@
-# SPDX-License-Identifier: MIT
-# Copyright (c) 2023 Shibaji Chakraborty
+# SPDX-License-Identifier: LGPL-3.0-or-later
+# Copyright (C) 2023-2026 Shibaji Chakraborty
 #
 # SCUBAS developer entry points.  `make` (or `make help`) lists them.
 # Override the interpreter with  make PY=/path/to/python  (default: the conda env named "scubas").

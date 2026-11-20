@@ -41,3 +41,7 @@ Follow the same instructions as installing the interactive notebooks.
 ## Citing this Project
 
 - Chakraborty S, Boteler DH, Shi X, Murphy BS, Hartinger MD, Wang X, Lucas G and Baker JBH (2022) Modeling geomagnetic induction in submarine cables. *Front. Phys.* 10:1022475. [doi:10.3389/fphy.2022.1022475](https://doi.org/10.3389/fphy.2022.1022475)
+
+## License
+
+SCUBAS is licensed under the **GNU Lesser General Public License v3.0 or later** (`LGPL-3.0-or-later`, see `LICENSE` and `COPYING`). Releases up to and including 0.1.9 were published under the MIT license and remain available under it; see `NOTICE.md`.

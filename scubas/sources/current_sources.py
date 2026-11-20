@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: LGPL-3.0-or-later
+# Copyright (C) 2023-2026 Shibaji Chakraborty
 """
     current_sources.py: Module is used to implement ionosphereic 
                         current sources and associated ground magnetic 
@@ -7,7 +9,7 @@
 __author__ = "Chakraborty, S."
 __copyright__ = ""
 __credits__ = []
-__license__ = "MIT"
+__license__ = "LGPL-3.0-or-later"
 __version__ = "1.0."
 __maintainer__ = "Chakraborty, S."
 __email__ = "chakras4@erau.edu"

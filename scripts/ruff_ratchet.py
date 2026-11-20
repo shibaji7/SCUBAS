@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-# SPDX-License-Identifier: MIT
-# Copyright (c) 2023 Shibaji Chakraborty
+# SPDX-License-Identifier: LGPL-3.0-or-later
+# Copyright (C) 2023-2026 Shibaji Chakraborty
 """Keep the legacy lint debt in ``ruff.toml`` honest: it may only shrink.
 
 ``ruff.toml`` holds the full BOLTS rule set. Violations that already existed in SCUBAS 0.1.9 are listed per file between the markers

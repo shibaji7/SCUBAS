@@ -1,5 +1,5 @@
-# SPDX-License-Identifier: MIT
-# Copyright (c) 2023 Shibaji Chakraborty
+# SPDX-License-Identifier: LGPL-3.0-or-later
+# Copyright (C) 2023-2026 Shibaji Chakraborty
 """File formats SCUBAS reads and writes: IAGA-2002, CSV B-field input, and the two files ``Cable.save`` writes."""
 
 import json

@@ -10,7 +10,7 @@ superseded) and the alternatives that were rejected.
 | [0003](0003-flat-layout-and-runtime-dependencies.md) | Keep the flat package layout and the runtime dependencies in 0.x | accepted |
 | [0004](0004-keep-loguru.md) | Keep loguru for logging | accepted |
 | [0005](0005-known-defects-are-pinned.md) | Known defects are pinned and reported, never fixed silently | accepted |
-| [0006](0006-license-lgpl.md) | Relicense from MIT to LGPL-3.0-or-later | proposed |
+| [0006](0006-license-lgpl.md) | Relicense from MIT to LGPL-3.0-or-later | accepted |
 | [0007](0007-documentation-on-sphinx.md) | The documentation moves to Sphinx and MyST, built as `dirhtml` | accepted |
 
 ```{toctree}

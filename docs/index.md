@@ -1,16 +1,13 @@
-<!-- 
+<!--
 Author(s): Shibaji Chakraborty, Xueling Shi
 
 Disclaimer:
-SCUBAS is under the MIT license found in the root directory LICENSE.md 
-Everyone is permitted to copy and distribute verbatim copies of this license 
-document.
-
-This version of the MIT Public License incorporates the terms
-and conditions of MIT General Public License.
+SCUBAS is licensed under the GNU Lesser General Public License v3.0 or later
+(LGPL-3.0-or-later); see LICENSE and COPYING in the root directory. Versions up to
+and including 0.1.9 were released under the MIT license (see NOTICE.md).
 -->
 
-[![License: MIT](https://img.shields.io/badge/License%3A-MIT-green)](https://choosealicense.com/licenses/mit/) 
+[![License: LGPL v3+](https://img.shields.io/badge/license-LGPL--3.0--or--later-blue.svg)](https://github.com/shibaji7/SCUBAS/blob/main/LICENSE) 
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/release/python-3110/) 
 ![GitHub Stable Release (latest by date)](https://img.shields.io/github/v/release/shibaji7/SCUBAS)
 [![Documentation Status](https://img.shields.io/readthedocs/SCUBAS?logo=readthedocs&label=docs)](https://SCUBAS.readthedocs.io/en/latest/?badge=latest)
