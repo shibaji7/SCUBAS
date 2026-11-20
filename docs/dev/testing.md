@@ -36,6 +36,7 @@ Behaviour of 0.1.9 that looks wrong but that users or published results may depe
 - `Cable._pot_end_cable_` and the other end-potential helpers round to 0.01 V, and `Vt(v)` is computed from the rounded values.
 - The `unit` argument of those helpers is `"V"` or anything else, which means millivolts.
 - Layer thicknesses are in metres although the `Site` docstrings say km.
+- The LITHO1.0 model is downloaded over plain HTTP, without an integrity check, into `.scubas_config/` of the working directory the first time `ConductivityProfile` is used (see `SECURITY.md`).
 - Two guards (`add_active_termination` before the E-field exists, `_pot_alongCS_` before the nodal solution) behave differently from what their messages suggest.
 
 A fix is a separate pull request that you approve one by one; an output-changing fix goes behind a new function or option, never
