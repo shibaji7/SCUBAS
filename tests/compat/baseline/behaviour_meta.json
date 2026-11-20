@@ -1,0 +1,200 @@
+{
+ "bfield_gap.csv_columns": [
+  "X",
+  "Y",
+  "Z",
+  "F"
+ ],
+ "bfield_tst20200101vmin.min_columns": [
+  "X",
+  "Y",
+  "Z",
+  "F"
+ ],
+ "conductivity_defaults": {
+  "asthenosphere_resistivity": 100.0,
+  "crust_resistivity": 3000.0,
+  "earth_model": "LITHO1.0.nc",
+  "grid_interpolation_method": "nearest",
+  "lithosphere_resistivity": 1000.0,
+  "lower_mantle_resistivity": 1.0,
+  "profile_max_depth": 1000.0,
+  "seawater_resistivity": 0.3,
+  "sediment_resistivity": 3.0,
+  "transition_zone_bot": 660.0,
+  "transition_zone_resistivity": 10.0,
+  "transition_zone_top": 410.0,
+  "uri": "http://ds.iris.edu/files/products/emc/emc-files/LITHO1.0.nc"
+ },
+ "conductivity_method": "nearest",
+ "current_B0_direction": "GEO_NORTH_SOUTH",
+ "current_B1_direction": "GEO_VERT_DOWN",
+ "current_E0_direction": "GEO_EAST_WEST",
+ "current_units": [
+  "T",
+  "V/m"
+ ],
+ "default_flim_points": 1000001,
+ "efield_gap.csv_columns": [
+  "dTime",
+  "Y",
+  "X"
+ ],
+ "efield_tst20200101vmin.min_columns": [
+  "dTime",
+  "Y",
+  "X"
+ ],
+ "event1989_tot_params_columns": [
+  "V(v)",
+  "E.X",
+  "E.X.00",
+  "E.X.00.left",
+  "E.X.01",
+  "E.X.02",
+  "E.X.03",
+  "E.X.04",
+  "E.X.05",
+  "E.X.06",
+  "E.X.07",
+  "E.X.08",
+  "E.X.08.right",
+  "E.Y",
+  "E.Y.00",
+  "E.Y.00.left",
+  "E.Y.01",
+  "E.Y.02",
+  "E.Y.03",
+  "E.Y.04",
+  "E.Y.05",
+  "E.Y.06",
+  "E.Y.07",
+  "E.Y.08",
+  "E.Y.08.right",
+  "V(v).00",
+  "V(v).01",
+  "V(v).02",
+  "V(v).03",
+  "V(v).04",
+  "V(v).05",
+  "V(v).06",
+  "V(v).07",
+  "V(v).08",
+  "Vt(v)",
+  "U0",
+  "U1"
+ ],
+ "iaga_tst20200101vmin.min_columns": [
+  "X",
+  "Y",
+  "Z",
+  "F"
+ ],
+ "iaga_tst20200101vmin.min_header": {
+  "data interval type": "1-minute",
+  "data type": "definitive",
+  "digital sampling": "1 second",
+  "elevation": "100",
+  "format": "IAGA-2002",
+  "geodetic latitude": "45.000",
+  "geodetic longitude": "285.000",
+  "header_length": "12",
+  "iaga code": "TST",
+  "reported": "XYZF",
+  "sensor orientation": "XYZF",
+  "source of data": "Test Observatory",
+  "station name": "Testville"
+ },
+ "iaga_tsthd20200101vmin.min_columns": [
+  "Z",
+  "F",
+  "X",
+  "Y"
+ ],
+ "iaga_tsthd20200101vmin.min_header": {
+  "data interval type": "1-minute",
+  "data type": "definitive",
+  "digital sampling": "1 second",
+  "elevation": "100",
+  "format": "IAGA-2002",
+  "geodetic latitude": "45.000",
+  "geodetic longitude": "285.000",
+  "header_length": "12",
+  "iaga code": "TST",
+  "reported": "HDZF",
+  "sensor orientation": "HDZF",
+  "source of data": "Test Observatory",
+  "station name": "Testville"
+ },
+ "ingest_components": [
+  "Y",
+  "X"
+ ],
+ "layer_resistivity": 0.25,
+ "litho_names": [
+  "Seawater",
+  "Sediment",
+  "Crust",
+  "Lithosphere",
+  "Upper Mantle",
+  "Transition Zone",
+  "Lower Mantle"
+ ],
+ "litho_profile_names": [
+  "a",
+  "b"
+ ],
+ "maps": [
+  "Y",
+  "X",
+  -1.0,
+  1.0
+ ],
+ "site_type": "Site",
+ "strings": [
+  "0",
+  "1.23$\\times 10^{5}$",
+  "-9.876$\\times 10^{-4}$",
+  "5$\\times 10^{0}$"
+ ],
+ "to_str": "Z: 7.50$\\times 10^{-1}$ (Ohm/km)\nY: 5.00$\\times 10^{-6}$ (S/km)\nZ0: 3.87$\\times 10^{2}$ (Ohm)\ngma: 1.94$\\times 10^{-3}$ (/km)\nAd: 5.16$\\times 10^{2}$ (km)",
+ "tutorial_case1_tot_params_columns": [
+  "V(v)",
+  "E.X",
+  "E.X.00",
+  "V(v).00",
+  "Vt(v)",
+  "U0",
+  "U1"
+ ],
+ "tutorial_case2_tot_params_columns": [
+  "V(v)",
+  "E.X",
+  "E.X.00",
+  "E.X.00.left",
+  "E.X.01",
+  "E.X.02",
+  "E.X.02.right",
+  "V(v).00",
+  "V(v).01",
+  "V(v).02",
+  "Vt(v)",
+  "U0",
+  "U1"
+ ],
+ "tutorial_case3_tot_params_columns": [
+  "V(v)",
+  "E.X",
+  "E.X.00",
+  "E.X.00.left",
+  "E.X.01",
+  "E.X.02",
+  "E.X.02.right",
+  "V(v).00",
+  "V(v).01",
+  "V(v).02",
+  "Vt(v)",
+  "U0",
+  "U1"
+ ]
+}

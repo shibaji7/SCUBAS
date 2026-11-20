@@ -1,0 +1,74 @@
+# Ruff configuration: lint and format (`make lint`, `make fmt-check`, `make format`).
+#
+# The rule set is BOLTS's. SCUBAS is older code, so the existing violations are frozen as a per-file debt list (the block at the bottom,
+# written by scripts/ruff_ratchet.py): new files and new code must be clean, a debt list may only shrink (`make lint-ratchet` fails
+# when an entry is stale, `python scripts/ruff_ratchet.py --update` removes it). Never add an entry by hand.
+line-length = 88                  # the width the legacy code was formatted with (black); BOLTS uses 110 for new code only
+target-version = "py311"
+src = ["scubas", "tests", "examples", "scripts"]
+extend-exclude = ["site", "build", "dist", "docs", "coverage.xml"]
+
+[lint]
+select = [
+  "E", "W",   # pycodestyle
+  "F",        # pyflakes
+  "I",        # import order
+  "B",        # bugbear
+  "UP",       # pyupgrade
+  "C4",       # comprehensions
+  "SIM",      # simplifications
+  "RUF",      # ruff-specific
+  "N",        # pep8-naming (symbols from the transmission-line literature are a documented exception, see ignore)
+  "D",        # pydocstyle (NumPy convention, scubas only)
+  "PTH",      # pathlib instead of os.path / open
+  "PERF",     # performance anti-patterns
+  "ANN",      # type annotations on every public function (scubas only)
+  "C90",      # McCabe complexity (default 10)
+  "ARG",      # unused arguments
+  "PLR0911", "PLR0912", "PLR0913", "PLR0915", "PLR2004",   # too many returns / branches / arguments / statements, magic values
+]
+# POLICY (permanent):
+#  - RUF001/2/3: Greek letters and units appear in docstrings on purpose.
+#  - SIM108: a plain if/else is often clearer than a conditional expression.
+#  - N802/N803/N806/N815/N816: the physics keeps its literature symbols (Z, Y, C, R, Z0, Ye, Yp2, Ie, calcZ, to_Efields ...): public names
+#    that users already call, so they are never renamed by a linter.
+#  - ANN401: an explicit Any is allowed where the type is genuinely open (a pass-through **kwargs, a Site-like object).
+#  - D105/D107: the class docstring documents construction; magic methods are self-describing.
+ignore = ["RUF001", "RUF002", "RUF003", "SIM108", "N802", "N803", "N806", "N815", "N816", "D105", "D107", "ANN401"]
+
+[lint.pydocstyle]
+convention = "numpy"              # the legacy docstrings are NumPy style ("Parameters\n----------")
+
+[lint.pylint]
+max-args = 9
+
+[lint.isort]
+known-first-party = ["scubas"]
+
+[lint.per-file-ignores]
+# the documentation rules apply to the package; tests, examples and scripts are checked for correctness only
+"tests/*" = ["D", "ANN", "ARG", "PLR", "PTH", "SIM117", "RUF012", "E501", "N"]
+"examples/*" = ["E402", "D", "ANN", "ARG", "PLR", "PTH", "E501"]
+"scripts/*" = ["D", "ANN", "PLR", "E501"]
+"__init__.py" = ["F401"]
+
+[format]
+# legacy files that `ruff format` would change. Formatting them would rewrite a module docstring (current_sources.py) or touch
+# science code for no gain, so they are left alone until they are edited for another reason; remove an entry when you do.
+exclude = ["scubas/cables.py", "scubas/sources/current_sources.py"]
+
+# ---- legacy debt: written by scripts/ruff_ratchet.py, only ever shrinks ----------------------------------------------------------
+# BEGIN LEGACY DEBT
+[lint.extend-per-file-ignores]
+"examples/network_1989.py" = ["B905", "UP006", "UP035"]
+"examples/network_model.py" = ["UP035", "UP045"]
+"scubas/__init__.py" = ["D104"]
+"scubas/cables.py" = ["B010", "B905", "C408", "D200", "D205", "D401", "F841", "PLR2004", "RUF100", "UP006", "UP007", "UP034", "UP035", "UP037", "UP045"]
+"scubas/conductivity.py" = ["B007", "D200", "D205", "E501", "PLR2004", "RUF046", "UP006", "UP007", "UP024", "UP035", "UP045"]
+"scubas/datasets.py" = ["B905", "C408", "D200", "D205", "N812", "UP006", "UP007", "UP035", "UP037"]
+"scubas/models.py" = ["D200", "N812", "PLR2004", "PTH123", "RUF005", "RUF046", "UP006", "UP007", "UP015", "UP035", "UP045"]
+"scubas/plotlib.py" = ["D200", "E501", "PLR0913", "UP035", "UP045"]
+"scubas/sources/__init__.py" = ["D104"]
+"scubas/sources/current_sources.py" = ["ANN201", "ANN204", "ANN206", "B008", "C408", "C416", "D101", "D200", "D205", "D208", "D400", "D401", "E501", "E741", "N812", "PLR0913", "UP004", "UP034", "W291"]
+"scubas/utils.py" = ["D200", "D205", "RUF046", "UP006", "UP035", "UP045"]
+# END LEGACY DEBT

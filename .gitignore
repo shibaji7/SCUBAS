@@ -130,3 +130,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# ruff
+.ruff_cache/
+.ruff_ratchet.toml

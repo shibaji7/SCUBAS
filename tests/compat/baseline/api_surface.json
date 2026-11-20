@@ -1,0 +1,2677 @@
+{
+ "modules": {
+  "scubas": {},
+  "scubas.cables": {
+   "Cable": {
+    "bases": [
+     "object"
+    ],
+    "kind": "class",
+    "methods": {
+     "__init__": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "cable_sections",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "components",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     },
+     "_pot_along_cable_": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "timestamp",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ],
+        [
+         "unit",
+         "POSITIONAL_OR_KEYWORD",
+         "'V'"
+        ]
+       ]
+      }
+     },
+     "_pot_endCS_": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "cable_section_id",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "unit",
+         "POSITIONAL_OR_KEYWORD",
+         "'V'"
+        ],
+        [
+         "timestamp",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ]
+       ]
+      }
+     },
+     "_pot_endCS_byComp_": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "cable_section_id",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "comp",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "unit",
+         "POSITIONAL_OR_KEYWORD",
+         "'V'"
+        ],
+        [
+         "timestamp",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ]
+       ]
+      }
+     },
+     "_pot_end_cable_": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "unit",
+         "POSITIONAL_OR_KEYWORD",
+         "'V'"
+        ],
+        [
+         "timestamp",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ]
+       ]
+      }
+     },
+     "_pot_end_cable_byComp_": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "comp",
+         "POSITIONAL_OR_KEYWORD",
+         "'X'"
+        ],
+        [
+         "unit",
+         "POSITIONAL_OR_KEYWORD",
+         "'V'"
+        ],
+        [
+         "timestamp",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ]
+       ]
+      }
+     },
+     "compile": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     },
+     "consolidate_final_result": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     },
+     "run_nodal_analysis": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     },
+     "save": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "folder",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     },
+     "solve_admitance_matrix": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     }
+    }
+   },
+   "CableSection": {
+    "bases": [
+     "object"
+    ],
+    "kind": "class",
+    "methods": {
+     "__init__": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "sec_id",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "directed_length",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ]
+       ]
+      }
+     },
+     "_pot_alongCS_": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "Vi",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ],
+        [
+         "Vk",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ],
+        [
+         "ln",
+         "POSITIONAL_OR_KEYWORD",
+         "1000"
+        ],
+        [
+         "idx",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ]
+       ]
+      }
+     },
+     "check_location": {
+      "kind": "staticmethod",
+      "signature": {
+       "params": [
+        [
+         "loc",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     },
+     "compute_lengths": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "length_method",
+         "POSITIONAL_OR_KEYWORD",
+         "'great_circle'"
+        ],
+        [
+         "legacy_kwargs",
+         "VAR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     }
+    }
+   },
+   "TransmissionLine": {
+    "bases": [
+     "CableSection"
+    ],
+    "kind": "class",
+    "methods": {
+     "__init__": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "sec_id",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "directed_length",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ],
+        [
+         "elec_params",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ],
+        [
+         "active_termination",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ]
+       ]
+      }
+     },
+     "add_active_termination": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     },
+     "calc_trasmission_line_parameters": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "site",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ],
+        [
+         "width",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ]
+       ]
+      }
+     },
+     "compile_oml": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "bfield_data_files",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ],
+        [
+         "p",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ],
+        [
+         "csv_file_date_name",
+         "POSITIONAL_OR_KEYWORD",
+         "'Date'"
+        ]
+       ]
+      }
+     },
+     "compute_Vj": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "time",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     },
+     "compute_eqv_pi_circuit": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "Efield",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ],
+        [
+         "components",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ]
+       ]
+      }
+     },
+     "to_str": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     }
+    }
+   },
+   "_update_recursive_namespace": {
+    "kind": "function",
+    "signature": {
+     "params": [
+      [
+       "target",
+       "POSITIONAL_OR_KEYWORD",
+       "<empty>"
+      ],
+      [
+       "values",
+       "POSITIONAL_OR_KEYWORD",
+       "<empty>"
+      ]
+     ]
+    }
+   }
+  },
+  "scubas.conductivity": {
+   "ConductivityProfile": {
+    "bases": [
+     "object"
+    ],
+    "kind": "class",
+    "methods": {
+     "__init__": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "conductivity_params",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ]
+       ]
+      }
+     },
+     "_compile_profile_": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "pts",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     },
+     "_download_earth_model": {
+      "kind": "staticmethod",
+      "signature": {
+       "params": [
+        [
+         "uri",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "destination",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     },
+     "compile_bined_profile": {
+      "kind": "staticmethod",
+      "signature": {
+       "params": [
+        [
+         "bined_latlon",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "to_site",
+         "POSITIONAL_OR_KEYWORD",
+         "True"
+        ],
+        [
+         "site_name",
+         "POSITIONAL_OR_KEYWORD",
+         "''"
+        ],
+        [
+         "site_description",
+         "POSITIONAL_OR_KEYWORD",
+         "''"
+        ],
+        [
+         "conductivity_params",
+         "VAR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     },
+     "compile_bined_profiles": {
+      "kind": "staticmethod",
+      "signature": {
+       "params": [
+        [
+         "bined_latlons",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "to_site",
+         "POSITIONAL_OR_KEYWORD",
+         "True"
+        ],
+        [
+         "site_names",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ],
+        [
+         "site_descriptions",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ],
+        [
+         "conductivity_params",
+         "VAR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     },
+     "compile_mcmc_bined_profiles": {
+      "kind": "staticmethod",
+      "signature": {
+       "params": [
+        [
+         "bined_latlons",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "n",
+         "POSITIONAL_OR_KEYWORD",
+         "100"
+        ],
+        [
+         "continental_shelves_thickness_range",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ],
+        [
+         "to_site",
+         "POSITIONAL_OR_KEYWORD",
+         "True"
+        ],
+        [
+         "site_names",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ],
+        [
+         "site_descriptions",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ],
+        [
+         "random_seed",
+         "POSITIONAL_OR_KEYWORD",
+         "0"
+        ],
+        [
+         "conductivity_params",
+         "VAR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     },
+     "compile_profile": {
+      "kind": "staticmethod",
+      "signature": {
+       "params": [
+        [
+         "latlon",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "kind",
+         "POSITIONAL_OR_KEYWORD",
+         "'rounded'"
+        ],
+        [
+         "to_site",
+         "POSITIONAL_OR_KEYWORD",
+         "True"
+        ],
+        [
+         "site_name",
+         "POSITIONAL_OR_KEYWORD",
+         "''"
+        ],
+        [
+         "site_description",
+         "POSITIONAL_OR_KEYWORD",
+         "''"
+        ],
+        [
+         "conductivity_params",
+         "VAR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     },
+     "compile_profiles": {
+      "kind": "staticmethod",
+      "signature": {
+       "params": [
+        [
+         "latlons",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "kind",
+         "POSITIONAL_OR_KEYWORD",
+         "'rounded'"
+        ],
+        [
+         "to_site",
+         "POSITIONAL_OR_KEYWORD",
+         "True"
+        ],
+        [
+         "site_names",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ],
+        [
+         "site_descriptions",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ],
+        [
+         "conductivity_params",
+         "VAR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     },
+     "get_crust_layer": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "lithosphere_model",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "pts",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     },
+     "get_interpolation_points": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "pt0",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "pt1",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     },
+     "get_lithosphere_layer": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "lithosphere_model",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "pts",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     },
+     "get_lower_mantle_layer": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     },
+     "get_sediment_layer": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "lithosphere_model",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "pts",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     },
+     "get_transition_zone_layer": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     },
+     "get_upper_mantle_layer": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "lithosphere_model",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "pts",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     },
+     "get_water_layer": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "lithosphere_model",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "pts",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     },
+     "load_earth_model": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     }
+    }
+   }
+  },
+  "scubas.datasets": {
+   "Layer": {
+    "bases": [
+     "object"
+    ],
+    "dataclass": {
+     "fields": [
+      [
+       "name",
+       "<empty>"
+      ],
+      [
+       "thickness",
+       "<empty>"
+      ],
+      [
+       "conductivity",
+       "<empty>"
+      ]
+     ],
+     "frozen": false
+    },
+    "kind": "class",
+    "methods": {
+     "resistivity": {
+      "kind": "property",
+      "signature": null
+     }
+    }
+   },
+   "PROFILES": {
+    "kind": "assignment",
+    "type": "SimpleNamespace"
+   },
+   "Site": {
+    "bases": [
+     "object"
+    ],
+    "dataclass": {
+     "fields": [
+      [
+       "layers",
+       "<empty>"
+      ],
+      [
+       "description",
+       "<empty>"
+      ],
+      [
+       "name",
+       "<empty>"
+      ]
+     ],
+     "frozen": false
+    },
+    "kind": "class",
+    "methods": {
+     "__post_init__": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     },
+     "calcP": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "freqs",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "layer",
+         "POSITIONAL_OR_KEYWORD",
+         "0"
+        ],
+        [
+         "return_Z",
+         "POSITIONAL_OR_KEYWORD",
+         "False"
+        ]
+       ]
+      }
+     },
+     "calcZ": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "freqs",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "layer",
+         "POSITIONAL_OR_KEYWORD",
+         "0"
+        ],
+        [
+         "return_all_layers",
+         "POSITIONAL_OR_KEYWORD",
+         "False"
+        ]
+       ]
+      }
+     },
+     "get": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "index",
+         "POSITIONAL_OR_KEYWORD",
+         "-1"
+        ]
+       ]
+      }
+     },
+     "get_conductivities": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "index",
+         "POSITIONAL_OR_KEYWORD",
+         "-1"
+        ]
+       ]
+      }
+     },
+     "get_names": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "index",
+         "POSITIONAL_OR_KEYWORD",
+         "-1"
+        ]
+       ]
+      }
+     },
+     "get_resistivities": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "index",
+         "POSITIONAL_OR_KEYWORD",
+         "-1"
+        ]
+       ]
+      }
+     },
+     "get_thicknesses": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "index",
+         "POSITIONAL_OR_KEYWORD",
+         "-1"
+        ]
+       ]
+      }
+     },
+     "init": {
+      "kind": "staticmethod",
+      "signature": {
+       "params": [
+        [
+         "conductivities",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "thicknesses",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "names",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "description",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "site_name",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     },
+     "set_thicknesses": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "value",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "index",
+         "POSITIONAL_OR_KEYWORD",
+         "0"
+        ]
+       ]
+      }
+     }
+    }
+   }
+  },
+  "scubas.models": {
+   "OceanModel": {
+    "bases": [
+     "object"
+    ],
+    "kind": "class",
+    "methods": {
+     "__init__": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "site",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "flim",
+         "POSITIONAL_OR_KEYWORD",
+         [
+          "1e-06",
+          "1.0"
+         ]
+        ]
+       ]
+      }
+     },
+     "calcTF": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "kinds",
+         "POSITIONAL_OR_KEYWORD",
+         [
+          "'E2B'",
+          "'B2B'"
+         ]
+        ],
+        [
+         "freqs",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ]
+       ]
+      }
+     },
+     "calcZ": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "freqs",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ]
+       ]
+      }
+     },
+     "get_TFs": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "key",
+         "POSITIONAL_OR_KEYWORD",
+         "'E2B'"
+        ],
+        [
+         "freqs",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ]
+       ]
+      }
+     },
+     "read_Bfield_data": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "files",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "return_xyzf",
+         "POSITIONAL_OR_KEYWORD",
+         "True"
+        ],
+        [
+         "csv_file_date_name",
+         "POSITIONAL_OR_KEYWORD",
+         "'Date'"
+        ],
+        [
+         "check_for_gaps",
+         "POSITIONAL_OR_KEYWORD",
+         "True"
+        ]
+       ]
+      }
+     },
+     "read_iaga": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "file",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "return_xyzf",
+         "POSITIONAL_OR_KEYWORD",
+         "True"
+        ],
+        [
+         "return_header",
+         "POSITIONAL_OR_KEYWORD",
+         "False"
+        ]
+       ]
+      }
+     },
+     "to_Efields": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "Bfield",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ],
+        [
+         "components",
+         "POSITIONAL_OR_KEYWORD",
+         [
+          "'X'",
+          "'Y'"
+         ]
+        ],
+        [
+         "p",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ]
+       ]
+      }
+     }
+    }
+   },
+   "Preprocess": {
+    "bases": [
+     "object"
+    ],
+    "dataclass": {
+     "fields": [
+      [
+       "t",
+       "<empty>"
+      ],
+      [
+       "field",
+       "<empty>"
+      ],
+      [
+       "p",
+       "0.1"
+      ]
+     ],
+     "frozen": false
+    },
+    "kind": "class",
+    "methods": {
+     "detrend_magnetic_field": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "p",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ]
+       ]
+      }
+     },
+     "get_tapering_function": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "p",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ]
+       ]
+      }
+     }
+    }
+   },
+   "_validate_frequency_limits": {
+    "kind": "function",
+    "signature": {
+     "params": [
+      [
+       "flim",
+       "POSITIONAL_OR_KEYWORD",
+       "<empty>"
+      ]
+     ]
+    }
+   }
+  },
+  "scubas.plotlib": {
+   "PlotArtifacts": {
+    "bases": [
+     "object"
+    ],
+    "dataclass": {
+     "fields": [
+      [
+       "figure",
+       "<empty>"
+      ],
+      [
+       "axes",
+       "<empty>"
+      ]
+     ],
+     "frozen": true
+    },
+    "kind": "class",
+    "methods": {}
+   },
+   "cable_potential": {
+    "kind": "function",
+    "signature": {
+     "params": [
+      [
+       "V",
+       "POSITIONAL_OR_KEYWORD",
+       "<empty>"
+      ],
+      [
+       "x",
+       "POSITIONAL_OR_KEYWORD",
+       "<empty>"
+      ],
+      [
+       "science",
+       "POSITIONAL_OR_KEYWORD",
+       "False"
+      ],
+      [
+       "ylim",
+       "POSITIONAL_OR_KEYWORD",
+       [
+        "-50",
+        "50"
+       ]
+      ]
+     ]
+    }
+   },
+   "plot_transfer_function": {
+    "kind": "function",
+    "signature": {
+     "params": [
+      [
+       "Tx",
+       "POSITIONAL_OR_KEYWORD",
+       "<empty>"
+      ],
+      [
+       "xlim",
+       "POSITIONAL_OR_KEYWORD",
+       [
+        "1e-06",
+        "0.01"
+       ]
+      ],
+      [
+       "ylim",
+       "POSITIONAL_OR_KEYWORD",
+       [
+        "0.001",
+        "1.0"
+       ]
+      ],
+      [
+       "science",
+       "POSITIONAL_OR_KEYWORD",
+       "False"
+      ]
+     ]
+    }
+   },
+   "potential_along_section": {
+    "kind": "function",
+    "signature": {
+     "params": [
+      [
+       "V",
+       "POSITIONAL_OR_KEYWORD",
+       "<empty>"
+      ],
+      [
+       "x",
+       "POSITIONAL_OR_KEYWORD",
+       "<empty>"
+      ],
+      [
+       "sec",
+       "POSITIONAL_OR_KEYWORD",
+       "None"
+      ],
+      [
+       "Vi",
+       "POSITIONAL_OR_KEYWORD",
+       "None"
+      ],
+      [
+       "Vk",
+       "POSITIONAL_OR_KEYWORD",
+       "None"
+      ],
+      [
+       "Z",
+       "POSITIONAL_OR_KEYWORD",
+       "None"
+      ],
+      [
+       "Y",
+       "POSITIONAL_OR_KEYWORD",
+       "None"
+      ],
+      [
+       "gma",
+       "POSITIONAL_OR_KEYWORD",
+       "None"
+      ],
+      [
+       "Z0",
+       "POSITIONAL_OR_KEYWORD",
+       "None"
+      ],
+      [
+       "science",
+       "POSITIONAL_OR_KEYWORD",
+       "False"
+      ]
+     ]
+    }
+   },
+   "update_rc_params": {
+    "kind": "function",
+    "signature": {
+     "params": [
+      [
+       "params",
+       "POSITIONAL_OR_KEYWORD",
+       "None"
+      ],
+      [
+       "science",
+       "POSITIONAL_OR_KEYWORD",
+       "False"
+      ],
+      [
+       "latex",
+       "POSITIONAL_OR_KEYWORD",
+       "False"
+      ]
+     ]
+    }
+   }
+  },
+  "scubas.sources": {},
+  "scubas.sources.current_sources": {
+   "Current": {
+    "bases": [
+     "object"
+    ],
+    "kind": "class",
+    "methods": {
+     "__init__": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "h",
+         "POSITIONAL_OR_KEYWORD",
+         "110.0"
+        ],
+        [
+         "a",
+         "POSITIONAL_OR_KEYWORD",
+         "0.0"
+        ],
+        [
+         "I",
+         "POSITIONAL_OR_KEYWORD",
+         "1.0"
+        ],
+        [
+         "p",
+         "POSITIONAL_OR_KEYWORD",
+         "ndarray(190,):9c72142ea0cd"
+        ],
+        [
+         "omega",
+         "POSITIONAL_OR_KEYWORD",
+         "ndarray(190,):806d33dabfb2"
+        ],
+        [
+         "site",
+         "POSITIONAL_OR_KEYWORD",
+         "Site(layers=[Layer(name='Sediments', thickness=15000, conductivity=5e-05), Layer(name='Crust', thickness=10000, conductivity=0.005), Layer(name='Lithosphere', thickness=125000, conductivity=0.001), Layer(name='Upper Mantle', thickness=200000, conductivity=0.01), Layer(name='Lower Mantle', thickness=inf, conductivity=0.3333333)], description='Conductivity model representing Quebec.', name=\"David's Model\")"
+        ],
+        [
+         "length_unit",
+         "POSITIONAL_OR_KEYWORD",
+         "'km'"
+        ],
+        [
+         "current_unit",
+         "POSITIONAL_OR_KEYWORD",
+         "'MA'"
+        ],
+        [
+         "current_direction",
+         "POSITIONAL_OR_KEYWORD",
+         "<Direction.GEO_EAST_WEST: 2>"
+        ],
+        [
+         "t",
+         "POSITIONAL_OR_KEYWORD",
+         "0"
+        ],
+        [
+         "layer",
+         "POSITIONAL_OR_KEYWORD",
+         "0"
+        ],
+        [
+         "return_Z",
+         "POSITIONAL_OR_KEYWORD",
+         "False"
+        ]
+       ]
+      }
+     },
+     "compute_B_field": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "x",
+         "POSITIONAL_OR_KEYWORD",
+         "ndarray(1,):05fe40575316"
+        ],
+        [
+         "length_unit",
+         "POSITIONAL_OR_KEYWORD",
+         "'km'"
+        ]
+       ]
+      }
+     }
+    }
+   },
+   "Direction": {
+    "bases": [
+     "Enum"
+    ],
+    "kind": "class",
+    "members": {
+     "GEO_EAST_WEST": "2",
+     "GEO_NORTH_SOUTH": "1",
+     "GEO_VERT_DOWN": "3"
+    },
+    "methods": {
+     "enumerate_key": {
+      "kind": "classmethod",
+      "signature": {
+       "params": [
+        [
+         "parameter",
+         "POSITIONAL_OR_KEYWORD",
+         "'B'"
+        ]
+       ]
+      }
+     }
+    }
+   }
+  },
+  "scubas.utils": {
+   "GreatCircle": {
+    "bases": [
+     "object"
+    ],
+    "dataclass": {
+     "fields": [
+      [
+       "initial",
+       "<empty>"
+      ],
+      [
+       "final",
+       "<empty>"
+      ],
+      [
+       "Re",
+       "6371.0"
+      ]
+     ],
+     "frozen": true
+    },
+    "kind": "class",
+    "methods": {
+     "_has_location_fields": {
+      "kind": "staticmethod",
+      "signature": {
+       "params": [
+        [
+         "loc",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     },
+     "_to_radians": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "loc",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     },
+     "great_circle": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "initial",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ],
+        [
+         "final",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ]
+       ]
+      }
+     },
+     "haversine": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "initial",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ],
+        [
+         "final",
+         "POSITIONAL_OR_KEYWORD",
+         "None"
+        ]
+       ]
+      }
+     }
+    }
+   },
+   "RecursiveNamespace": {
+    "bases": [
+     "SimpleNamespace"
+    ],
+    "kind": "class",
+    "methods": {
+     "__init__": {
+      "kind": "function",
+      "signature": {
+       "params": [
+        [
+         "self",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ],
+        [
+         "kwargs",
+         "VAR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     },
+     "_convert": {
+      "kind": "classmethod",
+      "signature": {
+       "params": [
+        [
+         "value",
+         "POSITIONAL_OR_KEYWORD",
+         "<empty>"
+        ]
+       ]
+      }
+     }
+    }
+   },
+   "component_mappings": {
+    "kind": "function",
+    "signature": {
+     "params": [
+      [
+       "field",
+       "POSITIONAL_OR_KEYWORD",
+       "'B2E'"
+      ],
+      [
+       "comp",
+       "POSITIONAL_OR_KEYWORD",
+       "'X'"
+      ]
+     ]
+    }
+   },
+   "component_sign_mappings": {
+    "kind": "function",
+    "signature": {
+     "params": [
+      [
+       "fromto",
+       "POSITIONAL_OR_KEYWORD",
+       "'BxEy'"
+      ]
+     ]
+    }
+   },
+   "fft": {
+    "kind": "function",
+    "signature": {
+     "params": [
+      [
+       "X",
+       "POSITIONAL_OR_KEYWORD",
+       "<empty>"
+      ],
+      [
+       "dT",
+       "POSITIONAL_OR_KEYWORD",
+       "<empty>"
+      ],
+      [
+       "remove_zero_frequency",
+       "POSITIONAL_OR_KEYWORD",
+       "True"
+      ]
+     ]
+    }
+   },
+   "frexp102str": {
+    "kind": "function",
+    "signature": {
+     "params": [
+      [
+       "x",
+       "POSITIONAL_OR_KEYWORD",
+       "<empty>"
+      ],
+      [
+       "precision",
+       "POSITIONAL_OR_KEYWORD",
+       "2"
+      ]
+     ]
+    }
+   },
+   "ifft": {
+    "kind": "function",
+    "signature": {
+     "params": [
+      [
+       "Y",
+       "POSITIONAL_OR_KEYWORD",
+       "<empty>"
+      ]
+     ]
+    }
+   }
+  }
+ },
+ "profiles": {
+  "BM": {
+   "description": "Ben's benchmark conductivity model.",
+   "layers": [
+    [
+     "Sediments",
+     "2000.0",
+     "0.2"
+    ],
+    [
+     "Crust",
+     "75000.0",
+     "0.0003333"
+    ],
+    [
+     "Lithosphere",
+     "332000.0",
+     "0.02"
+    ],
+    [
+     "Upper Mantle",
+     "250000.0",
+     "0.1"
+    ],
+    [
+     "Lower Mantle",
+     "inf",
+     "1.12201"
+    ]
+   ],
+   "name": "Ben's Model"
+  },
+  "CS": {
+   "description": "IGS continental shelf reference profile.",
+   "layers": [
+    [
+     "Seawater",
+     "100.0",
+     "3.3333333"
+    ],
+    [
+     "Sediments",
+     "3000.0",
+     "0.3333333"
+    ],
+    [
+     "Crust",
+     "20000.0",
+     "0.00033333333"
+    ],
+    [
+     "Lithosphere",
+     "140000.0",
+     "0.001"
+    ],
+    [
+     "Upper Mantle",
+     "246900.0",
+     "0.01"
+    ],
+    [
+     "Transition Zone",
+     "250000.0",
+     "0.1"
+    ],
+    [
+     "Lower Mantle",
+     "340000.0",
+     "1.0"
+    ]
+   ],
+   "name": "Continental Shelf"
+  },
+  "CS_E": {
+   "description": "Space Weather 1989: Continental shelf (eastern) section.",
+   "layers": [
+    [
+     "Seawater",
+     "100.0",
+     "3.3333333"
+    ],
+    [
+     "Sediments",
+     "3000.0",
+     "0.3333333"
+    ],
+    [
+     "Crust",
+     "20000.0",
+     "0.00033333333"
+    ],
+    [
+     "Lithosphere",
+     "120000.0",
+     "0.001"
+    ],
+    [
+     "Upper Mantle",
+     "266900.0",
+     "0.01"
+    ],
+    [
+     "Transition Zone",
+     "250000.0",
+     "0.1"
+    ],
+    [
+     "Lower Mantle",
+     "340000.0",
+     "1.0"
+    ]
+   ],
+   "name": "Continental Shelf East"
+  },
+  "CS_W": {
+   "description": "Space Weather 1989: Continental shelf (western) section.",
+   "layers": [
+    [
+     "Seawater",
+     "100.0",
+     "3.3333333"
+    ],
+    [
+     "Sediments",
+     "8000.0",
+     "0.3333333"
+    ],
+    [
+     "Crust",
+     "15000.0",
+     "0.00033333333"
+    ],
+    [
+     "Lithosphere",
+     "150000.0",
+     "0.001"
+    ],
+    [
+     "Upper Mantle",
+     "236900.0",
+     "0.01"
+    ],
+    [
+     "Transition Zone",
+     "250000.0",
+     "0.1"
+    ],
+    [
+     "Lower Mantle",
+     "340000.0",
+     "1.0"
+    ]
+   ],
+   "name": "Continental Shelf West"
+  },
+  "DB": {
+   "description": "Conductivity profile used in David's study.",
+   "layers": [
+    [
+     "Sediments",
+     "15000.0",
+     "5e-05"
+    ],
+    [
+     "Crust",
+     "10000.0",
+     "0.005"
+    ],
+    [
+     "Lithosphere",
+     "125000.0",
+     "0.001"
+    ],
+    [
+     "Upper Mantle",
+     "200000.0",
+     "0.01"
+    ],
+    [
+     "Lower Mantle",
+     "inf",
+     "0.3333333"
+    ]
+   ],
+   "name": "David's Model"
+  },
+  "DO": {
+   "description": "Deep ocean reference profile for IGS studies.",
+   "layers": [
+    [
+     "Seawater",
+     "4000.0",
+     "3.3333333"
+    ],
+    [
+     "Sediments",
+     "2000.0",
+     "0.3333333"
+    ],
+    [
+     "Crust",
+     "10000.0",
+     "0.00033333333"
+    ],
+    [
+     "Lithosphere",
+     "70000.0",
+     "0.001"
+    ],
+    [
+     "Upper Mantle",
+     "327000.0",
+     "0.01"
+    ],
+    [
+     "Transition Zone",
+     "250000.0",
+     "0.1"
+    ],
+    [
+     "Lower Mantle",
+     "340000.0",
+     "1.0"
+    ]
+   ],
+   "name": "Deep Ocean"
+  },
+  "DO_1": {
+   "description": "Space Weather 1989 study: deep ocean variant 1.",
+   "layers": [
+    [
+     "Seawater",
+     "4000.0",
+     "3.3333333"
+    ],
+    [
+     "Sediments",
+     "4000.0",
+     "0.3333333"
+    ],
+    [
+     "Crust",
+     "10000.0",
+     "0.00033333333"
+    ],
+    [
+     "Lithosphere",
+     "145000.0",
+     "0.001"
+    ],
+    [
+     "Upper Mantle",
+     "247000.0",
+     "0.01"
+    ],
+    [
+     "Transition Zone",
+     "250000.0",
+     "0.1"
+    ],
+    [
+     "Lower Mantle",
+     "340000.0",
+     "1.0"
+    ]
+   ],
+   "name": "Deep Ocean"
+  },
+  "DO_2": {
+   "description": "Space Weather 1989 study: deep ocean variant 2.",
+   "layers": [
+    [
+     "Seawater",
+     "5200.0",
+     "3.3333333"
+    ],
+    [
+     "Sediments",
+     "2000.0",
+     "0.3333333"
+    ],
+    [
+     "Crust",
+     "10000.0",
+     "0.00033333333"
+    ],
+    [
+     "Lithosphere",
+     "140000.0",
+     "0.001"
+    ],
+    [
+     "Upper Mantle",
+     "252800.0",
+     "0.01"
+    ],
+    [
+     "Transition Zone",
+     "250000.0",
+     "0.1"
+    ],
+    [
+     "Lower Mantle",
+     "340000.0",
+     "1.0"
+    ]
+   ],
+   "name": "Deep Ocean"
+  },
+  "DO_3": {
+   "description": "Space Weather 1989 study: deep ocean variant 3.",
+   "layers": [
+    [
+     "Seawater",
+     "4000.0",
+     "3.3333333"
+    ],
+    [
+     "Sediments",
+     "2000.0",
+     "0.3333333"
+    ],
+    [
+     "Crust",
+     "10000.0",
+     "0.00033333333"
+    ],
+    [
+     "Lithosphere",
+     "140000.0",
+     "0.001"
+    ],
+    [
+     "Upper Mantle",
+     "254000.0",
+     "0.01"
+    ],
+    [
+     "Transition Zone",
+     "250000.0",
+     "0.1"
+    ],
+    [
+     "Lower Mantle",
+     "340000.0",
+     "1.0"
+    ]
+   ],
+   "name": "Deep Ocean"
+  },
+  "DO_4": {
+   "description": "Space Weather 1989 study: deep ocean variant 4.",
+   "layers": [
+    [
+     "Seawater",
+     "4800.0",
+     "3.3333333"
+    ],
+    [
+     "Sediments",
+     "1000.0",
+     "0.3333333"
+    ],
+    [
+     "Crust",
+     "10000.0",
+     "0.00033333333"
+    ],
+    [
+     "Lithosphere",
+     "70000.0",
+     "0.001"
+    ],
+    [
+     "Upper Mantle",
+     "324200.0",
+     "0.01"
+    ],
+    [
+     "Transition Zone",
+     "250000.0",
+     "0.1"
+    ],
+    [
+     "Lower Mantle",
+     "340000.0",
+     "1.0"
+    ]
+   ],
+   "name": "Deep Ocean"
+  },
+  "DO_5": {
+   "description": "Space Weather 1989 study: deep ocean variant 5.",
+   "layers": [
+    [
+     "Seawater",
+     "4000.0",
+     "3.3333333"
+    ],
+    [
+     "Sediments",
+     "1000.0",
+     "0.3333333"
+    ],
+    [
+     "Crust",
+     "10000.0",
+     "0.00033333333"
+    ],
+    [
+     "Lithosphere",
+     "70000.0",
+     "0.001"
+    ],
+    [
+     "Upper Mantle",
+     "324200.0",
+     "0.01"
+    ],
+    [
+     "Transition Zone",
+     "250000.0",
+     "0.1"
+    ],
+    [
+     "Lower Mantle",
+     "340000.0",
+     "1.0"
+    ]
+   ],
+   "name": "Deep Ocean"
+  },
+  "DO_6": {
+   "description": "Space Weather 1989 study: deep ocean variant 6.",
+   "layers": [
+    [
+     "Seawater",
+     "4500.0",
+     "3.3333333"
+    ],
+    [
+     "Sediments",
+     "1500.0",
+     "0.3333333"
+    ],
+    [
+     "Crust",
+     "10000.0",
+     "0.00033333333"
+    ],
+    [
+     "Lithosphere",
+     "70000.0",
+     "0.001"
+    ],
+    [
+     "Upper Mantle",
+     "324000.0",
+     "0.01"
+    ],
+    [
+     "Transition Zone",
+     "250000.0",
+     "0.1"
+    ],
+    [
+     "Lower Mantle",
+     "340000.0",
+     "1.0"
+    ]
+   ],
+   "name": "Deep Ocean"
+  },
+  "LD": {
+   "description": "Land-based conductivity profile from IGS study.",
+   "layers": [
+    [
+     "Sediments",
+     "1000.0",
+     "0.3333333"
+    ],
+    [
+     "Crust",
+     "20000.0",
+     "0.00033333333"
+    ],
+    [
+     "Lithosphere",
+     "140000.0",
+     "0.001"
+    ],
+    [
+     "Upper Mantle",
+     "249000.0",
+     "0.01"
+    ],
+    [
+     "Transition Zone",
+     "250000.0",
+     "0.1"
+    ],
+    [
+     "Lower Mantle",
+     "340000.0",
+     "1.0"
+    ]
+   ],
+   "name": "Land"
+  },
+  "LD0": {
+   "description": "Land-based conductivity profile from IGS study.",
+   "layers": [
+    [
+     "0-Water",
+     "0.0",
+     "3.3333333"
+    ],
+    [
+     "Sediments",
+     "1000.0",
+     "0.3333333"
+    ],
+    [
+     "Crust",
+     "20000.0",
+     "0.00033333333"
+    ],
+    [
+     "Lithosphere",
+     "140000.0",
+     "0.001"
+    ],
+    [
+     "Upper Mantle",
+     "249000.0",
+     "0.01"
+    ],
+    [
+     "Transition Zone",
+     "250000.0",
+     "0.1"
+    ],
+    [
+     "Lower Mantle",
+     "340000.0",
+     "1.0"
+    ]
+   ],
+   "name": "Land-0m-depth"
+  },
+  "MAR": {
+   "description": "Space Weather 1989 study: Mid-Atlantic Ridge profile.",
+   "layers": [
+    [
+     "Seawater",
+     "3000.0",
+     "3.3333333"
+    ],
+    [
+     "Sediments",
+     "0.0",
+     "0.3333333"
+    ],
+    [
+     "Crust",
+     "10000.0",
+     "0.00033333333"
+    ],
+    [
+     "Lithosphere",
+     "25000.0",
+     "0.001"
+    ],
+    [
+     "Upper Mantle",
+     "372000.0",
+     "0.01"
+    ],
+    [
+     "Transition Zone",
+     "250000.0",
+     "0.1"
+    ],
+    [
+     "Lower Mantle",
+     "340000.0",
+     "1.0"
+    ]
+   ],
+   "name": "Mid-Atlantic Ridge"
+  },
+  "OM": {
+   "description": "Ben's model with a 1 km oceanic layer.",
+   "layers": [
+    [
+     "Seawater",
+     "1000.0",
+     "3.3333333"
+    ],
+    [
+     "Sediments",
+     "2000.0",
+     "0.2"
+    ],
+    [
+     "Crust",
+     "75000.0",
+     "0.0003333"
+    ],
+    [
+     "Lithosphere",
+     "332000.0",
+     "0.02"
+    ],
+    [
+     "Upper Mantle",
+     "250000.0",
+     "0.1"
+    ],
+    [
+     "Lower Mantle",
+     "inf",
+     "1.12201"
+    ]
+   ],
+   "name": "Ocean Model"
+  },
+  "Quebec": {
+   "description": "Conductivity model representing Quebec.",
+   "layers": [
+    [
+     "Sediments",
+     "15000.0",
+     "5e-05"
+    ],
+    [
+     "Crust",
+     "10000.0",
+     "0.005"
+    ],
+    [
+     "Lithosphere",
+     "125000.0",
+     "0.001"
+    ],
+    [
+     "Upper Mantle",
+     "200000.0",
+     "0.01"
+    ],
+    [
+     "Lower Mantle",
+     "inf",
+     "0.3333333"
+    ]
+   ],
+   "name": "David's Model"
+  },
+  "SO": {
+   "description": "Shallow ocean conductivity profile used in IGS analyses.",
+   "layers": [
+    [
+     "Seawater",
+     "1000.0",
+     "3.3333333"
+    ],
+    [
+     "Sediments",
+     "2000.0",
+     "0.3333333"
+    ],
+    [
+     "Crust",
+     "10000.0",
+     "0.00033333333"
+    ],
+    [
+     "Lithosphere",
+     "70000.0",
+     "0.001"
+    ],
+    [
+     "Upper Mantle",
+     "327000.0",
+     "0.01"
+    ],
+    [
+     "Transition Zone",
+     "250000.0",
+     "0.1"
+    ],
+    [
+     "Lower Mantle",
+     "340000.0",
+     "1.0"
+    ]
+   ],
+   "name": "Shallow Ocean"
+  },
+  "UN": {
+   "description": "Uniform conductivity model inspired by David's work.",
+   "layers": [
+    [
+     "Sediments",
+     "2000.0",
+     "0.2"
+    ],
+    [
+     "Crust",
+     "75000.0",
+     "0.2"
+    ],
+    [
+     "Lithosphere",
+     "332000.0",
+     "0.2"
+    ],
+    [
+     "Upper Mantle",
+     "250000.0",
+     "0.2"
+    ],
+    [
+     "Lower Mantle",
+     "inf",
+     "1.12201"
+    ]
+   ],
+   "name": "Uniform Model"
+  }
+ }
+}
