@@ -5,6 +5,10 @@ All notable changes are listed here. Format: [Keep a Changelog](https://keepacha
 SCUBAS is in alpha (0.x). **Compatibility rule while the engineering standards are being adopted:** every public import path, function signature, file format and numerical result of 0.1.9 is pinned by `tests/compat/`; a change to any of them needs its own approved, documented entry here.
 
 ## [Unreleased]
+
+## [0.2.0] - 2026-11-20
+First release after 0.1.9, and the first made by tag through the release workflow. The license is now LGPL-3.0-or-later (0.1.9 and earlier stay MIT). The public API, the file formats and the numbers of 0.1.9 are unchanged and pinned by the compatibility suite; the additions below are new modules, packaging, tooling and documentation.
+
 ### Fixed
 - **pandas 3 is supported.** Reading IAGA-2002 files (`OceanModel.read_iaga`, so `read_Bfield_data` for `.txt` and `.min` input and `TransmissionLine.compile_oml`) failed with pandas 3 (`read_csv() got an unexpected keyword argument 'delim_whitespace'`), and a fresh `pip install scubas` installs pandas 3. `read_iaga` now splits on whitespace with `sep=r"\s+"` and parses the date and time columns itself; results are identical to 0.1.9 on pandas 2 (the compatibility suite is unchanged and passes on pandas 2.3 and 3.1). `ConductivityProfile.compile_mcmc_bined_profiles` set the seawater thickness of the end bins through a chained assignment that pandas 3 silently ignores; it now writes into the frame, with the same random draws in the same order. The only visible difference on pandas 3 is pandas' own: datetime indexes parsed from text have microsecond instead of nanosecond resolution.
 
