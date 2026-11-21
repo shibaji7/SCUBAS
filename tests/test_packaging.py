@@ -116,6 +116,8 @@ def test_a_good_wheel_and_sdist_pass_the_check(dist):
             "errors.py",
             "future/__init__.py",
             "models.py",
+            "provenance.py",
+            "defaults/legacy_constants.toml",
             "plotlib.py",
             "sources/current_sources.py",
             "utils.py",

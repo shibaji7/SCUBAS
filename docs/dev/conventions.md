@@ -28,10 +28,8 @@ The rules enforced by `make qa` and by the same checks in CI and pre-commit. SCU
 
 ## Parameters
 
-New parameters carry a unit, a status and a source. The pattern (`Param(value, unit, status, source)` with status `sourced`,
-`assumed`, `unknown` or `override`, an unknown value raising a clear error) is used for **new code only**; the constants of the
-existing code (resistivities, the taper, the 120-sample baseline, the geodesic constants) get their provenance gradually, and are
-documented before they are moved.
+New parameters carry a unit, a status and a source, through `scubas.provenance`; an unknown value raises a clear error instead of being guessed. The constants of the existing code are
+listed, not rewired, in `scubas/defaults/legacy_constants.toml` and a test keeps the list equal to the code. See [parameters and provenance](parameters.md).
 
 ## Docstrings
 

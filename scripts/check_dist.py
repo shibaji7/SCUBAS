@@ -24,6 +24,8 @@ WHEEL_NEEDS = [
     "scubas/errors.py",
     "scubas/future/__init__.py",
     "scubas/models.py",
+    "scubas/provenance.py",
+    "scubas/defaults/legacy_constants.toml",
     "scubas/plotlib.py",
     "scubas/sources/current_sources.py",
     "scubas/utils.py",
@@ -35,7 +37,7 @@ SDIST_NEEDS = [
     "README.md", "LICENSE", "COPYING", "NOTICE.md", "CHANGELOG.md", "ROADMAP.md", "SECURITY.md", "CITATION.cff", "pyproject.toml", "ruff.toml",
     "docs/index.md", "docs/conf.py", "docs/requirements.txt", "docs/dev/conventions.md", "examples/network_model.py",
     "examples/datasets/1989/FRD.csv", "scripts/check_dist.py", "tests/compat/test_api_surface.py", "tests/compat/baseline/api_surface.json",
-    "tests/compat/baseline/behaviour.npz", "tests/compat/data/tst20200101vmin.min", "scubas/_version.py",
+    "tests/compat/baseline/behaviour.npz", "tests/compat/data/tst20200101vmin.min", "scubas/_version.py", "scubas/defaults/legacy_constants.toml",
 ]  # fmt: skip
 SDIST_FORBIDDEN = ("docs/_build/", "__pycache__", ".pyc", "outputs/", ".git/")
 
