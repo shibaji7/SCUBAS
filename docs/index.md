@@ -8,9 +8,9 @@ and including 0.1.9 were released under the MIT license (see NOTICE.md).
 -->
 
 [![License: LGPL v3+](https://img.shields.io/badge/license-LGPL--3.0--or--later-blue.svg)](https://github.com/shibaji7/SCUBAS/blob/main/LICENSE) 
-[![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/release/python-3110/) 
+[![Python versions](https://img.shields.io/pypi/pyversions/scubas.svg?label=python)](https://pypi.org/project/scubas/) 
 ![GitHub Stable Release (latest by date)](https://img.shields.io/github/v/release/shibaji7/SCUBAS)
-[![Documentation Status](https://img.shields.io/readthedocs/SCUBAS?logo=readthedocs&label=docs)](https://SCUBAS.readthedocs.io/en/latest/?badge=latest)
+[![Documentation Status](https://img.shields.io/readthedocs/scubas?logo=readthedocs&label=docs)](https://scubas.readthedocs.io/en/latest/)
 [![codecov](https://codecov.io/gh/shibaji7/SCUBAS/branch/main/graph/badge.svg)](https://codecov.io/gh/shibaji7/SCUBAS)
 
 # SCUBAS
