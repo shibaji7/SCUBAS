@@ -1,6 +1,6 @@
 # Plan: FDTD/FEM modelling of coastal effects
 
-**Roadmap:** planned. **Stub:** `scubas.future.coastal.numerical`. **Extends:** `scubas.cables` (the end potentials).
+**Roadmap:** planned. **Stub:** `scubas.future.coastal.numerical`. **Extends:** `scubas.cables` (the end potentials). **Model pages:** [the DSTL model](../model/dstl.md) and [numerical coast models](../model/fdtd.md).
 
 ## Goal
 

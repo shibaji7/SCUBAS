@@ -46,6 +46,9 @@ The two transfer functions of `OceanModel` (`calcTF`, `get_TFs`): `E2B` gives th
 `tests/compat/`: the tests that pin the public API, the file formats and the numbers of SCUBAS 0.1.9, so that refactoring and
 tooling work cannot change what users get. See [testing](dev/testing.md).
 
+### Distributed-source transmission line (DSTL)
+The model of the ocean and the Earth as a transmission line with a series impedance $Z$ from the conducting layers, a parallel admittance $Y$ from the resistive layers, and the induced electric field as a distributed source (Boteler et al., 2023). It gives the Earth potentials at the ends of a cable. See [the DSTL model](model/dstl.md).
+
 ### Electrically long and electrically short
 By the thresholds of the [tutorial](tutorial/elsc.md): a section is electrically long when its length exceeds four times the
 adjustment distance ($L>4/\gamma$), where the end potential tends to $-E/\gamma$; and electrically short when it is shorter than
