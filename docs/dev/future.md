@@ -30,12 +30,18 @@ The signature is `*args, **kwargs` on purpose: the real signature is decided whe
 
 ## Rules
 
-- **Only maintainers add one**, for a capability that is on the [roadmap](../roadmap.md); the stub and the roadmap row are added in the same pull request. The package is empty
-  until a capability is named. Nothing is invented to fill it.
+- **Only maintainers add one**, for a capability that is on the [roadmap](../roadmap.md); the stub, the roadmap row and a short [plan page](../plans/index.md) are added in the same
+  pull request. Nothing is invented to fill the package. `tests/test_future.py` checks that every stub has a row, that every row has a stub and an existing plan page, and that every
+  stub raises and names its roadmap item.
 - The stub never exists in the real package at the same time (`tests/test_future.py` checks it): when the capability is implemented, the module moves out of `scubas.future` in
   the same pull request that builds it and removes its roadmap row.
 - A stub is never imported by the real code and is not part of the public API of 0.1.9 (the compatibility suite pins that).
 - The message names the roadmap item, so a user who hits it knows where to look.
+
+## The stubs today
+
+Four, one per row of the planned-capabilities table of the roadmap: `scubas.future.uncertainty.propagation`, `scubas.future.segmentation.auto_segmenter`,
+`scubas.future.sources.electrojet` and `scubas.future.coastal.numerical`. Each docstring says which real module it becomes.
 
 ## Where it shows up
 

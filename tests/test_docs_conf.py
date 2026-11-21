@@ -74,9 +74,10 @@ def test_other_pages_are_not_given_status_colours(conf, app):
 
 def test_the_roadmap_progress_line_matches_the_table():
     text = (ROOT / "ROADMAP.md").read_text()
+    engineering = text.split("## Engineering")[1].split("\n## ")[0]
     rows = [
         line
-        for line in text.splitlines()
+        for line in engineering.splitlines()
         if line.startswith("| ") and "---" not in line and "Step" not in line
     ]
     done = sum("**done**" in line for line in rows)
