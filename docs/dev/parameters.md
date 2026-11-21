@@ -54,9 +54,9 @@ needs its own approved pull request with the compatibility suite unchanged ([ADR
 | `conductivity.asthenosphere_resistivity_ohm_m` | 100.0 | ohm m | sourced | default of ConductivityProfile (the 'Upper Mantle' layer); the layer table of docs/tutorial/netmodel.md (Chakraborty et al. 2022) |
 | `conductivity.transition_zone_resistivity_ohm_m` | 10.0 | ohm m | sourced | default of ConductivityProfile; the layer table of docs/tutorial/netmodel.md (Chakraborty et al. 2022) |
 | `conductivity.lower_mantle_resistivity_ohm_m` | 1.0 | ohm m | sourced | default of ConductivityProfile; the layer table of docs/tutorial/netmodel.md (Chakraborty et al. 2022) |
-| `conductivity.transition_zone_top_km` | 410.0 | km | assumed | default of ConductivityProfile: the depth at which the transition zone starts (the conventional 410 km seismic discontinuity); no citation in the code |
-| `conductivity.transition_zone_bottom_km` | 660.0 | km | assumed | default of ConductivityProfile: the depth at which the transition zone ends (the conventional 660 km seismic discontinuity); no citation in the code |
-| `conductivity.profile_max_depth_km` | 1000.0 | km | assumed | default of ConductivityProfile: the profile ends at this depth, so the lower mantle is 1000 - 660 km thick; no citation in the code |
+| `conductivity.transition_zone_top_km` | 410.0 | km | sourced | default of ConductivityProfile: the depth at which the transition zone starts; Chakraborty et al. (2022), Front. Phys. 10:1022475, Section 2.1.1: the mantle transition zone sits at 410-660 km |
+| `conductivity.transition_zone_bottom_km` | 660.0 | km | sourced | default of ConductivityProfile: the depth at which the transition zone ends; Chakraborty et al. (2022), Front. Phys. 10:1022475, Section 2.1.1: the mantle transition zone sits at 410-660 km |
+| `conductivity.profile_max_depth_km` | 1000.0 | km | sourced | default of ConductivityProfile: the profile ends at this depth, so the lower mantle is 1000 - 660 km thick; Chakraborty et al. (2022), Front. Phys. 10:1022475, Section 2.1.1: a fixed model bottom at 1,000 km |
 | `conductivity.grid_interpolation_method` | nearest |  | assumed | default of ConductivityProfile: how the LITHO1.0 grid is interpolated ('nearest' or 'linear') |
 | `conductivity.earth_model_file` | LITHO1.0.nc |  | sourced | default of ConductivityProfile: the file name of the LITHO1.0 netCDF product distributed by the IRIS Earth Model Collaboration; cached in .scubas_config/ of the working directory |
 | `conductivity.earth_model_uri` | http://ds.iris.edu/files/products/emc/emc-files/LITHO1.0.nc |  | sourced | default of ConductivityProfile: the IRIS Earth Model Collaboration copy of LITHO1.0; plain HTTP and no integrity check (see SECURITY.md) |
@@ -68,10 +68,10 @@ needs its own approved pull request with the compatibility suite unchanged ([ADR
 | `cables.flim_min_Hz` | 1e-06 | Hz | assumed | default of TransmissionLine elec_params, passed to OceanModel |
 | `cables.flim_max_Hz` | 1.0 | Hz | assumed | default of TransmissionLine elec_params, passed to OceanModel |
 | `geometry.north_east_split_divisor` | 1.4142135623730951 |  | assumed | CableSection: a total length given without a direction is split equally, length_north = length_east = length / sqrt(2) |
-| `geometry.lat_km_per_degree_a` | 111.133 | km/degree | assumed | CableSection.compute_lengths: length of a degree of latitude is (a - b cos 2 lambda) with lambda the mean latitude; the origin of a and b is not documented in the code |
-| `geometry.lat_km_per_degree_b` | 0.56 | km/degree | assumed | CableSection.compute_lengths: see lat_km_per_degree_a |
-| `geometry.lon_km_per_degree_a` | 111.5065 | km/degree | assumed | CableSection.compute_lengths: length of a degree of longitude is (a - b cos 2 lambda) cos lambda; the origin of a and b is not documented in the code |
-| `geometry.lon_km_per_degree_b` | 0.1872 | km/degree | assumed | CableSection.compute_lengths: see lon_km_per_degree_a |
+| `geometry.lat_km_per_degree_a` | 111.133 | km/degree | sourced | CableSection.compute_lengths: length of a degree of latitude is (a - b cos 2 lambda) with lambda the mean latitude; Chakraborty et al. (2022), Front. Phys. 10:1022475, Equation 4 (WGS84 geodetic model, as used for power-system modelling) |
+| `geometry.lat_km_per_degree_b` | 0.56 | km/degree | sourced | CableSection.compute_lengths: see lat_km_per_degree_a (Chakraborty et al. (2022), Equation 4) |
+| `geometry.lon_km_per_degree_a` | 111.5065 | km/degree | sourced | CableSection.compute_lengths: length of a degree of longitude is (a - b cos 2 lambda) cos lambda; Chakraborty et al. (2022), Front. Phys. 10:1022475, Equation 5 (WGS84 geodetic model) |
+| `geometry.lon_km_per_degree_b` | 0.1872 | km/degree | sourced | CableSection.compute_lengths: see lon_km_per_degree_a (Chakraborty et al. (2022), Equation 5) |
 | `utils.earth_radius_km` | 6371.0 | km | assumed | default Re of GreatCircle: the mean radius of a spherical Earth, rounded |
 | `sources.current_height_km` | 110.0 | km | assumed | default h of Current: the height of the ionospheric line current (given in km by default) |
 | `sources.cauchy_width` | 0.0 | km | assumed | default a of Current: the width of the Cauchy-distributed current (km by default) |
