@@ -33,6 +33,7 @@ If you have any questions or concerns please submit an **Issue** on the [SCUBAS 
 |---|---|
 | [Installation](user/install.md) | environment setup, dependencies, and package installation |
 | [INTERMAGNET data access](user/intermagnet.md), [Citing](user/citing.md) | where the magnetic field records come from, and citation guidance |
+| [Models](model/index.md) | how the model works: the SCUBAS chain from the magnetic record to the cable voltage, the DSTL transmission-line model of the ocean and the Earth, and the planned electrojet and numerical coast models |
 | [Tutorials](tutorial/theory.md) | theory, long and short cables, active terminations, network modeling, case studies, the 1989 event, extreme value analysis, uncertainty |
 | [API reference](dev/index.md) | cables, conductivity, datasets, models, plotting, current sources and utilities |
 | [Project](roadmap.md) | the roadmap, the [plans](plans/index.md) for the planned capabilities, the changelog and the glossary |
@@ -46,6 +47,18 @@ If you have any questions or concerns please submit an **Issue** on the [SCUBAS 
 user/install
 user/intermagnet
 user/citing
+```
+
+```{toctree}
+:hidden:
+:maxdepth: 1
+:caption: Models
+
+model/index
+model/scubas
+model/dstl
+model/electrojet
+model/fdtd
 ```
 
 ```{toctree}

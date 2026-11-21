@@ -7,6 +7,7 @@ Built with the ``dirhtml`` builder, so every page keeps the address it had under
 
 from __future__ import annotations
 
+import json
 import re
 import sys
 from pathlib import Path
@@ -45,8 +46,10 @@ napoleon_use_rtype = False
 napoleon_use_param = True
 default_role = "code"  # a single backtick is code, as in the Markdown pages
 
-myst_enable_extensions = ["colon_fence", "deflist", "amsmath", "dollarmath", "attrs_inline"]
+myst_enable_extensions = ["colon_fence", "deflist", "amsmath", "dollarmath", "attrs_inline", "substitution"]
 myst_heading_anchors = 3
+# The numbers the Models pages quote ({{ dstl_cs_Z0 }}) come from the code through scripts/make_model_figures.py, so they cannot drift.
+myst_substitutions = json.loads((Path(__file__).parent / "model" / "figures" / "numbers.json").read_text(encoding="utf-8"))
 
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),

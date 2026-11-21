@@ -8,6 +8,8 @@ and including 0.1.9 were released under the MIT license (see NOTICE.md).
 -->
 #### Transmission Line Modeling (TLM)
 
+This page is a short introduction. [The DSTL model](../model/dstl.md) gives the full derivation with the equations of the papers, a worked example, and the checks against the code; [the SCUBAS model](../model/scubas.md) covers the whole chain from the magnetic record.
+
 In the study of geomagnetic induction, the Earth's conductivity structure plays a crucial role. This structure comprises surface conducting layers, including seawater and sediments, overlaying more resistive layers such as the crust and mantle lithosphere. To simplify the representation of this complex structure, researchers have developed a concept of a thin double layer. This model considers a conductive layer on top followed by a resistive layer underneath.
 
 A significant contribution to this field was made by Ranganayaki and Madden in 1980, who introduced a generalized thin sheet analysis specifically designed for frequencies that penetrate through both the conductive and resistive layers. This analysis allows for a comprehensive understanding of the electromagnetic behavior of this layered structure.

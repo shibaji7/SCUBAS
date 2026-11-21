@@ -6,8 +6,15 @@ SCUBAS is in alpha (0.x). **Compatibility rule while the engineering standards a
 
 ## [Unreleased]
 
+### Added
+- Documentation: the **Models** section (`docs/model/`), rewritten from the removed draft. *The SCUBAS model* (the chain from the magnetic record to the cable voltage: the seawater transfer function after Boteler and Pirjola (2003), the emf, `V_C = emf + U_A - U_B`), *The DSTL model* (line constants, long and short sections, equivalent-π circuits, active terminations and the nodal network after Boteler et al. (2023), with a worked example), and two pages for the planned models, *Auroral electrojet currents* and *Numerical coast models*. Every equation is attributed to a paper and an equation number and is written out again, independently of the package, in `scripts/model_reference.py`; `tests/test_docs_model.py` compares those formulas and the numbers printed in the papers (Tables 2 to 4 and the limits of the examples, and values read off figures) with the code, and keeps `docs/model/figures/numbers.json`, from which the pages take their numbers, equal to what the code computes. The figures are regenerated from the code by `scripts/make_model_figures.py` (`make model-figures`). Where the code differs from a paper, the pages say so. Nothing in `scubas/` changes.
+
 ### Removed
 - Documentation: the **Model** section (`docs/model/`, added in 0.2.0) is taken out of the docs for now; it needs the authors' review before it is published. It stays in the git history and on the `roadmap-and-model` branch. The plan pages no longer link to it.
+
+### Known defects found
+- `OceanModel.to_Efields` returns **twice** the electric field of the analytic solution of Chakraborty et al. (2022), Eq 25 (the six-sine test: slope 2.003, correlation 0.99992). `scubas.utils.ifft` multiplies by `2 * n`; it was `n` until the commit of 2023-02-20, so `ifft(fft(x))` is `2 x`. Recorded and pinned, not changed; whether the factor is intended is for the authors to decide.
+- `Preprocess.get_tapering_function` computes the cosine ramp from the elapsed time in seconds divided by the number of samples, so the taper is a smooth ramp only for one-second data; for one-minute data it oscillates between 0 and 1 over the first and last tenth of the record. Recorded and pinned, not changed.
 
 ### Fixed
 - Documentation: the Deep ocean impedance in the transmission-line table of the conduct tutorial was printed as 7.14 x 10^-1 ohm/km, but the code and the other columns of that row give 7.14 x 10^-2. The table is now plain text, so it no longer breaks inside narrow cells, and `tests/test_docs_tables.py` checks it against the code. The Read the Docs badge of the home and install pages wrote the project name in capitals, which shields.io answers with "no finished builds"; it is lowercase now. The README status badge says v0.2, the home page shows the supported Python versions, and two dead links (Cartopy, McKinney) are replaced.
