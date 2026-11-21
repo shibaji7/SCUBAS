@@ -38,6 +38,8 @@ Behaviour of 0.1.9 that looks wrong but that users or published results may depe
 - Layer thicknesses are in metres although the `Site` docstrings say km.
 - The LITHO1.0 model is downloaded over plain HTTP, without an integrity check, into `.scubas_config/` of the working directory the first time `ConductivityProfile` is used (see `SECURITY.md`).
 - Two guards (`add_active_termination` before the E-field exists, `_pot_alongCS_` before the nodal solution) behave differently from what their messages suggest.
+- `scubas.utils.ifft` multiplies by `2 * n` (it was `n` until 2023-02-20), so `ifft(fft(x))` is `2 x` and `OceanModel.to_Efields` returns **twice** the analytic field of Chakraborty et al. (2022), Eq 25.
+- `Preprocess.get_tapering_function` builds the cosine ramp from the elapsed time in seconds divided by the number of samples: a smooth ramp for one-second data only; for one-minute data it oscillates over the first and last tenth of the record.
 
 A fix is a separate pull request that you approve one by one; an output-changing fix goes behind a new function or option, never
 silently, and updates the one test here and the changelog.
@@ -46,6 +48,8 @@ silently, and updates the one test here and the changelog.
 
 A new or changed piece of physics gets an analytic test (a closed form, a limit, a symmetry such as "splitting a uniform cable
 does not change the end potentials"), not a snapshot. Tests never use the network or random numbers without a fixed seed.
+
+The documentation is tested too. `tests/test_docs_tables.py` checks the transmission-line table of the conduct tutorial against the code, and `tests/test_docs_model.py` checks the [Models pages](../model/index.md): every equation, written again from the papers in `scripts/model_reference.py`, against the code; the tables and spot values printed in the papers against the code; the numbers the pages quote (`docs/model/figures/numbers.json`) against what the scripts compute now; and that the code shown on the pages runs. After a change to the code or the scripts, run `make model-figures` and commit the new figures and numbers.
 
 ## Coverage
 

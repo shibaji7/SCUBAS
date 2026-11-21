@@ -1,6 +1,6 @@
 # Plan: automatic segmenter
 
-**Roadmap:** planned. **Stub:** `scubas.future.segmentation.auto_segmenter`. **Extends:** `scubas.cables` and `scubas.conductivity`.
+**Roadmap:** planned. **Stub:** `scubas.future.segmentation.auto_segmenter`. **Extends:** `scubas.cables` and `scubas.conductivity`. **Model pages:** [the SCUBAS model](../model/scubas.md) and [the DSTL model](../model/dstl.md).
 
 ## Goal
 

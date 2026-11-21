@@ -1,6 +1,6 @@
 # Plan: uncertainty quantification
 
-**Roadmap:** planned. **Stub:** `scubas.future.uncertainty.propagation`. **Extends:** `scubas.conductivity` and `scubas.cables`.
+**Roadmap:** planned. **Stub:** `scubas.future.uncertainty.propagation`. **Extends:** `scubas.conductivity` and `scubas.cables`. **Model pages:** [the SCUBAS model](../model/scubas.md) and [the DSTL model](../model/dstl.md).
 
 ## Goal
 

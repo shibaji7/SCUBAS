@@ -91,3 +91,34 @@ def test_potential_profile_before_the_nodal_solution_fails_with_an_attribute_err
     tl = TransmissionLine("S", directed_length={"length": 1.0})
     with pytest.raises(AttributeError, match="Vi"):
         tl._pot_alongCS_()
+
+
+def test_ifft_of_fft_returns_twice_the_signal():
+    """``ifft`` multiplies by ``2 n`` (it was ``n`` before the commit of 2023-02-20), so the round trip doubles the signal.
+
+    This is why ``OceanModel.to_Efields`` returns twice the analytic field of Chakraborty et al. (2022), Eq 25 (see
+    ``tests/test_docs_model.py``).
+    """
+    from scubas.utils import fft, ifft
+
+    t = np.arange(1000)
+    x = np.sin(2 * np.pi * t / 50.0)
+    spectrum, _ = fft(x, 60.0)
+    assert np.abs(ifft(spectrum)).max() / np.abs(x).max() == pytest.approx(
+        2.0, abs=0.01
+    )
+
+
+def test_the_taper_ramp_depends_on_the_cadence_of_the_record():
+    """The cosine ramp uses elapsed seconds over a sample count: smooth for one-second data, oscillating for one-minute data."""
+    from scubas.models import Preprocess
+
+    n = 4320
+    ramp_1s = Preprocess(np.arange(n) * 1.0, np.zeros(n)).get_tapering_function(0.1)[
+        :216
+    ]
+    ramp_60s = Preprocess(np.arange(n) * 60.0, np.zeros(n)).get_tapering_function(0.1)[
+        :216
+    ]
+    assert np.all(np.diff(ramp_1s) >= 0)
+    assert not np.all(np.diff(ramp_60s) >= 0)  # it goes up and down

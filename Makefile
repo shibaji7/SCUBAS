@@ -22,7 +22,7 @@ ifeq ($(NO_COLOR),)
 endif
 
 .DEFAULT_GOAL := help
-.PHONY: env build check logo codecov-on codecov-off codecov-status publish-on publish-off publish-status publish-tag rtd-on rtd-off rtd-status help install dev test cov cov-xml cov-floors lint lint-ratchet fmt format fmt-check spdx release-check changelog-check compat-baseline pre-commit-install pre-commit qa docs docs-serve clean
+.PHONY: env build check logo model-figures codecov-on codecov-off codecov-status publish-on publish-off publish-status publish-tag rtd-on rtd-off rtd-status help install dev test cov cov-xml cov-floors lint lint-ratchet fmt format fmt-check spdx release-check changelog-check compat-baseline pre-commit-install pre-commit qa docs docs-serve clean
 
 help: ## Show this list
 	@printf "$(CB)SCUBAS$(C0)  $(CD)Submarine Cables Upset by Auroral Streams$(C0)\n\n"
@@ -133,6 +133,9 @@ publish-tag: ## Publish one existing tag that was held back: make publish-tag TA
 	@test -n "$(TAG)" || { echo "usage: make publish-tag TAG=vX.Y.Z"; exit 1; }
 	@git rev-parse -q --verify refs/tags/$(TAG) >/dev/null || { echo "no local tag $(TAG)"; exit 1; }
 	gh workflow run release.yml --ref $(TAG) -R $(REPO)
+
+model-figures: ## Regenerate the figures and numbers.json of the Models pages from the code (docs/model/figures)
+	$(PY) scripts/make_model_figures.py
 
 logo: ## Regenerate the logo SVGs in docs/_static/ (needs fonttools and matplotlib)
 	$(PY) scripts/make_logo.py

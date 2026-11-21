@@ -1,6 +1,6 @@
 # Plan: auroral electrojet design
 
-**Roadmap:** planned. **Stub:** `scubas.future.sources.electrojet`. **Extends:** `scubas.sources`.
+**Roadmap:** planned. **Stub:** `scubas.future.sources.electrojet`. **Extends:** `scubas.sources`. **Model page:** [Auroral electrojet currents](../model/electrojet.md).
 
 ## Goal
 
