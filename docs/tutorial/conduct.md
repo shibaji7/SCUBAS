@@ -27,12 +27,14 @@ To illustrate the application of the modelling technique and to examine the volt
 ##### Transmission Line Parameters 
 For each model the layer thicknesses and resistivities from table in [network modeling](netmodel.md) are used to calculate the transmission line series impedance, $Z$, and parallel admittance, $Y$. These values are then used to calculate the transmission line propagation constant, $\gamma$, characteristic impedance, $Z_0$, and adjustment distance, $\frac{1}{\gamma}$ for each section. The values obtained are shown in table below. The 'Shallow Sea' parameters are used for the continental shelf sections in models 2 and 3 as well as for the seawater section in model 1.
 
-|                    | Depth (m) | $Z$ ($\Omega/km$) | $Y$ (S/km) | $\gamma$ ($km^{-1}$) | $Z_0$ ($\Omega$) | Adj. Distance (km) |
-| ------------------ | --------- | ----------------- | ---------- | -------------------- | ---------------- | ------------------ |
-| Continental Shelf  | 100       | $7.5\times 10^{-1}$ | $5\times 10^{-6}$ | $1.9365\times 10^{-3}$ | $3.873\times 10^{2}$ | 516.4 |
-| Shalow Ocean  | 1000       | $2.5\times 10^{-1}$ | $1.0\times 10^{-5}$ | $1.58\times 10^{-3}$ | $1.58\times 10^{2}$ | 632.5 |
-| Deep Ocean  | 4000       | $7.14\times 10^{-1}$ | $1.0\times 10^{-5}$ | $8.45\times 10^{-4}$ | $8.45\times 10^{1}$ | 1183.2 |
-| Land  | 0       | 3.0 | $5.0\times 10^{-6}$ | $3.873\times 10^{-3}$ | $7.746\times 10^{2}$ | 258.2 |
+| Section | Depth (m) | Z (Ω/km) | Y (S/km) | γ (1/km) | Z₀ (Ω) | 1/γ (km) |
+| --- | --- | --- | --- | --- | --- | --- |
+| Continental shelf | 100 | 7.5 × 10⁻¹ | 5.0 × 10⁻⁶ | 1.9365 × 10⁻³ | 3.873 × 10² | 516.4 |
+| Shallow ocean | 1000 | 2.5 × 10⁻¹ | 1.0 × 10⁻⁵ | 1.58 × 10⁻³ | 1.58 × 10² | 632.5 |
+| Deep ocean | 4000 | 7.14 × 10⁻² | 1.0 × 10⁻⁵ | 8.45 × 10⁻⁴ | 8.45 × 10¹ | 1183.2 |
+| Land | 0 | 3.0 | 5.0 × 10⁻⁶ | 3.873 × 10⁻³ | 7.746 × 10² | 258.2 |
+
+The columns follow from each other: γ = √(ZY), Z₀ = √(Z/Y) and the adjustment distance (the last column) is 1/γ. The numbers are those of the profiles `PROFILES.CS`, `PROFILES.SO`, `PROFILES.DO` and `PROFILES.LD` (a check: `tests/test_docs_tables.py`).
 
 :::{admonition} Example
 :class: note

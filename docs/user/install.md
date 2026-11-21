@@ -14,7 +14,7 @@ Setup guidance for Python environments, dependencies, and optional geospatial to
 [![License: LGPL v3+](https://img.shields.io/badge/license-LGPL--3.0--or--later-blue.svg)](https://github.com/shibaji7/SCUBAS/blob/main/LICENSE) 
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/release/python-3110/) 
 ![GitHub Stable Release (latest by date)](https://img.shields.io/github/v/release/shibaji7/SCUBAS)
-[![Documentation Status](https://img.shields.io/readthedocs/SCUBAS?logo=readthedocs&label=docs)](https://SCUBAS.readthedocs.io/en/latest/?badge=latest)
+[![Documentation Status](https://img.shields.io/readthedocs/scubas?logo=readthedocs&label=docs)](https://scubas.readthedocs.io/en/latest/)
 [![codecov](https://codecov.io/gh/shibaji7/SCUBAS/branch/main/graph/badge.svg)](https://codecov.io/gh/shibaji7/SCUBAS)
 
 :::{important}
@@ -63,9 +63,9 @@ If you wish to plot coastlines or geographic projections you will need to instal
 :::
 
 ### Cartopy 
-[Cartopy](https://scitools.org.uk/cartopy/docs/latest/) is a Python package designed for geospatial data processing in order to produce maps and other geospatial data analyses. This library is used when invoking a projection system needing overlapped coastline maps in cable routs plots. 
+[Cartopy](https://cartopy.readthedocs.io/stable/) is a Python package designed for geospatial data processing in order to produce maps and other geospatial data analyses. This library is used when invoking a projection system needing overlapped coastline maps in cable routs plots. 
 
-For installing cartopy please follow the packages [installation](https://scitools.org.uk/cartopy/docs/latest/installing.html) instructions. For ubuntu here is good installation [link](https://techoverflow.net/2021/07/11/how-to-install-cartopy-on-ubuntu/) 
+For installing cartopy please follow the packages [installation](https://cartopy.readthedocs.io/stable/installing.html) instructions. For ubuntu here is good installation [link](https://techoverflow.net/2021/07/11/how-to-install-cartopy-on-ubuntu/) 
 
 :::{warning}
 For cartopy to work with scubas please make sure it version `>=0.19`. Otherwise scubas will throw an exception if you try to use it.  

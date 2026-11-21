@@ -20,7 +20,7 @@ potential along the cable and at its ends.
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![Roadmap](https://img.shields.io/badge/roadmap-published-blue)](ROADMAP.md)
-[![status](https://img.shields.io/badge/status-alpha%20v0.1-orange.svg)](ROADMAP.md)
+[![status](https://img.shields.io/badge/status-alpha%20v0.2-orange.svg)](ROADMAP.md)
 [![Last commit](https://img.shields.io/github/last-commit/shibaji7/SCUBAS)](https://github.com/shibaji7/SCUBAS/commits/main)
 [![Issues](https://img.shields.io/github/issues/shibaji7/SCUBAS)](https://github.com/shibaji7/SCUBAS/issues)
 
