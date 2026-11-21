@@ -104,3 +104,60 @@ def test_the_new_modules_import_without_side_effects(name, tmp_path, monkeypatch
     monkeypatch.chdir(tmp_path)
     importlib.import_module(name)
     assert list(tmp_path.iterdir()) == []
+
+
+ROOT = PKG.parent
+
+
+def roadmap_rows() -> list[dict[str, str]]:
+    """The rows of the "Planned capabilities" table of ``ROADMAP.md``."""
+    text = (ROOT / "ROADMAP.md").read_text()
+    section = text.split("## Planned capabilities")[1].split("\n## ")[0]
+    rows = []
+    for line in section.splitlines():
+        cells = [c.strip().strip("`") for c in line.strip().strip("|").split("|")]
+        if line.startswith("| ") and "---" not in line and cells[0] != "Capability":
+            rows.append(
+                dict(zip(("capability", "stub", "plan", "status"), cells, strict=True))
+            )
+    return rows
+
+
+def stub_modules() -> list[str]:
+    """The dotted names of the stub modules found in ``scubas/future``."""
+    return sorted(
+        ".".join(["scubas", "future", *f.relative_to(FUTURE).with_suffix("").parts])
+        for f in FUTURE.rglob("*.py")
+        if f.name != "__init__.py"
+    )
+
+
+def test_every_stub_has_a_roadmap_row_and_every_row_has_a_stub():
+    rows = roadmap_rows()
+    assert rows, "the Planned capabilities table of ROADMAP.md is empty"
+    assert sorted(r["stub"] for r in rows) == stub_modules()
+
+
+def test_every_roadmap_row_names_a_plan_page_that_exists():
+    for row in roadmap_rows():
+        assert (ROOT / row["plan"]).is_file(), row
+        assert row["status"] in {"**planned**", "**proposed**"}, row
+
+
+@pytest.mark.parametrize("name", stub_modules())
+def test_every_stub_raises_and_names_its_roadmap_item(name):
+    module = importlib.import_module(name)
+    assert module.__all__ == ["run"]
+    with pytest.raises(NotImplementedYetError, match=r"ROADMAP: ") as err:
+        module.run(1, key="value")
+    assert isinstance(err.value, NotImplementedError)
+    assert "is not implemented yet" in str(err.value)
+
+
+@pytest.mark.parametrize("name", stub_modules())
+def test_a_stub_promises_the_module_it_will_become(name):
+    module = importlib.import_module(name)
+    real = name.replace("scubas.future.", "scubas.")
+    assert f"``{real}``" in module.__doc__
+    with pytest.raises(ImportError):
+        importlib.import_module(real)

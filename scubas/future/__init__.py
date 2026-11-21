@@ -7,6 +7,6 @@ live once it is implemented (``scubas.future.cable.xyz`` will become
 ``scubas.cable.xyz``), so the real modules hold only working code and this package
 is the honest list of what is not there yet.
 
-It is empty until the maintainers name a capability: see ``ROADMAP.md``,
-``docs/dev/future.md`` and ADR 0008.
+It holds one stub per planned capability of ``ROADMAP.md`` (see also
+``docs/dev/future.md`` and ADR 0008).
 """
