@@ -37,6 +37,7 @@ extensions = [
 autosummary_generate = False
 autodoc_default_options = {"show-inheritance": True, "member-order": "bysource"}  # members are listed per directive
 autodoc_typehints = "description"
+autodoc_preserve_defaults = True  # show defaults as written (PROFILES.Quebec), not as printed arrays and objects
 autoclass_content = "both"  # the class docstring and the __init__ docstring (the legacy classes document their parameters there)
 napoleon_google_docstring = True
 napoleon_numpy_docstring = True

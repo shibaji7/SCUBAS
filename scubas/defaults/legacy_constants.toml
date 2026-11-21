@@ -10,9 +10,9 @@ lithosphere_resistivity_ohm_m = { value = 1000.0, unit = "ohm m", status = "sour
 asthenosphere_resistivity_ohm_m = { value = 100.0, unit = "ohm m", status = "sourced", source = "default of ConductivityProfile (the 'Upper Mantle' layer); the layer table of docs/tutorial/netmodel.md (Chakraborty et al. 2022)" }
 transition_zone_resistivity_ohm_m = { value = 10.0, unit = "ohm m", status = "sourced", source = "default of ConductivityProfile; the layer table of docs/tutorial/netmodel.md (Chakraborty et al. 2022)" }
 lower_mantle_resistivity_ohm_m = { value = 1.0, unit = "ohm m", status = "sourced", source = "default of ConductivityProfile; the layer table of docs/tutorial/netmodel.md (Chakraborty et al. 2022)" }
-transition_zone_top_km = { value = 410.0, unit = "km", status = "assumed", source = "default of ConductivityProfile: the depth at which the transition zone starts (the conventional 410 km seismic discontinuity); no citation in the code" }
-transition_zone_bottom_km = { value = 660.0, unit = "km", status = "assumed", source = "default of ConductivityProfile: the depth at which the transition zone ends (the conventional 660 km seismic discontinuity); no citation in the code" }
-profile_max_depth_km = { value = 1000.0, unit = "km", status = "assumed", source = "default of ConductivityProfile: the profile ends at this depth, so the lower mantle is 1000 - 660 km thick; no citation in the code" }
+transition_zone_top_km = { value = 410.0, unit = "km", status = "sourced", source = "default of ConductivityProfile: the depth at which the transition zone starts; Chakraborty et al. (2022), Front. Phys. 10:1022475, Section 2.1.1: the mantle transition zone sits at 410-660 km" }
+transition_zone_bottom_km = { value = 660.0, unit = "km", status = "sourced", source = "default of ConductivityProfile: the depth at which the transition zone ends; Chakraborty et al. (2022), Front. Phys. 10:1022475, Section 2.1.1: the mantle transition zone sits at 410-660 km" }
+profile_max_depth_km = { value = 1000.0, unit = "km", status = "sourced", source = "default of ConductivityProfile: the profile ends at this depth, so the lower mantle is 1000 - 660 km thick; Chakraborty et al. (2022), Front. Phys. 10:1022475, Section 2.1.1: a fixed model bottom at 1,000 km" }
 grid_interpolation_method = { value = "nearest", unit = "", status = "assumed", source = "default of ConductivityProfile: how the LITHO1.0 grid is interpolated ('nearest' or 'linear')" }
 earth_model_file = { value = "LITHO1.0.nc", unit = "", status = "sourced", source = "default of ConductivityProfile: the file name of the LITHO1.0 netCDF product distributed by the IRIS Earth Model Collaboration; cached in .scubas_config/ of the working directory" }
 earth_model_uri = { value = "http://ds.iris.edu/files/products/emc/emc-files/LITHO1.0.nc", unit = "", status = "sourced", source = "default of ConductivityProfile: the IRIS Earth Model Collaboration copy of LITHO1.0; plain HTTP and no integrity check (see SECURITY.md)" }
@@ -32,10 +32,10 @@ flim_max_Hz = { value = 1.0, unit = "Hz", status = "assumed", source = "default 
 
 [geometry]
 north_east_split_divisor = { value = 1.4142135623730951, unit = "", status = "assumed", source = "CableSection: a total length given without a direction is split equally, length_north = length_east = length / sqrt(2)" }
-lat_km_per_degree_a = { value = 111.133, unit = "km/degree", status = "assumed", source = "CableSection.compute_lengths: length of a degree of latitude is (a - b cos 2 lambda) with lambda the mean latitude; the origin of a and b is not documented in the code" }
-lat_km_per_degree_b = { value = 0.56, unit = "km/degree", status = "assumed", source = "CableSection.compute_lengths: see lat_km_per_degree_a" }
-lon_km_per_degree_a = { value = 111.5065, unit = "km/degree", status = "assumed", source = "CableSection.compute_lengths: length of a degree of longitude is (a - b cos 2 lambda) cos lambda; the origin of a and b is not documented in the code" }
-lon_km_per_degree_b = { value = 0.1872, unit = "km/degree", status = "assumed", source = "CableSection.compute_lengths: see lon_km_per_degree_a" }
+lat_km_per_degree_a = { value = 111.133, unit = "km/degree", status = "sourced", source = "CableSection.compute_lengths: length of a degree of latitude is (a - b cos 2 lambda) with lambda the mean latitude; Chakraborty et al. (2022), Front. Phys. 10:1022475, Equation 4 (WGS84 geodetic model, as used for power-system modelling)" }
+lat_km_per_degree_b = { value = 0.56, unit = "km/degree", status = "sourced", source = "CableSection.compute_lengths: see lat_km_per_degree_a (Chakraborty et al. (2022), Equation 4)" }
+lon_km_per_degree_a = { value = 111.5065, unit = "km/degree", status = "sourced", source = "CableSection.compute_lengths: length of a degree of longitude is (a - b cos 2 lambda) cos lambda; Chakraborty et al. (2022), Front. Phys. 10:1022475, Equation 5 (WGS84 geodetic model)" }
+lon_km_per_degree_b = { value = 0.1872, unit = "km/degree", status = "sourced", source = "CableSection.compute_lengths: see lon_km_per_degree_a (Chakraborty et al. (2022), Equation 5)" }
 
 [utils]
 earth_radius_km = { value = 6371.0, unit = "km", status = "assumed", source = "default Re of GreatCircle: the mean radius of a spherical Earth, rounded" }
