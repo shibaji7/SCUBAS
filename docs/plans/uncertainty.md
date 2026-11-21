@@ -1,7 +1,6 @@
 # Plan: uncertainty quantification
 
-**Roadmap:** planned. **Stub:** `scubas.future.uncertainty.propagation`. **Extends:** [Earth conductivity](../model/components/conductivity.md),
-[cable line and network](../model/components/cable-network.md).
+**Roadmap:** planned. **Stub:** `scubas.future.uncertainty.propagation`. **Extends:** `scubas.conductivity` and `scubas.cables`.
 
 ## Goal
 

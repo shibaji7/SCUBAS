@@ -11,7 +11,7 @@ method that appears here as a question is a question.
 | Auroral electrojet design | [Electrojet](electrojet.md) | `scubas.future.sources.electrojet` |
 | FDTD/FEM for coastal effects | [Coastal effects](coastal.md) | `scubas.future.coastal.numerical` |
 
-Each plan also lists the [model component](../model/index.md) it extends. The rules for a stub are in [Planned capabilities](../dev/future.md).
+The rules for a stub are in [Planned capabilities](../dev/future.md).
 
 ```{toctree}
 :hidden:

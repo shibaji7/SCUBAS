@@ -6,6 +6,9 @@ SCUBAS is in alpha (0.x). **Compatibility rule while the engineering standards a
 
 ## [Unreleased]
 
+### Removed
+- Documentation: the **Model** section (`docs/model/`, added in 0.2.0) is taken out of the docs for now; it needs the authors' review before it is published. It stays in the git history and on the `roadmap-and-model` branch. The plan pages no longer link to it.
+
 ### Fixed
 - Documentation: the Deep ocean impedance in the transmission-line table of the conduct tutorial was printed as 7.14 x 10^-1 ohm/km, but the code and the other columns of that row give 7.14 x 10^-2. The table is now plain text, so it no longer breaks inside narrow cells, and `tests/test_docs_tables.py` checks it against the code. The Read the Docs badge of the home and install pages wrote the project name in capitals, which shields.io answers with "no finished builds"; it is lowercase now. The README status badge says v0.2, the home page shows the supported Python versions, and two dead links (Cartopy, McKinney) are replaced.
 

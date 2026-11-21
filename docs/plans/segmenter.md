@@ -1,7 +1,6 @@
 # Plan: automatic segmenter
 
-**Roadmap:** planned. **Stub:** `scubas.future.segmentation.auto_segmenter`. **Extends:** [cable line and network](../model/components/cable-network.md),
-[Earth conductivity](../model/components/conductivity.md).
+**Roadmap:** planned. **Stub:** `scubas.future.segmentation.auto_segmenter`. **Extends:** `scubas.cables` and `scubas.conductivity`.
 
 ## Goal
 

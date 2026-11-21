@@ -1,7 +1,6 @@
 # Plan: auroral electrojet design
 
-**Roadmap:** planned. **Stub:** `scubas.future.sources.electrojet`. **Extends:** [source](../model/components/source.md). The components pages are to be filled in by the authors as the
-design is decided.
+**Roadmap:** planned. **Stub:** `scubas.future.sources.electrojet`. **Extends:** `scubas.sources`.
 
 ## Goal
 
