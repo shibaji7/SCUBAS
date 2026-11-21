@@ -31,7 +31,7 @@ potential along the cable and at its ends.
 
 **[📖 Documentation](https://scubas.readthedocs.io/) · [📦 PyPI](https://pypi.org/project/scubas/) · [🐙 GitHub](https://github.com/shibaji7/SCUBAS) · [🐛 Issues](https://github.com/shibaji7/SCUBAS/issues) · [📜 Changelog](CHANGELOG.md) · [🗺️ Roadmap](ROADMAP.md)**
 
-> Status: **0.1.9 (alpha)**. Implemented: the transmission-line model of Ocean/Earth sections (long and short cables), the equivalent-pi circuit and nodal solution of
+> Status: **0.2.0 (alpha)**. Implemented: the transmission-line model of Ocean/Earth sections (long and short cables), the equivalent-pi circuit and nodal solution of
 > multi-section cables, active terminations, magnetic-to-electric transfer functions from IAGA-2002 or CSV records, layered profiles from LITHO1.0 (single, binned and
 > Monte Carlo), and a line-current source. No further capability is committed in the [roadmap](ROADMAP.md); planned ones will be stubs in `scubas.future` that raise
 > `NotImplementedYetError`.
