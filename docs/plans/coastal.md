@@ -1,6 +1,6 @@
 # Plan: FDTD/FEM modelling of coastal effects
 
-**Roadmap:** planned. **Stub:** `scubas.future.coastal.numerical`. **Extends:** [cable line and network](../model/components/cable-network.md) (the end potentials).
+**Roadmap:** planned. **Stub:** `scubas.future.coastal.numerical`. **Extends:** `scubas.cables` (the end potentials).
 
 ## Goal
 
